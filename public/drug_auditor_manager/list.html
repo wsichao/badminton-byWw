@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=3, minimum-scale=1, user-scalable=no">
+  <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'/>
+  <title>药品审核</title>
+  <link rel="stylesheet" href="https://unpkg.com/mint-ui/lib/style.css">
+  <link href="https://cdn.bootcss.com/mint-ui/2.2.13/infinite-scroll/style.css" rel="stylesheet">
+
+  <script src="https://cdn.bootcss.com/vue/2.5.13/vue.min.js" charset="utf-8"></script>
+  <script src="https://cdn.bootcss.com/vue-resource/1.5.0/vue-resource.js"></script>
+  <script src="https://unpkg.com/mint-ui/lib/index.js"></script>
+  <style>
+    html,
+    body,
+    #app {
+      height: 100%;
+      background: #F4F4F4;
+      margin: 0;
+    }
+
+    .header {
+      height: 66px;
+      background: #FFFFFF;
+    }
+
+    .tab {
+      width: 220px;
+      margin: auto;
+    }
+
+    .tab .tab-item {
+      margin-top: 15px;
+      display: inline-block;
+      width: 105px;
+      height: 36px;
+      text-align: center;
+      line-height: 36px;
+    }
+
+    .tab .tab-item:nth-child(1) {
+      border: 1px solid #E0E0E0;
+      border-right: 0;
+      border-radius: 30px 0 0 30px;
+      font-size: 15px;
+      color: #666666;
+      letter-spacing: 0.08px;
+    }
+
+    .tab .tab-item:last-child {
+      border: 1px solid #E0E0E0;
+      border-left: 0;
+      border-top-right-radius: 30px;
+      border-bottom-right-radius: 30px;
+      font-size: 15px;
+      color: #666666;
+      letter-spacing: 0.08px;
+    }
+
+    .tab .tab-item.selected {
+      background: #12B6BB;
+      color: #FFFFFF;
+    }
+
+    .list-item {
+      margin-top: 10px;
+      padding-left: 12px;
+      padding-right: 12px;
+      padding-top: 15px;
+      padding-bottom: 15px;
+      background: #FFFFFF;
+      position: relative;
+    }
+
+    .item-right {
+      margin-left: 81px;
+      position: relative;
+    }
+
+    .item-img {
+      position: absolute;
+      top: 20px;
+      width: 74px;
+      height: 69px;
+    }
+
+    .item-img img {
+      width: 74px;
+      height: 69px;
+      object-fit: cover;
+    }
+
+    .item-img-count {
+      position: absolute;
+      bottom: 5px;
+      right: 8px;
+      padding-left: 7px;
+      padding-right: 7px;
+      padding-top: 2px;
+      padding-bottom: 2px;
+      font-size: 10px;
+      color: #FFFFFF;
+      opacity: 0.5;
+      background: #000000;
+      border-radius: 9px;
+    }
+
+    .item-right-name-1,
+    .item-right-name-2 {
+      display: inline-block;
+    }
+
+    .item-right-name-1 {
+      font-size: 15px;
+      color: #000000;
+      letter-spacing: 0.08px;
+    }
+
+    .item-right-name-2 {
+      font-size: 13px;
+      color: #999999;
+      letter-spacing: 0.07px;
+      position: absolute;
+      right: 0;
+      top: 2px;
+    }
+
+    .item-right-name {
+      margin-bottom: 8px;
+    }
+
+    .item-right-drug-name {
+      font-size: 13px;
+      color: #000000;
+      letter-spacing: 0.07px;
+      margin-bottom: 7px;
+    }
+
+    .item-right-detail {
+      font-size: 13px;
+      color: #666666;
+      letter-spacing: 0.07px;
+      position: relative;
+    }
+
+    .item-right-drug-name-2 {
+      font-size: 12px;
+      color: #999999;
+      letter-spacing: 0.07px;
+    }
+
+    .item-right-detail-amount {
+      font-size: 15px;
+      color: #000000;
+      letter-spacing: 0.08px;
+    }
+
+    .item-right-detail-refused {
+      font-size: 13px;
+      color: #000000;
+      letter-spacing: 0.07px;
+      position: absolute;
+      right: 80px;
+    }
+
+    .item-right-detail-through {
+      background: #12B6BB;
+      border-radius: 15px;
+      font-size: 13px;
+      color: #FFFFFF;
+      letter-spacing: 0.07px;
+      text-align: center;
+      width: 60px;
+      height: 24px;
+      display: inline-block;
+      line-height: 24px;
+      position: absolute;
+      right: 0;
+      top: -3px;
+    }
+    .item-right-detail-refused-gray {
+      background: #F4F4F4;
+      border-radius: 15px;
+      font-size: 13px;
+      color: #999999;
+      letter-spacing: 0.07px;
+      text-align: center;
+      width: 60px;
+      height: 24px;
+      display: inline-block;
+      line-height: 24px;
+      position: absolute;
+      right: 0;
+      top: -3px;
+    }
+    .item-right-detail-through-gray {
+      background: #F4F4F4;
+      border-radius: 15px;
+      font-size: 13px;
+      color: #999999;
+      letter-spacing: 0.07px;
+      text-align: center;
+      width: 60px;
+      height: 24px;
+      display: inline-block;
+      line-height: 24px;
+      position: absolute;
+      right: 0;
+      top: -3px;
+    }
+    .channel-check-reject-reason {
+      font-size: 13px;
+      line-height: 15px;
+      color: #666666;
+      letter-spacing: 0.07px;
+      padding: 8px;
+      margin-top: 19px;
+      background:#FAFAFA
+    }
+    .mint-msgbox{
+      border-radius: 8px;
+    }
+    .imgstyle{
+      width: 100%;
+      height: 100%;
+    }
+    .mint-swipe-indicator.is-active{
+      opacity: 1;
+    }
+    .mint-swipe-indicator{
+      background: #ccc;
+      opacity: 0.8;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <div class="header">
+      <div class='tab'>
+        <div :class="{ 'tab-item': true, 'selected': item.selected }" v-for="(item,index) in tabItems" v-on:click='changeTabItem(index)'>{{item.name}}
+        </div>
+      </div>
+    </div>
+
+    <div class="default" style="width: 100%;margin-top: 226px;" v-if="!list.length">
+      <img src="img/nocall@3x.png" style="width: 92px;height: 92px;display: block;margin: 0 auto;"/>
+      <p style="font-size: 17px;color: #999999;letter-spacing: 0;text-align: center;">暂无记录</p>
+    </div>
+
+    <div v-infinite-scroll="loadMore" infinite-scroll-disabled="fading-circle" infinite-scroll-distance="10">
+      <div v-for="(item,index) in list" class="list-item">
+        <div class="item-img" :style="{'background-image':'url('+'https://cdn.juliye.net/' +item.images[0]+')','background-repeat':'no-repeat','background-size':'100%','background-position':'center'}" v-on:click="clickImg(index)">
+          <div class="item-img-count">{{item.images.length}}图</div>
+        </div>
+        <div class="item-right">
+          <div class="item-right-name">
+            <div class="item-right-name-1">{{item.userName}}</div>
+            <div class="item-right-name-2">{{item.createdAt | formatDate}}</div>
+          </div>
+          <div class="item-right-drug-name">
+            <span class="item-right-drug-name-1">{{item.drugName}}</span>
+            <span class="item-right-drug-name-2"><span style="font-size: 8px;">x</span>{{item.reimburseCount}}</span>
+          </div>
+          <div class="item-right-detail">
+            <span class="item-right-detail-count">补贴总额:</span>
+            <span class="item-right-detail-amount" style="padding-left: 2px;">¥{{item.price.toFixed(2)}}</span>
+            <!-- 审核中 -->
+            <span v-if="item.channelCheckStatus == 100" class="item-right-detail-refused" v-on:click="alertRefused(index)">拒绝</span>
+            <span v-if="item.channelCheckStatus == 100" class="item-right-detail-through" v-on:click="through(index)">通过</span>
+
+            <!-- 审核通过 -->
+            <span v-if="item.isRejectShow" class="item-right-detail-refused" v-on:click="withdraw(index)">撤回</span>
+            <span v-if="item.channelCheckStatus == 200" class="item-right-detail-through-gray">已通过</span>
+
+            <!-- 审核失败 -->
+            <span v-if="item.isRejectShow" class="item-right-detail-refused" v-on:click="withdraw(index)">撤回</span>
+            <span v-if="item.channelCheckStatus == 300" class="item-right-detail-refused-gray">未通过</span>
+          </div>
+        </div>
+        <div class="channel-check-reject-reason" v-if="item.channelCheckStatus == 300">
+          拒绝理由：{{item.channelCheckRejectReason}}
+        </div>
+      </div>
+    </div>
+
+    <!-- 弹出遮罩层 -->
+    <div class="mint-msgbox-wrapper" v-bind:style="{display:modal.show}" style="position: absolute; z-index: 2001;">
+      <div class="mint-msgbox">
+        <!---->
+        <div class="mint-msgbox-content" style="padding:10px 20px 0px;">
+          <div class="mint-msgbox-message" style="font-size: 19px;color: #000000;letter-spacing: 0;">拒绝理由</div>
+          <div class="mint-msgbox-input">
+            <textarea rows="5" v-model="reject_reason" placeholder="请填写拒绝理由" style="width:100%;resize:none;font-size: 15px;line-height: 30px;border: 1px solid #E0E0E0;padding:10px;box-sizing: border-box;
+border-radius: 8px;"></textarea>
+            <div class="mint-msgbox-errormsg" style="min-height: 15px;"></div>
+          </div>
+        </div>
+        <div class="mint-msgbox-btns" style="height: 49px; ">
+          <button class="mint-msgbox-btn mint-msgbox-cancel " v-on:click='cancel' style="font-size: 17px;">取消</button>
+          <button class="mint-msgbox-btn mint-msgbox-confirm " style="color: #12B6BB;font-size: 17px;" v-on:click='refused()'>确定</button>
+        </div>
+      </div>
+    </div>
+    <div class="v-modal" v-bind:style="{display:modal.show}" style="z-index: 2000;"></div>
+
+    <!--弹出 swipe-->
+    <div class="imgSwipe" style="position: fixed;top: 0;width:100%;height: 100%;background: #000000;" v-bind:style="{display:images.show}">
+      <div style="position: absolute;right: 0;top:0;color:#ffffff;z-index: 9999999;width: 30px;height: 30px" v-on:click="closeImg"><img style="width: 30px;height: 30px" src="img/Oval@3x.png"></div>
+      <mt-swipe :auto="0" style="width:100%;height: 100%;">
+        <mt-swipe-item v-for="(item,index) in imgList" >
+          <div class="imgstyle" :style="{'background-image':'url('+'https://cdn.juliye.net/' +item+')','background-repeat':'no-repeat','background-size':'100%','background-position':'center'}"></div>
+        </mt-swipe-item>
+      </mt-swipe>
+    </div>
+  </div>
+</body>
+
+
+<script>
+
+  var getTimeFormat = function(timestamp){
+    var date = new Date(timestamp);
+    var result = '';
+    var now = new Date();
+    if(now.getFullYear() != date.getFullYear()){
+      result += date.getFullYear() + '-'
+    }
+    if(now.toLocaleDateString() != date.toLocaleDateString()){
+      var month = ((date.getMonth()+1)/10)<1 ? ('0' + (date.getMonth()+1)):(date.getMonth()+1);
+      var day = (date.getDate()/10)<1 ? ('0' + date.getDate()):date.getDate();
+      result += month + '-' + day + ' '
+    }
+    var hour = (date.getHours()/10)<1 ? ('0' + date.getHours()):date.getHours();
+    var minute = (date.getMinutes()/10)<1 ? ('0' + date.getMinutes()):date.getMinutes();
+    result += hour  + ":" + minute;
+    return result;
+  }
+  Vue.http.options.emulateJSON = true;
+  new Vue({
+    el: '#app',
+    data: {
+        status: 100,
+        modal: {
+          show: 'none'
+        },
+        images: {
+            show: 'none'
+        },
+        defaultShow: {
+            show: 'none'
+        },
+      tabItems: [
+        { name: '未审核', selected: true,status : 100 },
+        { name: '已审核', selected: false,status : 200 },
+      ],
+      list: [],
+      imgList:[],
+      bookmark: null,
+      reject_reason: '',
+      editIndex:null
+    },
+    filters: {
+      formatDate(time) {
+        return getTimeFormat(time)
+      }
+    },
+    methods: {
+        //图片点击事件
+        clickImg(index){
+          var self = this;
+          var data = self.list[index];
+          if(data.images.length){
+              this.imgToggle();
+          }
+          this.imgList = data.images;
+        },
+        closeImg(){
+            this.imgToggle();
+        },
+      // 通过
+      through(index) {
+        // 获取当前数据
+        var self = this;
+        var dt = self.list[index];
+        // 调用接口
+        this.$http
+          .post('/1/drugAllowance/drug_audit',
+            { reimburse_id: dt._id, status: 200 })
+          .then(function (res) {
+            // 更新当前数据
+            dt.channelCheckStatus = 200;
+            dt.notOverTime = true;
+          }, function (err) {
+            console.log(err);
+          });
+      },
+      // 弹出拒绝框
+        alertRefused(index){
+            this.toggle();
+            this.editIndex = index;
+        },
+      // 拒绝
+      refused() {
+        if(!this.reject_reason){
+          alert('请输入拒绝理由');
+          return
+        }
+        // 获取当前数据
+        var self = this;
+        var dt = self.list[this.editIndex];
+        this.$http
+          .post('/1/drugAllowance/drug_audit',
+            { reimburse_id: dt._id, status: 300, reject_reason: self.reject_reason })
+          .then(function (res) {
+            if(res.body.code == 200){
+              // 更新当前数据
+              dt.channelCheckStatus = 300;
+              dt.channelCheckRejectReason = self.reject_reason;
+              self.reject_reason = '';
+              dt.notOverTime = true;
+            }else{
+              alert(res.body.msg)
+            }
+
+            this.toggle();
+          }, function (err) {
+            console.log(err);
+          });
+      },
+      // 撤回
+      withdraw(index) {
+          var self = this;
+          var dt = self.list[index];
+          this.$http
+              .post('/1/drugAllowance/drug_audit',
+                  { reimburse_id: dt._id, status: 100})
+              .then(function (res) {
+                  // 更新当前数据
+                  self.list[index].isRejectShow=false;
+                  dt.channelCheckStatus = 100;
+              }, function (err) {
+                  console.log(err);
+              });
+      },
+      changeTabItem(index) {
+        this.status = this.tabItems[index].status;
+        console.log(this.status);
+        this.bookmark=null;
+        this.list = [];
+        for (var i = 0; i < this.tabItems.length; i++) {
+          if (i == index) {
+            this.tabItems[i].selected = true;
+          } else {
+            this.tabItems[i].selected = false;
+          }
+        }
+        this.loadMore();
+      },
+      // 打开弹出层
+      toggle() {
+        this.modal.show = this.modal.show == 'block' ? 'none ' : 'block';
+
+      },
+      imgToggle(){
+         this.images.show = this.images.show == 'block' ? 'none ' : 'block';
+      },
+        showToggle(){
+         this.defaultShow.show = this.defaultShow.show == 'block' ? 'none ' : 'block';
+      },
+      ok() {
+      },
+      cancel() {
+        this.toggle();
+      },
+      loadMore() {
+        var self = this;
+        this.loading = true;
+        if (this.list.length > 0) {
+          this.bookmark = this.list[this.list.length - 1]['createdAt'];
+        }
+        this.$http
+          .get("/1/drugAllowance/drug_list?mock=false", {
+            emulateJSON: true,
+            params: {
+              status: self.status,
+              bookmark: self.bookmark
+            }
+          })
+          .then(function (res) {
+            console.log(res);
+            res.body.items.forEach(function(item){
+              if(item.channelCheckStatus != 100){
+                item.notOverTime = Date.now() - item.channelCheckedAt < 86400000
+              }
+            })
+            self.list =  self.list.concat(res.body.items);
+            if (res.body.bookmark == 0) {
+              self.loading = false;
+              console.log('已经没有更数据了');
+              this.showToggle();
+            }
+          }, function (err) {
+            alert("失败");
+          });
+      }
+    }
+  });
+
+  window.alert = function (name) {
+    var iframe = document.createElement("IFRAME");
+    iframe.style.display = "none";
+    iframe.setAttribute("src", 'data:text/plain,');
+    document.documentElement.appendChild(iframe);
+    window.frames[0].window.alert(name);
+    iframe.parentNode.removeChild(iframe);
+  }
+</script>
+
+</html>

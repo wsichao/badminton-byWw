@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+
+    <!-- http://t.co/dKP3o1e -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    <title>开通热线</title>
+    <!-- JQuery -->
+    <script src="https://cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script>
+    <script src="../../assets/libs/bootstrap.min.js"></script>
+    <!-- Private -->
+    <link rel="stylesheet" href="../../assets/styles/bootstrap.min.css">
+    <link href="../../assets/styles/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="comm/signUp.css">
+    <style type="text/css">
+
+        body{
+            background: #EEEEEE;
+        }
+        fieldset{
+            border:1px solid #ddd;
+            border-radius: 4px;
+            line-height:24px;
+            margin:15px 0 ;
+            padding:15px 5px;
+            padding-left:12px;
+        }
+        .submitThis{
+            margin:0;
+            margin-bottom: 15px;
+        }
+        legend{
+            padding:0 5px;
+            margin:0;
+        }
+        .blue-back{
+            background: #33a5ee;
+        }
+        .alert{
+            background: #FFF;
+            /*width:calc(100% - 74px);*/
+            filter:alpha(opacity=80);
+            -moz-opacity:0.8;
+            opacity:0.8;
+            border-radius: 4px;
+            left: 50%;
+            top:50%;
+            -webkit-transform: translate(-50%,-50%);
+            transform: translate(-50%,-50%);
+            z-index: 11;
+            display:none;
+            position:fixed;
+            padding:18px;
+            margin:0;
+        }
+        .gray{
+            width:100%;
+            height:100%;
+            z-index: 10;
+            left: 0;
+            top:0;
+            background: #000;
+            filter:alpha(opacity=70);
+            -moz-opacity:0.7;
+            opacity:0.7;
+            display:none;
+            position:fixed;
+        }
+        #realName,#phoneNum{
+            color:#535353;
+        }
+
+        .cushion{
+            width:100%;
+           /* margin-top:18px;*/
+        }
+        .cushion img{
+            height:59px;
+            width:59px;
+            margin:0 auto;
+            display:block;
+
+        }
+        #change{;
+            -webkit-animation:run 3s linear 0s infinite;
+        }
+
+        @-webkit-keyframes run{
+            from{
+                -webkit-transform:rotate(0deg);
+            }
+            to{
+                -webkit-transform:rotate(360deg);
+            }
+
+        }
+    </style>
+</head>
+<body>
+    <div class="tabs">
+        <div class="lines">
+            <span class="dot blue-back"></span>
+            <span class="line" id="firstLine"></span>
+            <span class="dot second-dot"></span>
+            <span class="line" id="lastLine"></span>
+            <span class="dot"></span>
+        </div>
+        <div class="font">
+            <span class="menu blue-font">基本信息</span>
+            <span id="secondFont" class="menu sec-tabs-font">职业信息</span>
+            <span id="lastFont" class="menu">咨询定价</span>
+        </div>
+    </div>
+    <div id="view1" class="view">
+        <input id="realName" type="text" class="insert input"  placeholder="请填写真实姓名（提现时使用）"/>
+        <input id="phoneNum" type="text" class="insert input"  placeholder="请填写手机号"/>
+        <div class="row-wrap">
+            <span class="leftFont" style="color: #000;">选择性别</span>
+            <div class="radio-wrap">
+                <div class="left-wrap">
+                    <span id="male" class="radio-a">男</span>
+                </div>
+                <div class="right-wrap">
+                    <span id="female" class="radio-a">女</span>
+                </div>
+                <input type="radio" name="sex" style="display: none" value="男">
+                <input type="radio" name="sex" style="display: none" value="女">
+            </div>
+        </div>
+        <input id="job" type="text" class="insert input" placeholder="请输入职业信息，如医生、律师等" />
+        <!--<div class="row-wrap">
+            <span class="leftFont" style="color: #535353;">选择职业</span>
+            <div class="radio-wrap">
+                <div class="left-wrap">
+                    <span id="doctor" class="radio-a">医生</span>
+                </div>
+                <div class="right-wrap">
+                    <span id="other" class="radio-a">其他</span>
+                </div>
+
+                <input type="radio" style="display: none" value="医生" name="profession">
+                <input type="radio" style="display: none" value="其他" name="profession">
+            </div>
+        </div>-->
+        <input id="next1" style="margin: 12px 0;" class="submitThis btn-submit blue-btn" type="button" value="下一步"/>
+       <!-- <p class="info-under-btn">申请成功后，基本信息无法修改，请核对无误后再继续</p>-->
+    </div>
+    <div class="view" id="view2" style="display: none">
+        <select id="province" class="insert input">
+            <option disabled selected value="">选择所在省/直辖市</option>
+
+        </select>
+        <select id="city" class="insert input" disabled="disabled">
+            <option disabled selected value="">选择所在市/区</option>
+
+        </select>
+        <div id="view2-1">
+            <select id="hospital" class="insert input" disabled="disabled">
+                <option disabled selected value="">选择医院</option>
+
+            </select>
+            <input id='inputHospitalName' type='text' class='insert input' placeholder='请输入医院名称' style="display: none"/>
+            <input id='inputHospitalDept' type='text' class='insert input' placeholder='请输入所在科室' style="display: none"/>
+            <select id="hospitalDept" class="insert input" disabled="disabled">
+                <option disabled selected value="">选择科室</option>
+
+            </select>
+            <select id="hospitalTitle" class="insert input">
+                <option disabled selected value="">选择职称</option>
+                <option value="主任医师">主任医师</option>
+                <option value="副主任医师">副主任医师</option>
+                <option value="主治医师">主治医师</option>
+                <option value="住院医师">住院医师</option>
+                <option value="助理医师">助理医师</option>
+                <option value="营养师">营养师</option>
+                <option value="康复治疗师">康复治疗师</option>
+                <option value="心理咨询师">心理咨询师</option>
+                <option value="其他">其他</option>
+            </select>
+        </div>
+        <div id="view2-2" style="display:none">
+            <input id="companyName" type="text" class="insert input" placeholder="请填写公司名称"/>
+            <input id="dept" type="text" class="insert input" placeholder="请填写部门"/>
+            <input id="companyTitle" type="text" class="insert input" placeholder="请填写职称（选填）"/>
+        </div>
+        <input style="margin: 12px 0;" id="next2" class="submitThis btn-submit blue-btn" type="button" value="下一步"/>
+    </div>
+    <div class="view" id="view3" style="display: none">
+        <select id="chargeLevel" class="insert input" style="margin-bottom: 0">
+            <option disabled selected value="">请选择咨询定价</option>
+            <option value="零">零级</option>
+            <option value="一">一级</option>
+            <option value="二">二级</option>
+            <option value="三">三级</option>
+            <option value="四">四级</option>
+        </select>
+        <fieldset>
+            <legend> 定价说明 </legend>
+            零级：免费<br/>
+            一级：5分钟内收费8元，之后2元/每分钟;<br/>
+            二级：5分钟内收费16元，之后4元/每分钟;<br/>
+            三级：5分钟内收费40元，之后10元/每分钟;<br/>
+            四级：5分钟内收费80元，之后18元/每分钟;
+        </fieldset>
+        <input id="managerName" type="text" class="insert input" placeholder="请填写介绍人姓名（非必填）">
+        <input id="submit" class="submitThis btn-submit blue-btn" style="margin:12px 0" type="button" value="提交"/>
+    </div>
+    <div class="gray" id="gray" ></div>
+    <div class="alert" style="padding-bottom:15px" id="suc_alert">
+
+        <div class="cushion">
+            <img src="images/Loading@3x@3x.png" id="change">
+        </div>
+        <!--<div class="alert_inf">
+            <p>...</p>
+            <i> 028-68073247</i>
+            <em>您使用的电话是<span id="cellphone"></span></em>
+        </div>-->
+
+    </div>
+</body>
+<script src="lib/connectWebViewJavascriptBridge.js"></script>
+<script src="lib/common.js"></script>
+<script>
+//获取URL内容
+function getUrlQueryObject(){
+    var query = decodeURIComponent(window.location.search.substring(1));
+    var urlArray = query.split('&'),queryObj = {};
+    urlArray.forEach(function(item){
+        var itemArray =  item.split('=');
+        queryObj[itemArray[0]] = itemArray[1];
+    })
+    return queryObj;
+}
+var urlItem=getUrlQueryObject();
+
+$(function(){
+  /* var name=getUrlParam("name");
+     var phone=getUrlParam("phoneNum");*/
+    //localStorage.setItem("name","123");
+   // localStorage.setItem("phoneNum","13120019421");
+   // localStorage.setItem("userId","5819ed2593740e996bf3f824");
+    var name = localStorage.getItem("name");
+    var phone=localStorage.getItem("phoneNum");
+   /* var name=urlItem.name;
+    var phone=urlItem.phoneNum;*/
+    var realname=$("#realName");
+    var phonenumber=$("#phoneNum");
+    realname.val(name);
+    phonenumber.val(phone);
+    realname.attr('disabled',true);
+    realname.css("background","#eee");
+    phonenumber.attr('disabled',true);
+    phonenumber.css("background","#eee");
+});
+
+
+    var area;
+    var areaIndex;
+    var isDoctor;//判断职业是否为医生
+    //获取下拉列表信息
+    $(function(){
+        var APIHOST1 = "https://wx.zlycare.com";
+        var APIHOST2 = "https://pro.mtxhcare.com";
+        var pageHost = window.location.hostname;
+        if(pageHost == "//web.dc-test.zlycare.com"){
+            APIHOST1 = "//wx-test.zlycare.com"
+            APIHOST2 = "//dev.mtxhcare.com"
+        }
+       // console.log(APIHOST1 + "/1/indexes/regions");
+        $.ajax({
+            type: "get",
+            url: "/1/indexes/regions",
+            success: function(rs){
+                area = rs;
+                console.log(area);
+                for(var i=0;i<area.length;i++){
+                    $("#province").append("<option index='" + i + "' value='" + area[i].name + "'>" + area[i].name + "</option>")
+                }
+                //获取城市信息
+                $("#province").change(function () {
+                    $("#city").removeAttr("disabled");
+                    areaIndex = $('#province').find('option:selected').attr('index');
+                    $("#city").empty();
+                    $("#hospital").empty();
+                    $("#hospital").append("<option disabled selected value=''>选择医院</option>");
+                    $("#hospitalDept").empty();
+                    $("#hospitalDept").append("<option disabled selected value=''>选择科室</option>");
+                    for(var j=0;j<area[areaIndex].subArea.length;j++) {
+                        $("#city").append("<option index='" + j + "'  value='" + area[areaIndex].subArea[j].name + "'>" + area[areaIndex].subArea[j].name + "</option>")
+                    }
+                    $("#city").change();
+                })
+            },
+            error: function(rs){
+                alert("获取省份失败");
+            }
+        });
+        //获取医院信息
+        $("#city").change(function(){
+            $("#hospital").empty();
+            $("#hospitalDept").empty();
+            $("#hospitalDept").append("<option disabled selected value=''>选择科室</option>");
+            /*if($("input[name='profession']:checked").val() == "医生"){*/
+            if(isDoctor!=-1){
+                $("#hospital").removeAttr("disabled");
+                var cityIndex = $('#city').find('option:selected').attr('index');
+                var provinceId = area[areaIndex]._id;
+                var areaId = area[areaIndex].subArea[cityIndex]._id;
+                console.log(provinceId,areaId);
+                $.ajax({
+                    type: "get",
+                    url: "/1/indexes/hospitals?provinceId="+ provinceId + "&areaId=" + areaId ,
+                    success: function(rs){
+                        var hospital = rs;
+                        console.log(hospital);
+                        for(var i=0;i<hospital.length;i++){
+                            $("#hospital").append("<option index='" + i + "' value='" + hospital[i].name + "'>" + hospital[i].name + "</option>")
+                        }
+                        $("#hospital").append("<option value='其他'>其他</option>")
+                        //获取科室信息
+                        $("#hospital").change(function(){
+                            if($("#hospital").val()=="其他"){
+                                $("#inputHospitalName").show();
+                                $("#inputHospitalDept").show();
+                                $("#hospitalDept").hide();
+                            }else{
+                                $("#inputHospitalName").hide();
+                                $("#inputHospitalDept").hide();
+                                $("#hospitalDept").show();
+                                $("#hospitalDept").removeAttr("disabled");
+                                var hospitalIndex = $('#hospital').find('option:selected').attr('index');
+                                console.log(hospitalIndex);
+                                console.log(hospital);
+                                console.log(hospital[hospitalIndex]);
+                                var hospitalNameId = hospital[hospitalIndex]._id;
+                                $.ajax({
+                                    type: "get",
+                                    url: "/1/indexes/departments?hospitalId=" + hospitalNameId,
+                                    success: function(rs){
+                                        var departments = rs;
+                                        console.log(departments);
+                                        for(var i=0;i<departments.length;i++){
+                                            $("#hospitalDept").append("<option index='" + i + "' value='" + departments[i].name + "'>" + departments[i].name + "</option>")
+                                        }
+                                    },
+                                    error: function(rs){
+                                        alert("获取医院部门失败");
+                                    }
+                                });
+                            }
+
+                        })
+                        $("#hospital").change();
+                    },
+                    error: function(rs){
+                        alert("获取医院失败");
+                    }
+                });
+
+            }
+        })
+
+
+        var pageStatus = 1 ;
+        common.initData( webViewBridge(),pageStatus);
+        common.webBridgeInit(function (bridge) {
+            bridge.registerHandler('backButton', common.backButton);
+        });
+        $("#male").click(function(){
+            $(this).css("border","1px solid #35adfb")
+            $("#female").css("border","1px solid #ddd")
+            $("input[name='sex'][value='男']").attr("checked","checked");
+        });
+        $("#female").click(function(){
+            $(this).css("border","1px solid #35adfb")
+            $("#male").css("border","1px solid #ddd")
+            $("input[name='sex'][value='女']").attr("checked","checked");
+        });
+       /* $("#doctor").click(function(){
+            $(this).css("border","1px solid #35adfb")
+            $("#other").css("border","1px solid #bfbfbf")
+            $("input[name='profession'][value='医生']").attr("checked","checked");
+        });
+        $("#other").click(function(){
+            $(this).css("border","1px solid #35adfb")
+            $("#doctor").css("border","1px solid #bfbfbf")
+            $("input[name='profession'][value='其他']").attr("checked","checked");
+        });*/
+        $("#male").click();
+        /*$("#doctor").click();*/
+        //go step 2
+        $("#next1").click(function(){
+           /* if($("#realName").val() == ""){
+                alert("请输入姓名");
+                return
+            }*/
+            var job=$("#job").val();
+            if(job == ""){
+                alert("请输入职业信息");
+                return
+            }else{
+                isDoctor=job.indexOf("医生");
+               // debugger;
+            }
+            /*var reg = /^(13|15|18|17)[0-9]{9}$/;
+            reg=/^0[0-9]{2,3}[0-9]{7,8}$/;
+            if($("#phoneNum").val() == "" || !reg.test($("#phoneNum").val())){
+                alert('请输入正确的手机号');
+                return;
+            }*/
+
+            var phonenumber=$("#phoneNum").val();
+            if(phonenumber.length!=11 && phonenumber.length != 12){
+                alert('请输入正确的电话号');
+                return;
+            }
+            if($("input[name='sex']:checked").val() == undefined){
+                alert('请选择性别');
+                return;
+            }
+            /*if($("input[name='profession']:checked").val() == undefined){
+                alert('请选择职业');
+                return;
+            }*/
+            $("#view1").hide();
+            $("#view3").hide();
+
+
+           /* if($("input[name='profession']:checked").val() == "其他"){*/
+           if(isDoctor=='-1'){
+              // debugger;
+                console.log(1);
+                $("#view2-1").hide();
+                $("#view2-2").show();
+            }else{
+               $("#view2-1").show();
+               $("#view2-2").hide();
+           }
+            $("#view2").show();
+            pageStatus = 2 ;
+            common.initData( webViewBridge(),pageStatus);
+            $("#firstLine").addClass("blue-back");
+            $(".second-dot").addClass("blue-back");
+            $("#secondFont").addClass("blue-font");
+        })
+        //go step 3
+        $("#next2").click(function(){
+            if($("#province").val()==null){
+                alert("请选择省份");
+                return;
+            }
+            if($("#city").val()==null){
+                alert("请选择城市");
+                return;
+            }
+            /*if($("input[name='profession']:checked").val() == "医生"){*/
+            if(isDoctor!=-1){
+                if($("#hospital").val()==null){
+                    alert("请选择医院");
+                    return;
+                }
+                if($("#hospital").val()== "其他"){
+                    if($("#inputHospitalName").val() == ""){
+                        alert("请输入医院名称");
+                        return;
+                    }
+                    if($("#inputHospitalDept").val() == ""){
+                        alert("请输入部门");
+                        return;
+                    }
+                }else{
+                    if($("#hospitalDept").val()==null){
+                        alert("请选择医院科室");
+                        return;
+                    }
+                }
+            }else{
+                if($("#companyName").val() == ""){
+                    alert("请输入公司姓名");
+                    return
+                }
+                if($("#dept").val() == ""){
+                    alert("请输入部门");
+                    return
+                }
+            }
+            $("#view1").hide();
+            $("#view2").hide();
+            $("#view3").show();
+            pageStatus = 3 ;
+            common.initData( webViewBridge(),pageStatus);
+            $("#lastLine").addClass("blue-back");
+            $(".dot:last-child").addClass("blue-back");
+            $("#lastFont").addClass("blue-font")
+        })
+        //提交
+        var submit_btn=$("#submit");
+        submit_btn.click(function(){
+
+            if($("#chargeLevel").val()==null){
+                alert("请选择咨询定价")
+                return;
+            }else{
+                submit_btn.attr("disabled",true);
+                submit_btn.css("background","rgba(50,164,238,0.50)");
+                $("#suc_alert").show();
+                $("#gray").show();
+            }
+
+            var data = {}
+            data.realName = $("#realName").val();
+            data.phoneNum = $("#phoneNum").val();
+            data.sex = $("input[name='sex']:checked").val();
+           // data.occupation = ($("input[name=profession]:checked").val()=="其他")? "":$("input[name=profession]:checked").val();
+            data.occupation=$("#job").val();
+            data.province = $("#province").val();
+            data.city = $("#city").val();
+            if($("#hospital").val() == "其他"){
+                data.hospital = $("#inputHospitalName").val();
+                data.department = $("#inputHospitalDept").val();
+            }else{
+                data.hospital = $("#hospital").val() || $("#companyName").val()
+                data.department = $("#hospitalDept").val() || $("#dept").val()
+            }
+            data.position = $("#hospitalTitle").val() || $("#companyTitle").val()
+            data.chargeLevel = $("#chargeLevel").val();
+            data.managerName = $("#managerName").val();
+            /*var app = localStorage.getItem("app");
+            if(app == 'Cus'){
+                data.from = "customer";
+            }*/
+            var userId = localStorage.getItem("userId");
+            var token = localStorage.getItem("token");
+            console.log(data);
+
+
+            $.ajax({
+                type: "POST",
+
+                url:"/1/customer/apply",//APIHOST2 +
+                data: data,
+                data: JSON.stringify(data),
+                dataType:'json',
+                headers : {
+                    "Content-Type": 'application/json',
+                    "x-docchat-user-id":userId,
+                    "x-docchat-session-token":token
+                },
+                success: function(rs){
+                    common.becomeBroker(rs.docChatNum);
+                    $("#suc_alert").hide();
+                    $("#gray").hide();
+                    window.location="adviserSuc.html?docChatNum=" + rs.docChatNum;
+                },
+                error: function(rs){
+                    $("#suc_alert").hide();
+                    $("#gray").hide();
+                    submit_btn.attr("disabled",false);
+                    submit_btn.css("background","#33a5ee");
+                    var message = "";
+                    if (rs && rs.responseText && rs.status){
+                        if (rs.status >= 500) message = "服务器异常!";
+                        else if (rs.responseText.indexOf("1202")) message = "手机号码已存在!";
+                    }
+                    //console.log("报名失败!" + message);
+                    alert("报名失败!" + message);
+
+                }
+            });
+
+        })
+    })
+</script>
+</html>

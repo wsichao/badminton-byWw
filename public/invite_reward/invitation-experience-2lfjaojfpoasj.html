@@ -1,0 +1,478 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>领取代金券</title>
+  <!--<base href="/download/" />-->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimal-ui">
+  <meta name="apple-mobile-web-app-status-bar-style" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="description" content="医聊">
+  <link rel="icon" type="image/x-icon" href="images/logo_c.png">
+  <link rel="stylesheet" type="text/css" href="styles/invitation-experience.css">
+  <!-- JQuery -->
+  <script src="https://cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script>
+  <!-- 新 Bootstrap 核心 CSS 文件
+  <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+   -->
+  <!-- 最新的 Bootstrap 核心 JavaScript 文件
+  <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+   -->
+  <!-- 微信JSSDK -->
+  <!--<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>-->
+
+</head>
+<style>
+  * {
+    margin: 0px;
+    padding: 0px;
+    /*font-family: 'HelveticaNeue', '华文黑体', 'Helvetica Neue', 'Tahoma', 'DroidSanFallback', 'San Francisco','DroidSan';*/
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  }
+  /*::-webkit-input-placeholder { !* WebKit browsers *!*/
+    /*　　color:#b3b3b3;*/
+  /*}*/
+  a{
+    text-decoration: none;
+  }
+  body{
+    width:100%;
+    height:100%;
+    position: relative;
+  }
+  .bg-img{
+    width: 100%;
+  }
+  .main{
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 9;
+  }
+  .head-icon-wrapper{
+    position: relative;
+    padding: 15px 41px 15px 41px;
+  }
+  .head-icon {
+    width: 100%;
+    /*display: block;*/
+    /*margin: 30px 82px 0px 82px;*/
+  }
+  .coupon-wrapper{
+    position: absolute;
+    left: 0px;
+    top: 10px;
+    width: 100%;
+    /*height: 80px;*/
+    /*line-height: 80px;*/
+    /*border: 1px solid grey;*/
+    text-align: center;
+    color: #ea414a;
+    font-size: 70px;
+  }
+  .yuan-icon{
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    /*vertical-align: super;*/
+    font-size: 19px;
+    /*display: inline;*/
+    /*margin-right: -15px;*/
+    line-height: normal;
+  }
+  #couponValue{
+    font-style: italic;
+    font-weight: bold;
+    line-height: normal;
+    text-align: center;
+  }
+  .coupon-text{
+    font-size: 19px;
+    vertical-align: middle;
+    display: inline;
+    margin-left: 10px;
+    line-height: normal;
+  }
+  .who-wrapper{
+    position: absolute;
+    left: 0px;
+    bottom: 40px;
+    width: 100%;
+    color: #f7c90b;
+    font-size: 15px;
+  }
+  .who{
+    width: 100%;
+    text-align: center;
+    line-height: 150%;
+  }
+  .input-wrapper{
+    padding: 0px 45px 24px 45px;
+  }
+  input{
+    width: 100%;
+    height: 44px;
+    line-height: 44px;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border: 0;
+    outline: none;
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    border: 1px solid #db6f73;
+    padding-left: 10px;
+    color: #535353;
+    font-size: 16px;
+  }
+  input:first-child{
+    margin-bottom: 15px;
+  }
+  input::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color:    #b3b3b3;
+  }
+  input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color:    #b3b3b3;
+    opacity:  1;
+  }
+  input::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color:    #b3b3b3;
+    opacity:  1;
+  }
+  input:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color:    #b3b3b3;
+  }
+  input:focus{
+    color:    #b3b3b3 !important;
+  }
+  #getCouponBtn{
+    width: 100%;
+    margin-top: 24px;
+    height: 44px;
+    line-height: 44px;
+    font-size: 17px;
+    /*font-weight: bold;*/
+    color: #ea414a;
+    background-color: #f7c90b;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    text-align: center;
+    /*border: 0;*/
+    box-shadow: 0px 5px 2px #aaaaaa;
+  }
+  #failGetText{
+    width: 100%;
+    text-align: center;
+    margin-top: 15px;
+    color: #ff3b30;
+    font-size: 15px;
+    font-weight: bold;
+  }
+  .tips{
+    width: 100%;
+    /*position: absolute;*/
+    /*left: 0px;*/
+    /*bottom: 15px;*/
+    margin-top: 60px;
+    font-size: 13px;
+    color: #ea414a;
+    /*padding: 0px 45px;*/
+    text-align: center;
+    line-height: 150%;
+  }
+  @media screen and (max-width: 330px){
+    /*#couponValue{*/
+      /*font-style: italic;*/
+      /*font-size: 50px;*/
+    /*}*/
+  }
+</style>
+
+<body>
+<div id="content" style=" width: 100%;">
+  <!--微信中分享显示的缩略图-->
+  <img  src="images/share-icon.png" style="width: 0px;height: 0px">
+  <img class="bg-img" src="images/bg@3x.png">
+  <div class="main">
+    <div class="head-icon-wrapper">
+      <img class="head-icon" id="head-icon" src="images/coupon-value-10.png">
+      <!--<div class="coupon-wrapper">-->
+        <!--<span class="yuan-icon">¥</span><span id="couponValue"></span><span class="coupon-text">代金券</span>-->
+      <!--</div>-->
+      <div class="who-wrapper">
+        <p class="who"><span id="userName"></span>邀你领取朱李叶健康代金券</p>
+        <p class="who">(限新用户使用)</p>
+      </div>
+    </div>
+    <div class="input-wrapper">
+      <input type="text" class="coupon-input" id="customerName" placeholder="请输入姓名">
+      <input type="tel" class="coupon-input" id="customerPhone" placeholder="请输入手机号">
+      <input type="hidden" id="userId">
+      <div id="getcouponBtn">领取代金券</div>
+      <p id="failGetText" style="display: none;">领取失败,此优惠券仅限新用户使用</p>
+      <div class="tips">
+        朱李叶健康拥有数万名医疗、健康、心理等领域的专业人士,为用户提供一对一的专业咨询服务
+      </div>
+    </div>
+  </div>
+</div>
+<div class="gray" style="display: none">
+</div>
+<div class="alert" id="concernSuccessAlert" style="display: none">
+  <div class="msg">
+    <h4>领取成功</h4>
+    <p>您已成功领取优惠券，可以直接下载朱李叶健康App拨打电话啦！</p>
+  </div>
+  <div class="alertBtn">
+    <button class="cancel">取消</button>
+    <a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.zlycare.docchat.c" class="download-App">下载App</a>
+  </div>
+
+</div>
+<div class="alert" id="phoneMsgCode" style="padding-bottom: 20px;height: auto;display: none" >
+  <button id="closeAlert">
+    <img src="images/btn_close@2x.png">
+  </button>
+  <!--
+  <h4 style="text-align: center;font-size: 18px;margin-top: 20px;font-weight: 100">&nbsp; 验证码</h4>
+  -->
+  <div style="padding: 0 30px;margin-top:18px;">
+    <input type="text" id="msgCodeInput" placeholder="请输入短信验证码">
+    <button id="confirmMsgCode">确认</button>
+  </div>
+  <p class="errorMsg" id="error" style="display: none">验证码错误，请重新输入</p>
+</div>
+<!--<script type="text/javascript" src="libs/jweixin-1.0.0.js"></script>-->
+<!--<script type="text/javascript" src="libs/wx-util.js"></script>-->
+<script>
+  window.onload = function(){
+//    var imgHeight = $('.head-icon').height(),imgWidth = $('.head-icon').width();
+//    var topRate = 75/246,leftRate = 65/293,heightRate = 62/246,widthRate = 168/293;
+//    $('.coupon-wrapper').css({top: topRate * imgHeight  + 'px' , left: (leftRate * imgWidth + 41) + 'px',
+//      width: widthRate * imgWidth + 'px',
+//      height: imgHeight * heightRate  + 'px',
+//      'line-height': imgHeight * heightRate  + 'px',
+//    });
+//    console.log('imgHeight:',imgHeight,imgWidth);
+  }
+  var HOST = 'web.dc.zlycare.com';
+  var REG = /test/;
+  //if(window.location.hostname!="dc-c.zlycare.com"){
+  if (REG.test(window.location.hostname)){
+    HOST = 'http://web.dc-test.zlycare.com';
+  }else if(! /zlycare.com/.test(window.location.hostname)){
+    HOST = '';
+  }
+  $(function () {
+    document.getElementById("content").style.height = window.innerHeight;
+    console.log(window.innerWidth);
+    //$("#phoneMsgCode").css(width,window.innerWidth)
+  });
+  //?后参数
+  var query = window.location.search.substring(1);
+ /* var screenwidth=$("#head-icon").width()-174;
+  var words_count=screenwidth/15;
+  words_count=parseInt(words_count);
+  if(result.userName.length>= words_count){
+
+    result.userName=result.userName.slice(0,words_count-1);
+    result.userName=result.userName+"...";
+  }
+  $('#userName').text(result.userName);*/
+  $(function(){
+    //获取活动信息
+    $.ajax({
+      type: 'GET',
+      url: '/1/customer/getFriendShare?' + query,
+      success: function(result){
+        var screenwidth=$("#head-icon").width()-174;
+        var words_count=screenwidth/15;
+        words_count=parseInt(words_count);
+        if(result.userName.length>= words_count){
+
+          result.userName=result.userName.slice(0,words_count-1);
+          result.userName=result.userName+"...";
+        }
+        $('#userName').text(result.userName);
+        console.log(result.userName);
+        $('#userId').val(result.userId);
+       // $('.head-icon').attr('src','images/coupon-value-'+result.couponValue+'.png');
+      }
+    });
+  });
+  $(function(){
+    //获取代金券
+    $("#getcouponBtn").click(function(){
+      var reg = /^(13|15|18|17)[0-9]{9}$/;
+      var phoneNum = $("#customerPhone").val();
+      var name = $("#customerName").val();
+      console.log(phoneNum)
+      if(phoneNum=="" || !reg.test(phoneNum)){
+        alert('请输入正确的手机号');
+        return;
+      }
+      if(name==""){
+        alert('请输入姓名');
+        return;
+      }
+      $.ajax({
+        url: '/1/customer/getAuthCodeForTheNew?phoneNum=' + phoneNum,
+        type: 'GET',
+        success: function (result) {
+//          console.log("获取验证码成功",result);
+          $(".gray").show();
+          $("#phoneMsgCode").show();
+          $("#confirmMsgCode").focus();
+          $('#failGetText').hide();
+        },
+        error: function(err){
+          $('#failGetText').show();
+        }
+      });
+    });
+    //重新输入手机号,重置
+    $('#customerPhone').focus(function(){
+      $('#failGetText').hide();
+    });
+  });
+  //点击确认短信验证码
+  $(function(){
+    $("#confirmMsgCode").click(function(){
+      var data ={};
+      data.authCode = $("#msgCodeInput").val();
+      data.phoneNum = $("#customerPhone").val();
+      data.name = $("#customerName").val();
+      data.userId = $("#userId").val();
+      console.log(JSON.stringify(data));
+      $.ajax({
+        url: '/1/customer/getCouponByFriend',
+        type: 'POST',
+        data: JSON.stringify(data),
+        dataType:'json',
+        headers : {
+          "Content-Type": 'application/json'
+        },
+        success: function (result) {
+//          console.log("分享成功");
+          $("#phoneMsgCode").hide();
+          $("#concernSuccessAlert").show();
+          $("#error").hide();
+        },
+        error: function (err) {
+//          console.log(err);
+          if( JSON.parse(err.responseText).code == 1502){
+            $("#error").text("验证码错误请重新输入")
+          }else if(JSON.parse(err.responseText).code == 1701){
+            $("#error").text("该活动为新用户活动")
+          }else if(JSON.parse(err.responseText).code == 1601){
+            $("#error").text("你已领取过代金券")
+          }else{
+            $("#error").text("请求失败")
+          }
+          $("#error").show();
+        }
+      });
+    })
+  })
+  //点击×
+  $(function(){
+    $("#closeAlert").click(function(){
+      $(".gray").hide();
+      $("#phoneMsgCode").hide();
+      $("#error").hide();
+      $("#msgCodeInput").val("");
+    })
+  })
+  //点击关注成功的取消
+  $(function(){
+    $(".cancel").click(function(){
+      $("#concernSuccessAlert").hide();
+      $(".gray").hide();
+      $("#msgCodeInput").val("");
+    })
+  })
+  //二次分享
+//  $(function(){
+//    var imgUrl = 'http://7j1ztl.com1.z0.glb.clouddn.com/share_baobao.png';  // 分享后展示的一张图片
+//    var lineLink = window.location.href; // 点击分享后跳转的页面地址
+//    var descContent = "你的好盆友叫你粗来领取10元红包啦，你领大家得，你有Ta也有～";  // 分享后的描述信息
+//    var shareTitle = '10元红包抢抢抢！';  // 分享后的标题
+//    var appid = '';  // 应用id,如果有可以填，没有就留空
+//
+//    function shareFriend() {
+//
+//      WeixinJSBridge.invoke('sendAppMessage',{
+//        "img_url": imgUrl,
+//        "img_width": "200",
+//        "img_height": "200",
+//        "link": lineLink,
+//        "desc": descContent,
+//        "title": shareTitle
+//      }, function(res) {
+////        _report('send_msg', res.err_msg);  // 这是回调函数，必须注释掉
+//      })
+//    }
+//    function shareTimeline() {
+//      WeixinJSBridge.invoke('shareTimeline',{
+//        "img_url": imgUrl,
+//        "img_width": "200",
+//        "img_height": "200",
+//        "link": lineLink,
+//        "desc": descContent,
+//        "title": shareTitle
+//      }, function(res) {
+//        //_report('timeline', res.err_msg); // 这是回调函数，必须注释掉
+//      });
+//    }
+//    function shareWeibo() {
+//      WeixinJSBridge.invoke('shareWeibo',{
+//        "content": descContent,
+//        "url": lineLink,
+//      }, function(res) {
+//        //_report('weibo', res.err_msg);
+//      });
+//    }
+//    // 当微信内置浏览器完成内部初始化后会触发WeixinJSBridgeReady事件。
+//    document.addEventListener('WeixinJSBridgeReady', function onBridgeReady(result) {
+//      alert('weixin bridge ready!');
+//      console.log();
+//      alert(Object.keys(result).join('~'));
+//      alert(Object.keys(WeixinJSBridge).join('~'));
+//      // 发送给好友
+////      shareFriend();
+//      WeixinJSBridge.on('menu:share:appmessage', function(e){
+//        console.log('come in appmessage');
+//        alert('come in appmessage');
+//        shareFriend();
+//      });
+//      WeixinJSBridge.on('menuItem:share:appMessage', function(e){
+//        console.log('come in appmessage 2');
+//        alert('come in appmessage 2');
+//        shareFriend();
+//      });
+//      // 分享到朋友圈
+//      WeixinJSBridge.on('menuItem:share:timeline', function(argv){
+//        shareTimeline();
+//      });
+//    }, false);
+//  })
+//  $(function(){
+//    // wx share
+//    WX_UTIL.loadConfig();
+//    var  inviterName = $("#customerName").val();
+//    var inviterId  = $("#userId").val();
+//    if (inviterName && inviterName != "") {
+//      _share_config.desc = inviterName + _share_config.desc;
+////      _share_config.titleTL2 = (inviterName || "好友") + _share_config.titleTL2;
+//    }
+//    _share_config.link += HOST+"/invite_reward/invitation-experience.html?"+query;
+//    WX_UTIL._ready();
+//  })
+</script>
+</body>
+</html>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>活动详情</title>
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no" />
+    <script src="https://cdn.bootcss.com/vue/2.5.13/vue.min.js" charset="utf-8"></script>
+    <script src="https://cdn.bootcss.com/vue-resource/1.5.0/vue-resource.js"></script>
+    <script src="https://unpkg.com/mint-ui/lib/index.js"></script>
+    <script src="https://unpkg.com/qiniu-js/dist/qiniu.min.js
+        "></script>
+    <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.3.2.js"></script>
+    <link rel="stylesheet" href="beauty_contest.css" />
+</head>
+<body>
+<div class="all" id="app">
+    <div class="msg_top">
+        <img src="https://cdn.juliye.net/beauty_top.png"/>
+    </div>
+    <div class="msg_center">
+        <div class="mag_item">
+            <div class="item_title">*高校-院系-年级</div>
+            <div class="item_bg">
+                <input class="input_dt" type="text" v-model='postData.school_info' placeholder="请输入文字内容"/>
+            </div>
+        </div>
+
+        <div class="mag_item">
+            <div class="item_title">*真实姓名</div>
+            <div class="item_bg">
+                <input class="input_dt" type="text" v-model='postData.student_name' placeholder="请输入文字内容"/>
+            </div>
+        </div>
+
+        <div class="mag_item">
+            <div class="item_title">*写下一段霸气的拉票宣言</div>
+            <div class="item_bg2">
+                <textarea class="input_dt2" type="text" v-model='postData.declaration' placeholder="请输入8-20个字符内容"></textarea>
+            </div>
+        </div>
+
+        <div class="mag_item">
+            <div class="item_title">推荐人</div>
+            <div class="item_bg">
+                <input class="input_dt" type="text" v-model='postData.build_leader' placeholder="请输入文字内容（如：楼长姓名）"/>
+            </div>
+        </div>
+        <div class="mag_item">
+            <div class="item_title">*请上传本人照片</div>
+            <div class="item_sp">
+                <div class="item_imgbg">
+                    <input id="file1" class="img_btn" type="file"  name="file1" @change="changeImage($event)" accept=".jpg, .png, .jpeg">
+                    <img :src="img1" class="thumbnail" v-if="img1">
+                </div>
+                <div class="item_imgbg">
+                    <input id="file2" class="img_btn" type="file"  name="file2" @change="changeImage($event)" accept=".jpg, .png, .jpeg">
+                    <img :src="img2" class="thumbnail" v-if="img2">
+                </div>
+                <div class="item_imgbg">
+                    <input id="file3" class="img_btn" type="file"  name="file3" @change="changeImage($event)" accept=".jpg, .png, .jpeg">
+                    <img :src="img3" class="thumbnail" v-if="img3">
+                </div>
+            </div>
+        </div>
+        <div class="upload" @click="uploadData" ></div>
+    </div>
+
+    <div class="msg_bottom">
+        <div class="msg">PS：带有*号内容必须填写</div>
+        <div class="msg">活动最终解释权归满天星辉联盟所有</div>
+    </div>
+
+    <div class="cover" v-if='isCover' v-on:click="closeCover">
+        <div class="msg_card">{{msg}}</div>
+    </div>
+    <div class="cover" v-if='isLoading'>
+        <div class="loading_sp">
+            <div class="loading_word">正在上传，请稍等...</div>
+            <img class='loading' src="https://cdn.juliye.net/loading1.gif">
+        </div>
+    </div>
+</div>
+</body>
+<script>
+
+    new Vue({
+      el:'#app',
+      data:{
+          img1:"",
+          img2:"",
+          img3:"",
+          isCover:false,
+          once: false,
+
+          msg:'请填写完整信息！',
+          token: "",
+          postData:{
+              activity_id:'',
+              recommended_user_id :'',
+              user_id :'',
+              school_info:'',
+              student_name:'',
+              build_leader:'',
+              declaration:'',
+              imgs:[]
+          },
+          isLoading: false
+
+      },
+      methods: {
+          getToken(){
+            var that = this;
+            that.$http.get('/mc_weapp/product/activity/get_uptoken')
+                .then(function (res) {
+                    console.log(res.data.data)
+                    that.token = res.data.data;
+                })
+          },
+          changeImage(e) {
+                var file = e.target.files[0]
+                var name = e.target.name
+				var reader = new FileReader()
+				var that = this
+				reader.readAsDataURL(file)
+				reader.onload = function(e) {
+                    let config = {
+                        useCdnDomain: true, 
+                        region: qiniu.region.z0
+                    };
+                    let putExtra = {
+                        mimeType: ["image/png", "image/jpeg", "image/jpg"]
+                    };
+                    //这里出 loading
+                    that.isLoading = true;
+                    var observable = qiniu.upload(file, null, that.token, putExtra, config);
+                        observable.subscribe({
+                            error: (errResult) => {
+                            // 失败报错信息
+                            //结束 loading
+                                that.isLoading = false;
+                            },
+                            complete: (result) => {
+                            //结束 loading
+                                that.isLoading = false;
+                                // 接收成功后返回的信息
+                             if (name == "file1") {
+                                that.img1 = this.result
+                             }
+                             if (name == "file2") {
+                                that.img2 = this.result
+                             }
+                             if (name == "file3") {
+                                that.img3 = this.result
+                             }
+                             that.postData.imgs.push(result.key)
+                            }
+                        })
+                }
+			
+		  },
+          closeCover() {
+              let that = this;
+              that.isCover = false;
+              that.data = that.data;
+          },
+          uploadData() {
+              let that = this;
+              if (that.postData.school_info == '') {
+                  that.isCover = true;
+                  that.data = that.data;
+                  return;
+              }
+              if (that.postData.student_name == '') {
+                  that.isCover = true;
+                  that.data = that.data;
+                  return;
+              }
+              if (that.postData.declaration == '') {
+                  that.isCover = true;
+                  that.data = that.data;
+                  return;
+              }
+
+              let upList = {
+                  activity_id: that.postData.activity_id,
+                  recommended_user_id: that.postData.recommended_user_id,
+                  user_id: that.postData.user_id,
+                  school_info: that.postData.school_info,
+                  student_name: that.postData.student_name,
+                  build_leader: that.postData.build_leader,
+                  declaration: that.postData.declaration,
+                  imgs: that.postData.imgs,
+              };
+              that.$http
+                  .post('/mc_weapp/product/activity/sign_up_2', upList)
+                  .then(function (res) {
+                      // 更新当前数据
+                      if (res.body.code == '200') {
+                          that.once = true;
+                          that.isCover = true;
+                          that.msg = '提交成功';
+                          that.data = that.data;
+                          wx.miniProgram.navigateBack({
+                              url: '/pages/recommend_goods/recommend_list/recommend_list?scene=' + that.recommended_user_id + "&refresh=1"
+                          })
+                      } else {
+                          that.once = true;
+                          that.isCover = true;
+                          that.msg = res.body.msg;
+                          that.data = that.data;
+                      }
+                  }, function (err) {
+                      console.log(err);
+                  });
+          },
+      },
+      created(){
+        let that = this;
+        that.getToken();
+        var route = window.location.href;
+
+        var localarr = route.split('?')[1].split('&');
+        var tempObj = {};
+        for (var i = 0; i < localarr.length; i++) {
+          tempObj[localarr[i].split('=')[0]] = localarr[i].split('=')[1];
+        }
+        that.postData.activity_id = tempObj.activity_id;
+        that.postData.recommended_user_id = tempObj.recommended_user_id;
+        that.postData.user_id = tempObj.user_id;
+        that.data = that.data;
+      },
+    })
+</script>
+</html>

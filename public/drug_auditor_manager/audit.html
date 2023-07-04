@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=3, minimum-scale=1, user-scalable=no">
+    <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'/>
+    <script src="https://cdn.bootcss.com/vue/2.5.13/vue.min.js" charset="utf-8"></script>
+
+    <title>身份验证</title>
+    <style>
+        .img-success {
+            background: url("/drug_auditor_manager/img/complete@3x.png") no-repeat;
+            width: 70px;
+            height: 70px;
+            background-size: 100% 100%;
+            margin: auto;
+            margin-top: 40px;
+        }
+
+        .success-title, .success-detail, .btn-success {
+            width: 315px;
+            display: block;
+            margin: auto;
+            text-align: center;
+        }
+
+        .success-title {
+            margin-top: 20px;
+            font-size: 17px;
+            color: #000000;
+            letter-spacing: -0.41px;
+            margin-bottom: 3px;
+        }
+
+        .success-detail {
+            font-size: 15px;
+            color: #666666;
+            letter-spacing: 0.24px;
+            line-height: 22px;
+        }
+
+        .btn-success {
+            margin-top: 40px;
+            background: #12B6BB;
+            border-radius: 4px;
+            height: 44px;
+            line-height: 44px;
+            font-size: 15px;
+            color: #FFFFFF;
+            letter-spacing: 0;
+        }
+    </style>
+</head>
+<body>
+<div id='app'>
+    <div>
+        <div class="img-success"></div>
+        <div class="success-title">提交成功</div>
+        <div class="success-detail">请等待审核</div>
+    </div>
+    <a class="btn-success" v-on:click='closePage'>完成</a>
+</div>
+</body>
+<script>
+  new Vue({
+    el: '#app',
+    methods:{
+      closePage(){
+        if(window.WeixinJSBridge){
+          WeixinJSBridge.call('closeWindow');
+        }
+      }
+    }
+  })
+</script>
+</html>

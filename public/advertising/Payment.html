@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>向热线团队付款</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimal-ui">
+    <meta name="apple-mobile-web-app-status-bar-style" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link href="advCss.css" rel="stylesheet" type="text/css">
+    <link href="../general_file/general_css.css" type="text/css">
+    <script src="https://cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script>
+</head>
+<body class="gen-gray-f"  style="background-color:#fff">
+<div style="display: none">
+    <div class="coupon-list">
+        <ul>
+            <!--<li>
+                <div class="radio-wrap">
+                <input type="radio" id="coupon1" name="coupons"><span></span>
+                </div>
+                <label for="coupon1">
+
+                    <div class="coupon-left">
+                        <p><i>10</i>元</p>
+                    </div>
+                    <div class="right-border">
+                        &nbsp;
+                    </div>
+                    <div class="coupon-right">
+                        <div class="coupon-infomation">
+                            <div class="info-list">
+                            <p>全城购·代金券</p>
+                            <i>折扣价: ¥3.00</i>
+                            </div>
+                        </div>
+                    </div>
+                </label>
+            </li>
+            <li>
+                <div class="radio-wrap">
+                    <input type="radio" id="coupon2" name="coupons"><span></span>
+                </div>
+                <label for="coupon2">
+
+                    <div class="coupon-left">
+                        <p><i>10</i>元</p>
+                    </div>
+                    <div class="right-border">
+                        &nbsp;
+                    </div>
+                    <div class="coupon-right">
+                        <div class="coupon-infomation">
+                            <div class="info-list">
+                            <p>全城购·代金券</p>
+                            <i>折扣价: ¥3.00</i>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                </label>
+            </li>
+            <li class="gray-coupons">
+                <div class="radio-wrap">
+                    <input type="radio" id="coupon3" name="coupons" disabled ><span></span>
+                </div>
+                <label for="coupon3">
+
+                    <div class="coupon-left">
+                        <p><i>10</i>元</p>
+                    </div>
+                    <div class="right-border">
+                        &nbsp;
+                    </div>
+                    <div class="coupon-right">
+                        <div class="coupon-infomation">
+                            <div class="info-list">
+                                <p>全城购·代金券</p>
+                                <i>折扣价: ¥3.00</i>
+                            </div>
+                            <div class="sold-out">
+                                &nbsp;
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+
+                </label>
+            </li>-->
+        </ul>
+    </div>
+    <div class="infomation" style="display: none;">
+        <div class="avatar">
+            <img src="../general_file/gen_assets/mid@2x.png"/>
+            <p id="payfor">向热线团队付款</p>
+        </div>
+        <p>请电话沟通确认后再进行支付</p>
+    </div>
+    <div class="bid_list">
+        <ul class="list-input">
+            <li id="firstbid">
+                <span id="bid1">支付金额(元)：</span>
+                <i style="font-family:'微软雅黑'">¥</i>
+                <input type="number"  id="price"  placeholder="1元起">
+            </li>
+            <li id="addbid">
+                <span>服务助理热线(选填)：</span>
+                <input id="productCode"  type="number" style="width: 40%">
+
+            </li>
+            <li class="specifyContent">
+            <span id="specifyContent" >
+
+            </span>
+                <em id="Edit">修改</em>
+            </li>
+        </ul>
+        <ul class="select-coupon">
+            <li id="get_coupon">
+                <span>代金券</span><i><em style="color:#33A5EE;" id="couponMoney"></em>></i>
+            </li>
+            <li>
+                <span>实际支付</span><i style="color:#33A5EE; font-family:'微软雅黑'">¥<em id="resultMoney">0</em></i>
+            </li>
+        </ul>
+        <ul>
+
+            <li style="margin:0;" class="coupon-btn">
+                <p id="pay" class="ad_button" type="button"  style="line-height:44px;">付款</p>
+            </li>
+
+            <li style="height:7.2%;" class="even">
+                <p style="color: #33A5EE;" id="Specify">添加付款说明</p>
+            </li>
+        </ul>
+        <div class="detail">
+        <span>
+        注：若是拨打电话时提示余额不足，请到“我的钱包”处进行充值。
+        </span>
+        </div>
+        <div class="coupon-detail" style="display:none">
+            <p>代金券说明：</p>
+            <p>使用后赠送“5元全城购特惠券”；</p>
+            <span>
+            每个用户每周限购1张; 有效期6个月; 限指定商家使用
+        </span>
+        </div>
+    </div>
+    <div class="gray" style="display:none"></div>
+    <div class="gray1" style="display:none"></div>
+    <div class="alert" id="paySpecify" style="display:none;border-radius:8px;background: #f6f6f6">
+        <p>付款说明</p>
+        <textarea placeholder="最多输入20字" id="specifyInput"></textarea>
+        <ul class="botton_list">
+            <li>
+                <p id="specifyCacle">取消</p>
+            </li>
+            <li>
+                <p id="specifyComfir" style="color: #33a5ee;">确认</p>
+            </li>
+        </ul>
+    </div>
+    <div class="alert" style="padding:15px; width:170px; display:none; background-color:rgba(255,255,255,0.0)" id="suc_alert">
+
+        <div class="cushion">
+            <img src="../apply_doctor/images/Loading@3x@3x.png" id="change">
+        </div>
+        <p>
+            <span id="time">6s</span>秒后跳转
+        </p>
+        <!--<div class="alert_inf">
+            <p>...</p>
+            <i> 028-68073247</i>
+            <em>您使用的电话是<span id="cellphone"></span></em>
+        </div>-->
+
+    </div>
+</div>
+<div style="text-align: center;margin-top: 70%">
+    “向Ta付款”功能已关闭，感谢您对朱李叶健康的理解和支持。
+</div>
+<script src="lib/connectWebViewJavascriptBridge.js"></script>
+<script src="../general_file/general_js.js"></script>
+<script>
+    window.alert = function(name){
+        var iframe = document.createElement("IFRAME");
+        iframe.style.display="none";
+        iframe.setAttribute("src", 'data:text/plain,');
+        document.documentElement.appendChild(iframe);
+        window.frames[0].window.alert(name);
+        iframe.parentNode.removeChild(iframe);
+    }
+    var webBridge = webViewBridge();
+    var gray=$(".gray");
+    var paySpecify=$("#paySpecify");
+    function getUrlQueryObject(){
+        var query = decodeURIComponent(window.location.search.substring(1));
+        var urlArray = query.split('&'),queryObj = {};
+        urlArray.forEach(function(item){
+            var itemArray =  item.split('=');
+            queryObj[itemArray[0]] = itemArray[1];
+        })
+        return queryObj;
+    }
+    var urlData=getUrlQueryObject();
+    var docName=urlData.docName || sessionStorage.getItem("docName");
+    var userId=urlData.userId || sessionStorage.getItem("userId");
+    var token=urlData.token || sessionStorage.getItem("token");
+    var payForUserId = urlData.payForUserId || sessionStorage.getItem("payForUserId");
+    var version=urlData.version || sessionStorage.getItem("version");
+    var couponMoney = sessionStorage.getItem("couponMoney");
+    var couponId = sessionStorage.getItem("couponId");
+    var couponTitle = sessionStorage.getItem("couponTitle");
+    var couponType = sessionStorage.getItem("couponType");
+    var couponDiscount = sessionStorage.getItem("couponDiscount")
+    var price = sessionStorage.getItem("price");
+    if(price){
+        $("#price").val(price);
+    }
+
+    var $couponList=$(".coupon-list");
+    var $infomation=$(".infomation");
+    var $couponDetail=$(".coupon-detail");
+    var $detail=$(".detail");
+    var $inputBorder=$(".bid_list .list-input li");
+    console.log(couponMoney);
+    if(couponMoney && couponMoney != 'undefined'){
+        if(couponType == 7){
+            $("#couponMoney").text(couponDiscount * 100 + "%,最多抵扣¥"+couponMoney);
+        }else{
+            $("#couponMoney").text('-' + couponMoney);
+        }
+    }else{
+        couponMoney=0;
+    }
+    function getResultMoney(){
+        if(couponType == 7){
+            var resultM= $("#price").val() > couponMoney/couponDiscount ? $("#price").val()-couponMoney : $("#price").val() * couponDiscount;
+        }else{
+            var resultM=$("#price").val()-couponMoney;
+        }
+        if(resultM<=0 || resultM!=resultM)
+        {
+            $("#resultMoney").text(0);
+        }else{
+            $("#resultMoney").text(getDotTwoMoney(resultM));
+        }
+
+
+    }
+    getResultMoney();
+    $("#price").on('input',function(){
+        getResultMoney();
+    });
+
+    var isCouponVender;
+    var isVender;
+
+
+   /* payForUserId ='57d77e24f52e142136bd8573';
+    token='502F07824F605ECA3BD5318267A12128';
+    userId='57d77e24f52e142136bd8573';*/
+   /*var hasChecked=$('input[name="coupons"]:checked').val();
+    if(!hasChecked){
+        $("#price").val('');
+    }*/
+    var specify=sessionStorage.getItem("specifyContent");
+    console.log(specify);
+   // $(".specifyContent").show()
+   if(specify && specify.trim()!=''){
+       $("#specifyContent").text(specify);
+       $(".specifyContent").show();
+   }
+   var isProductPayForUser = false;
+   $("#get_coupon").click(function(){
+       sessionStorage.setItem("userId",userId);
+       sessionStorage.setItem("token",token);
+       sessionStorage.setItem("payForUserId",payForUserId);
+       sessionStorage.setItem("docName",docName);
+       sessionStorage.setItem("version",version);
+       sessionStorage.setItem("price",$("#price").val());
+       sessionStorage.setItem("checkedId",checkedId);//当前页面所选择的代金券
+       sessionStorage.setItem("specifyContent",$("#specifyContent").text());
+       var _checkValue=$('input[name="coupons"]:checked').val();
+       //console.log("_checkValue"+_checkValue);
+       if(!_checkValue){
+           //debugger;
+           sessionStorage.removeItem("checkedId");
+       }
+      // alert(_checkValue);
+       window.location.href="select_coupon.html";
+   });
+    //获取信息
+    $.ajax({
+        type:"GET",
+        url:"/1/customer/publicInfoById?userId="+payForUserId,
+        headers:{
+            "x-docchat-user-id":userId,
+            "x-docchat-session-token":token,
+            "x-docchat-app-version":"4.2.1"
+        },
+        success:function(rs){
+            console.log(rs);
+            /*购买优惠券用户*/
+            isVender=rs.isVender;
+           {
+                $couponList.hide();
+                $infomation.show();
+                $couponDetail.hide();
+                $detail.show();
+                $inputBorder.css("border","1px solid #ddd");
+               /* $even.css("border","none");*/
+
+            }
+
+
+            if(rs.avatar && rs.avatar!=''){
+                $(".avatar img").attr('src',"https://cdn.juliye.net/" + rs.avatar);
+            }else{
+                sex=rs.sex;
+                if(sex=="男"){
+                    $(".avatar img").attr('src',"../general_file/gen_assets/male@3x.png");
+                }else if(sex=="女"){
+                    $(".avatar img").attr('src',"../general_file/gen_assets/famale@3x.png");
+                }else{
+                    $(".avatar img").attr('src',"../general_file/gen_assets/mid@2x.png");
+                }
+            }
+
+        }
+    });
+
+
+
+    var checkedNum;
+    var $price=$("#price");
+    var checkedId;
+
+
+
+  var changeRadio=function($item,checkStatus,checkValue,inputStatus,id){
+
+      $item.attr("checked",checkStatus);
+      if(checkValue!=''){
+        $price.val(getMoney(checkValue));
+          checkedId=id;
+      }else{
+          $price.val('');
+      }
+
+      $price.attr("disabled",inputStatus);
+      getResultMoney();
+      checkedNum=id;
+
+
+  }
+    $('.coupon-list ul').on("click",function(e){
+
+        if(e.target.nodeName=='INPUT'){
+            var ischeck=$(e.target).attr('checked');
+            if(!checkedNum){
+
+                changeRadio($(e.target),true,$(e.target).val(),"disabled",e.target.id);
+            }else{
+                if(e.target.id==checkedNum && ischeck){
+
+                    changeRadio($(e.target),false,'',false,e.target.id);
+                }else{
+
+                    changeRadio($(e.target),true,$(e.target).val(),"disabled",e.target.id);
+                }
+            }
+        }
+    })
+
+
+
+
+    var height = document.body.scrollHeight;
+
+    //付款方式
+    webBridge.bridgeInit(function (bridge) {
+        bridge.registerHandler('checkPaymentStatus', function(data,responseCallback){
+            var info = data;
+            info = JSON.parse(info);
+            //过2s再请求接口，因为回调慢
+            $(".gray1").show();
+            $("#suc_alert").show();
+            setTimeout(function(){
+                $(".gray1").hide();
+                $("#suc_alert").hide();
+            },6001);
+            var timecount = 5;
+            var IntervalName = setInterval(function () {
+                if (timecount >= 0) {
+                    $("#time").text(timecount+'s');
+                    timecount--;
+                } else {
+                    clearInterval(IntervalName);
+                }
+
+            }, 1000);
+            setTimeout(function(){$.ajax({
+                type: "GET",
+                url: "/1/order/prepareOrderStatus?prepareId="+info.prepayId+"&type=tf",
+                headers: {
+                    "x-docchat-user-id":info.userId,
+                    "x-docchat-session-token":info.token
+                },
+                success: function(rs){
+                    if(rs.payStatus == "paid"){
+
+                        window.location = "succPayment.html?from=payment&docName="+ docName +"&price="+ $("#price").val()  ;
+                    }else{
+                        alert("支付失败")
+                    }
+                },
+                error: function(err){
+                    alert("支付失败");
+                }
+            })},2001);
+        });
+        bridge.registerHandler('backButton', function(data,responseCallback){
+            var result = {
+                isClose : true
+            }
+            responseCallback(JSON.stringify(result));
+        })
+
+    });
+
+    document.title="向"+docName+"付款";
+    var screenwidth=window.screen.width-174;
+    var words_count=screenwidth/15;
+    words_count=parseInt(words_count);
+    if(docName.length>= words_count){
+        docName=docName.slice(0,words_count-2);
+        docName=docName+"...";
+    }
+    // alert(words_count);
+    $("#payfor").text('向'+docName+'付款');
+    $("#Specify").click(function(){
+        var wordLength=20;
+       gray.css("height",height+"px").show();
+        paySpecify.show();
+        var input=$("#specifyInput");
+        input.focus();
+        input.on('input',function(e){
+           var value=this.value;
+            if(value.length>=wordLength){
+                this.value=value.slice(0,wordLength);
+            }
+        });
+    });
+    $("#specifyCacle").click(function(){
+        gray.css("height",height+"px").hide();
+        paySpecify.hide();
+    });
+    $("#specifyComfir").click(function(){
+        var input=$("#specifyInput");
+        var content=input.val();
+        if(content=="") {
+            $("#specifyContent").html(content);
+            gray.css("height",height+"px").hide();
+            paySpecify.hide();
+            $(".specifyContent").hide();
+            $(".even").show();
+            return
+        }
+        $("#specifyContent").html(content);
+        $(".even").hide();
+        $(".specifyContent").show();
+        gray.css("height",height+"px").hide();
+        paySpecify.hide();
+
+
+    });
+    $("#Edit").click(function(){
+        gray.css("height",height+"px").show();
+        paySpecify.show();
+    });
+
+
+    $("#pay").click(function() {
+        if(!$("#price").val()){
+            alert('请填写支付金额');
+            return;
+        }
+        var data = {};
+        data.price = $("#price").val();
+        var presentCode = "";
+        if ($("#productCode").val() != "") {
+            data.productCode = $("#productCode").val() || "";
+            presentCode = "(" + data.productCode + ")"
+        }
+        if ($("#specifyInput") != "") {
+            data.memo = $("#specifyInput").val()
+        }
+        data.tradeName = "向" + docName + "付款" + presentCode;
+        data.tradeDetail = "向" + docName + "付款" + presentCode;
+       // var type = productId ? "product" : "normal";
+        var type="normal";
+        var dataStr = "?price=" + data.price + "&venderUserId=" + payForUserId
+            + "&type=" + type;
+        console.log(couponId);
+        if(couponId && couponId != "undefined"){
+            dataStr += "&couponId=" + couponId
+        }
+        $.ajax({
+            type: "GET",
+            url: "/1/customer/getAmountAndBestCoupon" + dataStr,
+            headers: {
+                "x-docchat-user-id": userId,
+                "x-docchat-session-token": token
+            },
+            success: function (rs) {
+                console.log(rs);
+                data.balance = rs.amount;
+                data.actualPayPrice = rs.actualPayPrice;
+               // data.productId = productId;
+                /*if (data.productId) {
+                    data.type = "product";
+                } else {
+                    data.type = "normal";
+                }*/
+                if (couponId) {
+                    data.couponId = rs.couponId;
+                    data.couponRMB = rs.couponRMB;
+                    data.couponTitle = rs.couponTitle;
+                    data.actualPayPrice = rs.actualPayPrice
+                }
+                console.log(JSON.stringify(data));
+                webBridge.upload("selectPayment", JSON.stringify(data))
+            },
+            error: function (err) {
+                if(JSON.parse(err.responseText).code == 2113){
+                    alert("向该用户付款不可使用优惠券");
+                }else{
+                    alert("页面异常");
+                }
+            }
+        });
+    })
+    $("#firstbid").click(function(){
+        $("#price").focus();
+    })
+    $("#addbid").click(function(){
+        $("#productCode").focus();
+    })
+
+        </script>
+</body>
+</html>
+          

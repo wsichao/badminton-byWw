@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>自定义咨询价格</title>
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    <!-- JQuery -->
+    <script src="https://cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script>
+    <!-- Private -->
+    <link href="../general_file/general_css.css" rel="stylesheet" type="text/css">
+    <link href="costomized_price.css" rel="stylesheet"/>
+</head>
+<body>
+<ul class="price-list">
+    <li>
+        <span>5分钟内</span>
+        <div class="right">
+            <input type="number" placeholder="0-200" id="fiveMinutes">
+            <i>元</i>
+        </div>
+    </li>
+    <li></li>
+    <li>
+        <span>超出部分</span>
+        <div class="right">
+            <input type="number" placeholder="0-25" id="outPart">
+            <i>元/分钟</i>
+        </div>
+    </li>
+    <li></li>
+    <li>
+        <span>允许欠费</span>
+        <div class="right">
+            <div class="round-btn" >
+                <div class="round"></div>
+            </div>
+        </div>
+    </li>
+    <li id="last_line"></li>
+    <li class="view">
+        <span>最多欠费</span>
+        <div class="right">
+            <input type="number" placeholder="1-500" id="maxArrearage">
+            <i>元</i>
+        </div>
+    </li>
+    <!--<li></li>-->
+</ul>
+<div style="margin: 0 12px">
+<button class="gen-long-full-btn" id="submit">确认</button>
+</div>
+<div class="discription">
+    <h6>说明：</h6>
+    <ul>
+        <li>1.允许欠费：当对方欠费达最多金额将自动挂断来电</li>
+        <li>2.不允许欠费：余额不足时将自动挂断</li>
+        <li>3.您的收入中，用户欠费部分需该用户充值支付后才可提现</li>
+    </ul>
+</div>
+<script src="../apply_doctor/lib/connectWebViewJavascriptBridge.js"></script>
+<script>
+    var roundBtn=true;
+    var $round_btn=$(".round-btn");
+    var $round=$(".round");
+    var $view=$(".view");
+    var $last_line=$("#last_line");
+    window.alert = function(name){
+        var iframe = document.createElement("IFRAME");
+        iframe.style.display="none";
+        iframe.setAttribute("src", 'data:text/plain,');
+        document.documentElement.appendChild(iframe);
+        window.frames[0].window.alert(name);
+        iframe.parentNode.removeChild(iframe);
+    }
+
+
+    //滑动按钮处理
+    $round_btn.click(function(){
+        roundBtn=!roundBtn;
+        if(roundBtn==true){
+            $round_btn.css('background-color','#33A5EE');
+            $round.css('float','right');
+            $view.animate({height:"44px"});
+            $last_line.show();
+        }else{
+            $round_btn.css('background-color','#b3b3b3');
+            $round.css('float','left');
+            $round.css('margin-left','1px');
+            $view.animate({height:"0px"});
+            $last_line.hide();
+        }
+    });
+    //判断钱是否为整数
+    function isInt(value){
+        var valueArray=value.split(".");
+        if(valueArray.length==1){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    //判断钱数范围
+    function checkMoney(min,max,value){
+        var isIntNumber=isInt(value);
+        if (isIntNumber==false){
+            return false;
+        }else{
+            var minMoney=parseInt(min);
+            var maxMoney=parseInt(max);
+            var valueMoney=parseInt(value);
+            if(valueMoney>=minMoney && valueMoney<=maxMoney){
+                return true;
+            }else{
+                return false;
+            }
+
+        }
+
+
+    }
+
+    function getUrlQueryObject(){
+        var query = decodeURIComponent(window.location.search.substring(1));
+        var urlArray = query.split('&'),queryObj = {};
+        urlArray.forEach(function(item){
+            var itemArray =  item.split('=');
+            queryObj[itemArray[0]] = itemArray[1];
+        })
+        return queryObj;
+    }
+    var urlData=getUrlQueryObject();
+
+
+    $("#submit").click(function(){
+        var postData={};
+        var fiveMinutes=$("#fiveMinutes").val();
+        var checkFiveMinutes=checkMoney(0,200,fiveMinutes);
+        if(checkFiveMinutes==false){
+            alert("5分钟内价格需为在0-200元之间的整数");
+            return;
+        }
+        var outPart=$("#outPart").val();
+        var checkOutPart=checkMoney(0,25,outPart);
+        if(checkOutPart==false){
+            alert("超出部分价格需为在0-25元之间的整数");
+            return;
+        }
+        console.log(roundBtn);
+        var allowArrearage=roundBtn;
+        var maxArrearage=$("#maxArrearage").val();
+        if(allowArrearage==true){
+            var checkMaxArrearage=checkMoney(1,500,maxArrearage);
+            if(checkMaxArrearage==false){
+                alert("最多欠费需为在1-500元之间的整数");
+                return;
+            }else{
+                postData.canLackMoney=allowArrearage;
+                postData.lackedMoney=maxArrearage;
+            }
+        }else{
+            postData.canLackMoney=allowArrearage;
+        }
+
+
+        postData.initiateIncome=fiveMinutes;
+        postData.incomePerMin=outPart;
+       // postData.allowArrearage
+
+        //=====测试数据======
+       /* urlData.userId='583508e70b6b3ac26a65468b';
+        urlData.token='5CD0680D8A835A8A78C819C50897A211';*/
+        console.log(urlData);
+        $.ajax({
+            type: "POST",
+            url:"/1/customer/callPrice",
+            data: JSON.stringify(postData),
+            dataType:'json',
+            headers : {
+                "Content-Type": 'application/json',
+                "x-docchat-user-id":urlData.userId,
+                "x-docchat-session-token":urlData.token
+            },
+            success: function(rs){
+                var webBridge = webViewBridge();
+                webBridge.bridgeInit(function (bridge) {});
+                webBridge.upload('submit');
+            },
+            error: function(rs){
+                alert("提交失败，请重试！");
+            }
+
+        });
+
+    });
+</script>
+</body>
+</html>

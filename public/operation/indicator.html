@@ -1,0 +1,36 @@
+<link rel="stylesheet" href="../assets/styles/list.css">
+
+<div class="container-fluid">
+    <table id="mainTable" class="table table-bordered table-hover">
+        <thead id="thead">
+        <tr style="font-family: '宋体'; font-size: 14px; font-weight: bold">
+            <td>时间</td>
+            <td>累计患者数</td>
+            <td>累计医生数</td>
+            <td>累计订单数</td>
+            <td>累计成单数</td>
+            <td>患者累计充值</td>
+            <td>患者实际支出</td>
+            <td>医生实际收入</td>
+            <td>用户转账支出</td>
+            <td>用户广告支出</td>
+        </tr>
+        </thead>
+        <tbody id="brokerArea">
+        <tr ng-repeat="data in datas " style="text-align: center">
+            <td>{{data.infoTime|date: 'yyyy-MM-dd HH:mm'}}</td>
+            <td>{{data.customerNum}}</td>
+            <td>{{data.doctorNum}}</td>
+            <td>{{data.orderNum}}</td>
+            <td>{{data.connectedOrderNum}}</td>
+            <td>{{data.rechargeSum}}</td>
+            <td>{{data.customerRealityPay}}</td>
+            <td>{{data.doctorRealityIncome}}</td>
+            <td>{{data.tfSum}}</td>
+            <td>{{data.adSum}}</td>
+        </tr>
+        </tbody>
+    </table>
+    <div id="buttom"><a class="btn btn-success" ng-click="PrePage()">上一页</a>&nbsp;&nbsp;<a
+            class="btn btn-warning" ng-click="NextPage()">下一页</a></div>
+</div>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- http://t.co/dKP3o1e -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+
+    <title>24活动</title>
+    <link href="../../general_file/general_css.css" rel="stylesheet" type="text/css" />
+    <link href="../../activity/activity.css" rel="stylesheet" type="text/css" />
+    <!-- JQuery -->
+    <script src="http://7j1ztl.com1.z0.glb.clouddn.com/jquery-2.1.4.min.js"></script>
+</head>
+<body>
+    <img src="http://7j1ztl.com1.z0.glb.clouddn.com/1.jpg" class="spring-back">
+    <img src="http://7j1ztl.com1.z0.glb.clouddn.com/2.jpg" class="spring-back mg" id="button">
+    <img src="http://7j1ztl.com1.z0.glb.clouddn.com/3.jpg" class="spring-back mg">
+    <img src="http://7j1ztl.com1.z0.glb.clouddn.com/4.jpg" class="spring-back mg">
+    <!--<button class="spring-btn" id="button"></button>-->
+</body>
+<script src="../../advertising/lib/connectWebViewJavascriptBridge.js"></script>
+<script>
+  var webBridge = webViewBridge();
+  webBridge.bridgeInit(function (bridge) {
+    bridge.registerHandler('goBack', function(data,responseCallback){
+      var backInfo ={};
+      backInfo.isClose = true;
+      responseCallback(JSON.stringify(backInfo));
+    })
+  });
+    $(function(){
+        window.alert = function (name) {
+            var iframe = document.createElement("IFRAME");
+            iframe.style.display = "none";
+            iframe.setAttribute("src", 'data:text/plain,');
+            document.documentElement.appendChild(iframe);
+            window.frames[0].window.alert(name);
+            iframe.parentNode.removeChild(iframe);
+        }
+        var data = '<%-data%>';
+        data = data.replace(new RegExp("\r\n", "gm"), "\\r\\n");
+        data = data.replace(new RegExp("\n\r", "gm"), "\\n\\r");
+        data = data.replace(new RegExp("\n", "gm"), "\\n");
+        data = data.replace(new RegExp("\'", "gm"), " ");
+        data = JSON.parse(data);
+        console.log(data,data.userId,data.token);
+        $("#button").click(function(){
+            window.location.href="../buy_reward.html?userId=" + data.userId + "&token=" + data.token + "&client=" + data.client
+                    + "&version=" + data.version + "&isVersionPass=" + data.isVersionPass;
+
+        })
+
+
+    })
+</script>
+</html>

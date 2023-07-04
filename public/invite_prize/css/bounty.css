@@ -1,0 +1,148 @@
+*{
+    padding: 0;
+    margin: 0;
+    font-family: PingFangSC-Regular;
+}
+html{
+    background: #F4F4F4;
+}
+body{
+    width: 100%;
+    height: 100%;
+    background: #ffffff;
+}
+.bounty{
+    width: 100%;
+    height: 100%;
+}
+.top{
+    width: 100%;
+    padding-top: 31px;
+}
+.circle{
+    width: 130px;
+    height: 130px;
+    margin: 0 auto;
+    background: url(../img/money@3x.png) no-repeat center;
+    background-size:130px 130px;
+    overflow: hidden;
+}
+.circle p:nth-child(1){
+    color: #F3783C;
+    margin-top: 41px;
+    text-align: center;
+    font-size: 13px;
+}
+.circle p:nth-child(2){
+    color: #EE412F;
+    text-align: center;
+    font-size: 21px;
+}
+.money{
+    color: #EE412F;
+    margin-left: -9px;
+}
+.showList{
+    width: 100%;
+    height: 100px;
+    overflow: hidden;
+}
+.detial{
+    width: 50%;
+    float: left;
+}
+.detial p{
+    text-align: center;
+    font-size: 13px;
+    color: #000000;
+    letter-spacing: -0.01px;
+}
+.detial p:nth-child(1){
+    margin-top: 30px;
+}
+.describe{
+    height: 30px;
+    line-height: 30px;
+    font-size: 13px;
+    color: #999999;
+    letter-spacing: -0.01px;
+    text-align: center;
+    background: #F4F4F4;
+}
+.describe-gray{
+    height: 10px;
+    background: #F4F4F4;
+}
+.listOfFriends,.showSpace{
+    width: 100%;
+}
+.listOfFriends p:nth-child(1){
+    padding-left: 11px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    height: 21px;
+    font-size: 15px;
+    color: #000000;
+    letter-spacing: -0.01px;
+}
+.showSpace li{
+    height: 84px;
+    overflow: hidden;
+    margin-left:12px;
+    padding: 16px 0px;
+    box-sizing: border-box;
+    border-top: 1px solid #E0E0E0;
+}
+.showSpace li .lfl{
+    float: left;
+    width: 54px;
+    height: 54px;
+}
+.showSpace li .lfl img{
+    width: 54px;
+    height: 54px;
+}
+.showSpace li .lfr{
+    float: right;
+    font-size: 15px;
+    margin-top:4px;
+    margin-right: 12px;
+}
+.showSpace li .lfr span{
+    margin-left: -5px;
+    color:#EE412F;
+}
+.showSpace li .lfr span:nth-child(1){
+    margin-left: 0px;
+    color: #000000;
+}
+.center{
+    width: 100px;
+    height: 54px;
+    float: left;
+    margin-left: 15px;
+    margin-top: 2px;
+}
+.center span:nth-child(1){
+    display: block;
+    font-size: 17px;
+    color: #000000;
+    letter-spacing: -0.01px;
+}
+.center span:nth-child(2){
+    font-size: 13px;
+    color: #999999;
+    letter-spacing: -0.01px;
+    margin-top: 9px;
+}
+.noneWord {
+    font-size: 15px;
+    color: #000000;
+    letter-spacing: -0.01px;
+    background: #F4F4F4;
+    padding-top: 12px;
+    padding-left: 12px;
+}
+#describe{
+    display: none;
+}

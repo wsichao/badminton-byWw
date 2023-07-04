@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- http://t.co/dKP3o1e -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+
+    <title>24全城购－三天三夜</title>
+    <link href="../general_file/general_css.css" rel="stylesheet"
+          type="text/css" />
+    <link href="activity.css" rel="stylesheet" type="text/css" />
+    <!-- JQuery -->
+    <script src="http://7j1ztl.com1.z0.glb.clouddn.com/jquery-2.1.4.min.js"></script>
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?689199293e09fb9b4c35a1bb8b0a7438";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+</head>
+<body>
+<img src="http://7j1ztl.com1.z0.glb.clouddn.com/42.1.png" class="top"
+     id="topBackground">
+<div class="content three-days-input" id="inputContent">
+    <div class="get-coupon" >
+        <ul class="three-days-out">
+            <li>
+                <span>手机号码</span>
+                <input type="text" placeholder="输入手机号码领取" id="phoneNum">
+
+            </li>
+            <li>
+                <button id="checkAuthCode" class="threeDays-auth-code">获取验证码</button>
+                <input type="text" id="authCode" placeholder="输入验证码">
+            </li>
+        </ul>
+
+
+    </div>
+
+</div>
+<div class="share-button three-btn-background3"  id="getCouponButton"  style="margin-top:-12px">
+    <img src="http://7j1ztl.com1.z0.glb.clouddn.com/2.3.1.png" class="shareBtn" id="getCoupon" style="width:60%; margin:12px auto; display: block">
+    <fieldset style="padding-top:15px; margin-top:-20px">
+        <legend> 会员专区所有活动都可使用 </legend>
+    </fieldset>
+</div>
+<div class="share-button three-btn-background2"  id="useButton"
+     style="display: none;margin:-3px 0 12px 0">
+    <img  src="http://7j1ztl.com1.z0.glb.clouddn.com/%E7%AB%8B%E5%8D%B3%E4%BD%BF%E7%94%A8.png" class="shareBtn" id="use" style="width:50%; margin:0 auto; display: block">
+    <fieldset style="padding-top:15px; margin-top:20px">
+        <legend> 会员专区所有活动都可使用 </legend>
+    </fieldset>
+</div>
+<img src="http://7j1ztl.com1.z0.glb.clouddn.com/1.3.png"  class="top" style="margin-top:-12px">
+<div class="three-days-list" >
+    <h2>活动规则：</h2>
+    <ul>
+        <li>
+            1.会员专区所有商户都可使用。
+        </li>
+        <li>
+            2.本次活动针对保定，烟台，南和，燕郊，牡丹江，唐山，沧州7个城市指定商户使用。
+        </li>
+        <li>
+            3.本次代金券不设找零，不可挂失，每个用户每天限使用一次。
+        </li>
+        <li>
+            4.同一设备，手机号，支付账号视为同一个用户，每张券限用一次。
+        </li>
+        <li>
+            5.法律允许范围内，解释权归朱李叶健康所有。
+        </li>
+    </ul>
+</div>
+<div class="gen-gray-back filter"  style="display:none" id="gray"></div>
+<div class="alert" style="padding:15px; width:170px; background-color:rgba(255,255,255,0.0);display:none" id="suc_alert">
+
+    <div class="cushion">
+        <img src="../apply_doctor/images/Loading@3x@3x.png" id="change">
+    </div>
+    <!--<div class="alert_inf">
+        <p>...</p>
+        <i> 028-68073247</i>
+        <em>您使用的电话是<span id="cellphone"></span></em>
+    </div>-->
+
+</div>
+
+<script>
+    $(function() {
+        window.alert = function (name) {
+            var iframe = document.createElement("IFRAME");
+            iframe.style.display = "none";
+            iframe.setAttribute("src", 'data:text/plain,');
+            document.documentElement.appendChild(iframe);
+            window.frames[0].window.alert(name);
+            iframe.parentNode.removeChild(iframe);
+        }
+
+        var timeout=30;
+        function Interval(){
+           var intervalID= setInterval(function(){
+                $("#checkAuthCode").text(timeout--);
+               console.log(timeout);
+                if(timeout<=0){
+                    timeout=30;
+                    clearInterval(intervalID);
+                    $("#checkAuthCode").removeAttr("disabled").css("background-color","#ff7903");
+                    $("#checkAuthCode").text('获取验证码');
+                }
+            },1000);
+        }
+
+
+        $("#checkAuthCode").click(function(){
+
+            $("#authCode").val('');
+            var phoneNum=$("#phoneNum").val();
+            var reg = /^(13|15|18|17)[0-9]{9}$/;
+            if(phoneNum=="" || !reg.test(phoneNum)){
+                alert('请输入正确的手机号');
+                return;
+            }
+            //ff7903
+            $("#checkAuthCode").attr("disabled","disabled").css("background-color","#a3a3a3");
+            Interval();
+            $.ajax({
+                url: '/1/common/authCode?phoneNum=' + phoneNum,
+                type: 'GET',
+                success: function (result) {
+                    console.log("获取验证码成功");
+                }
+            });
+        });
+        $("#getCoupon").click(function(){
+            var phoneNum=$("#phoneNum").val();
+            var authCode=$("#authCode").val();
+            var reg = /^(13|15|18|17)[0-9]{9}$/;
+            if(phoneNum=="" || !reg.test(phoneNum)){
+                alert('请输入正确的手机号');
+                return;
+            }
+            if(!authCode){
+                alert("请输入验证码")
+                return;
+            }
+            var postData = {
+                phoneNum : phoneNum,
+                authCode : authCode
+            }
+            console.log(postData);
+            $("#gray").show();
+            $(".alert").show();
+            $.ajax({
+                url:'/1/customer/getCouponConsumedMembershipByShareOut',
+                type: 'POST',
+                data: postData,
+                dataType:'json',
+                success: function (result) {
+                    $("#gray").hide();
+                    $(".alert").hide();
+                    $("#topBackground").attr("src","http://7j1ztl.com1.z0.glb.clouddn.com/199204150685631121.png");
+                    $("#getCouponButton").hide();
+                    $("#inputContent").hide();
+                    $("#useButton").show();
+                },
+                error:function(err){
+                    $("#gray").hide();
+                    $(".alert").hide();
+                    console.log(err);
+                    if(err.responseText){
+                        var code=JSON.parse(err.responseText).code;
+                        var msg=JSON.parse(err.responseText).msg;
+                        if(msg && code!=2109){
+                            alert(msg);
+                        }else if(code == 2109){
+                            alert("您的会员额度不足，请到朱李叶健康“我”-“我的会员”购买会员额度");
+                        }else{
+                            alert("请求失败");
+                        }
+
+                    }else{
+                        alert("请求失败")
+                    }
+
+                }
+            });
+        });
+
+        $("#use").click(function(){
+            var docChatNum;
+            window.location.href = "http://web.dc.zlycare.com/download/docchat-c.html?docChatNum="+docChatNum;
+        })
+
+
+    });
+</script>
+</body>
+</html>

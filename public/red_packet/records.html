@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>红包领取记录</title>
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    <!-- JQuery -->
+    <script src="https://cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script>
+    <script src="../../assets/libs/bootstrap.min.js"></script>
+    <!-- Private -->
+    <link href="../general_file/general_css.css" rel="stylesheet" type="text/css">
+    <link href="red_packet/red_packet.css" rel="stylesheet" type="text/css">
+
+    <style>
+        body{
+            background-color:#eee;
+
+        }
+    </style>
+
+</head>
+<body>
+    <div class="red_view1" style="display:none">
+        <div class="infomation">
+            <img src="images/mid@2x.png" class="gen_info_img">
+                <h3 id="name">您已领取孙思邈的红包</h3>
+                <span>可在我的收藏找到Ta</span>
+        </div>
+        <div class="money">
+            <span><em id="money">100.00</em>元</span>
+            <i id="gotoMyWallet">查看“我的钱包”</i>
+        </div>
+    </div>
+    <div class="red_view2" style="display:none">
+        <div class="infomation">
+            <img src="images/mid@2x.png" class="gen_info_img">
+            <h3 id="name1"></h3>
+        </div>
+        <div class="money">
+            <span class="pity"></span>
+        </div>
+    </div>
+
+    <p id="redCount"></p>
+    <ul class="red_list_give">
+      <!--  <li>
+            <span>
+                <i>**乐</i>
+                <em>0.01元</em>
+            </span>
+            <u>12-1 08:01</u>
+        </li>
+        <li>
+            <span>
+                <i>**乐</i>
+                <em>0.01元</em>
+            </span>
+            <u>12-1 08:01</u>
+        </li>
+        <li>
+            <span>
+                <i>**乐</i>
+                <em>0.01元</em>
+            </span>
+            <u>12-1 08:01</u>
+        </li>-->
+    </ul>
+
+    <script src="../general_file/general_js.js"></script>
+    <script src="../apply_doctor/lib/connectWebViewJavascriptBridge.js"></script>
+<script>
+
+    var data = <%-data%>;
+    console.log(data);
+
+    $(function(){
+        function getname(listName){
+            var name_m="**";
+            if(listName.length===1){
+                name_m="";
+            }else if(listName.length===2){
+                name_m="*";
+            }
+            listName=name_m+listName.slice(listName.length-1,listName.length);
+            return listName;
+        }
+
+       // data.avatar="";
+
+        var sex=data.sex;
+        function getAvatar(){
+            if(sex=="男"){
+                $(".gen_info_img").attr('src',"red_packet/images/male@3x.png");
+            }else if(sex=="女"){
+                $(".gen_info_img").attr('src',"red_packet/images/famale@3x.png");
+            }else{
+                $(".gen_info_img").attr('src',"red_packet/images/mid@2x.png");
+            }
+        }
+        //getAvatar();
+
+        var webBridge = webViewBridge();
+        webBridge.bridgeInit(function (bridge) {});
+        $("#gotoMyWallet").click(function(){
+           // alert(webBridge);
+            webBridge.upload('gotoMyWallet');
+        });
+
+        //基本信息===========
+        //$("#money").text(getMoney(data.cash));
+        var lease=data.hongbao.totalCount-data.hongbao.usedCount;
+        $("#redCount").text("共"+data.hongbao.totalCount+"个红包，剩余"+lease+"个");
+        if(data.avatar=="")
+        {
+            getAvatar();
+        }else{
+            $(".gen_info_img").attr("src","https://cdn.juliye.net/"+data.avatar);
+        }
+        $("#name").text("您已领取"+data.name+"的红包");
+        $("#name1").text(data.name);
+        if(data.hongbaoStatus=="catchUp"){
+            $(".red_view1").show();
+            $(".red_view2").hide();
+            $("#money").text(getMoney(data.cash));
+        }else if(data.hongbaoStatus=="usedUp"){
+
+            $(".red_view2").show();
+            $(".red_view1").hide();
+            $(".pity").text("很遗憾，红包已被抢完！");
+        }else if(data.hongbaoStatus=="timeUp"){
+            $(".red_view2").show();
+            $(".red_view1").hide();
+            $(".pity").text("很遗憾，红包已过期！");
+        }
+        var redListContent="";
+        for(var i=0; i<data.list.length;i++){
+            var listName=getname(data.list[i].name.trim());
+            var listTime=getTime(data.list[i].createdAt);
+            redListContent=redListContent+"<li><span><i>"+listName+"</i><em>"+getMoney(data.list[i].cash)+"元</em></span> <u>"+listTime+"</u> </li>";
+        }
+        $(".red_list_give").append(redListContent);
+
+
+
+    })
+</script>
+</body>
+</html>

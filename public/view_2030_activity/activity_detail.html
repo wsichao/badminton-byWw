@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>活动详情</title>
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no" />
+    <script src="https://cdn.bootcss.com/vue/2.5.13/vue.min.js" charset="utf-8"></script>
+    <script src="https://cdn.bootcss.com/vue-resource/1.5.0/vue-resource.js"></script>
+    <script src="https://unpkg.com/mint-ui/lib/index.js"></script>
+    <link rel="stylesheet" href="activity_detail.css" />
+</head>
+<body>
+<div class="all" id="app">
+    <div class="wrapper">
+        <div style="width: 100%; height: 168px;"></div>
+
+        <div class="card" v-for="(item, index) in product_list">
+            <div class="desc">请添加您、家人和朋友常用的营养品或保健品</div>
+
+            <div class="inputSp">
+                <div class="detail" v-if="!item.isOther">
+                    <div class="brand">
+                        <div class="title">品牌</div>
+                        <div class="select" >
+                            <input class="select_style" type="text" v-model="item.brand" disabled="disabled" />
+                        </div>
+
+                    </div>
+                    <div class="product">
+                        <div class="title">产品</div>
+                        <div class="select">
+                            <input class="select_style" type="text" v-model="item.name" disabled="disabled" />
+                        </div>
+                    </div>
+                    <div class="money">
+                        <div class="title">金额</div>
+                        <div class="select">
+                            <input class="input_money" type="number" v-model="item.price" disabled="disabled" />
+                            <div class="unit">元/年</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="other" v-if="item.isOther">
+                    <div class="title">其他</div>
+                    <div class="select">
+                        <input class="input_other" type="text" v-model="item.other" disabled="disabled" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card_user">
+            <div class="desc">如果您需要的产品有优惠活动，我们将第一时间通知您</div>
+            <div class="inputSp">
+                <div class="name">
+                    <div class="title">姓名</div>
+                    <div class="select">
+                        <input class="input_other" type="text" v-model="name" disabled="disabled" />
+                    </div>
+                </div>
+                <div class="phone">
+                    <div class="title">电话</div>
+                    <div class="select">
+                        <input class="input_other" type="text" v-model="phone" disabled="disabled" />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+</body>
+<script>
+  new Vue({
+    el:'#app',
+    data:{
+      product_list:[
+        {
+          brand : '',
+          name : '',
+          price : '',
+          other : '',
+          isOther:false
+        }
+      ],
+      activity_id:'',
+      user_id:'',
+      name:'',
+      phone:''
+    },
+    methods:{
+
+      getData(){
+        let that = this;
+        that.$http
+          .get('/mc_weapp/product/activity/get_info_1',{params:{
+            id: that.activity_id,
+            user_id: that.user_id}
+          })
+          .then(function (res) {
+            console.log(res);
+            // 更新当前数据
+            that.product_list = res.body.data.products;
+            that.name = res.body.data.name;
+            that.phone = res.body.data.phone;
+            for(var i=0;i<that.product_list.length;i++){
+              if(that.product_list[i].other) {
+                that.product_list[i].isOther = true
+              }
+            }
+            that.data = that.data;
+            console.log(that.product_list);
+
+          }, function (err) {
+            console.log(err);
+          });
+
+      }
+
+
+
+    },
+    created(){
+      let that = this;
+      var route = window.location.href;
+      var localarr = route.split('?')[1].split('&');
+      var tempObj = {};
+      for (var i = 0; i < localarr.length; i++) {
+        tempObj[localarr[i].split('=')[0]] = localarr[i].split('=')[1];
+      }
+      console.log(tempObj);
+      that.activity_id = tempObj.id;
+      that.user_id=tempObj.user_id;
+      that.data=that.data;
+      that.getData();
+    },
+  })
+</script>
+</html>

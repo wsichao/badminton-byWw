@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- http://t.co/dKP3o1e -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    <meta name="format-detection" content="telephone=no" />
+    <title>24全城购会员日</title>
+    <link href="../general_file/general_css.css" rel="stylesheet" type="text/css" />
+    <link href="activity.css" rel="stylesheet" type="text/css"/>
+
+
+    <!-- Vue -->
+    <script src="https://cdn.bootcss.com/vue/2.3.3/vue.min.js"></script>
+    <script src="https://cdn.bootcss.com/vue-resource/1.3.1/vue-resource.min.js"></script>
+    <script src="../general_file/general_js.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script>
+
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?5402d444962caaeb2486c98f3a005af9";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+
+    </script>
+
+</head>
+<body style="background-color:#FBDD9C">
+    <div class="mayActivity">
+        <div class="content1" v-if="isContent1">
+            <img src="http://7j1ztl.com1.z0.glb.clouddn.com/p1-1@2x.png" />
+        </div>
+        <div class="content2" v-if="isContent2">
+            <div class="suc-content">
+                <ul>
+                    <li>
+                        <h2>1 重好礼</h2>
+                        <div class="img">
+                            <img src="http://7j1ztl.com1.z0.glb.clouddn.com/%E5%88%B8@2x.png">
+                        </div>
+                        <div class="success">
+                            <span v-text="statusText" class="suc-get" v-bind:style="{background: sucCouupon}">领取成功</span>
+                        </div>
+                    </li>
+                    <li>
+                        <h2>2 重好礼</h2>
+                        <div class="img">
+                            <img src="http://7j1ztl.com1.z0.glb.clouddn.com/2%E9%87%8D%E5%A5%BD%E7%A4%BC@2x.png" v-on:click="buy">
+                        </div>
+                        <div class="may-button">
+                            <button  class="btn" v-on:click="use" v-text="buttonText">前往会员专区使用</button>
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+            <div class="may-content">
+                <div class="may-button" v-if="isContent1">
+                    <button class="btn" v-on:click="share" id="shareBtn">分享领取会员礼包</button>
+                </div>
+                 <div class="may-rules">
+                    <h3>活动规则</h3>
+                    <ul>
+                        <li>1、代金券需分享后才会到账，代金券只适用于“会员专区”带“活动” 字样商户。</li>
+                        <li>2、领券的手机号和注册朱李叶健康app的手机号应保持一致，方可领取现金券。每位会员仅能领取一次。</li>
+                        <li>3、活动起止日期：仅限5月24日当天</li>
+                        <li>4、在法律允许范围内，本公司拥有活动最终解释权。</li>
+                    </ul>
+                </div>
+            </div>
+
+        <div v-if="isLoading">
+            <div class="gen-gray-back"  id="gray"></div>
+            <div class="alert" style="padding:15px; width:170px; background-color:rgba(255,255,255,0.0)" id="suc_alert">
+                <div class="cushion">
+                    <img src="../apply_doctor/images/Loading@3x@3x.png" id="change">
+                </div>
+            </div>
+        </div>
+    </div>
+<script src="../apply_doctor/lib/connectWebViewJavascriptBridge.js"></script>
+<script>
+
+    var data = '<%-data%>';
+    data = data.replace(new RegExp("\r\n", "gm"), "\\r\\n");
+    data = data.replace(new RegExp("\n\r", "gm"), "\\n\\r");
+    data = data.replace(new RegExp("\n", "gm"), "\\n");
+    data = data.replace(new RegExp("\'", "gm"), " ");
+    data = JSON.parse(data);
+    console.log(data);
+
+
+    console.log(data.userId)
+
+
+//data.hasCoupon=false;
+    var vm = new Vue({
+        el:".mayActivity",
+        data:{
+            isContent1:false,
+            isContent2:false,
+            isLoading:false,
+            statusText:'领取成功',
+            sucCouupon:'background: url(images/suc@2x.png) no-repeat;',
+            buttonText:'前往会员专区使用'
+        },
+        mounted:function(){
+            if(data.hasCoupon){
+                this.isContent1=false;
+                this.isContent2=true;
+            }else{
+                this.isContent1=true;
+                this.isContent2=false;
+            }
+        },
+        methods:{
+            share: function(){
+                var HOST = 'http://web.dc.zlycare.com';
+                var REG = /test/;
+                //if(window.location.hostname!="dc-c.zlycare.com"){
+                if (REG.test(window.location.hostname)){
+                    HOST = 'http://web.dc-test.zlycare.com';
+                }else if(! /zlycare.com/.test(window.location.hostname)){
+                    HOST = 'http://192.168.3.65:9020';
+                }
+                var dataShare = {
+                    title: '每月24会员日，17元礼包清凉你的初夏',
+                    desc: '带你感受风的清凉，还有诗和远方',
+                    img:'http://7j1ztl.com1.z0.glb.clouddn.com/may24share.jpg',
+                    /*img:'http://7j1ztl.com1.z0.glb.clouddn.com/24share.png',*/
+                    url: HOST + "/activity/mayActivityOut.html"
+                }
+                /*alert(dataShare.url);*/
+                console.log(dataShare);
+                webBridge.upload("shareCoupon",JSON.stringify(dataShare));
+            },
+            buy: function(){
+                urlString="userId="+data.userId+"&token="+data.token+"&client="+data.client+"&isVersionPass="+data.isVersionPass;
+                window.location.href="../member-recharge/memberRechargeNew.html?"+urlString;
+            },
+            use: function(){
+                webBridge.upload("gotoVIP");
+            }
+        }
+    });
+    function getCoupon(){
+        $.ajax({
+            type: "GET",
+            url: "/1/activity/share/getCoupon170524",
+            headers: {
+                "x-docchat-user-id":data.userId,
+                "x-docchat-session-token":data.token
+            },
+            success: function(rs){
+                vm.isLoading=false;
+                vm.isContent1=false;
+                vm.isContent2=true;
+            },
+            error:function(err){
+                console.log(err.responseText);
+                if(err.responseText) {
+                    var err=JSON.parse(err.responseText);
+                    vm.isLoading=false;
+                    vm.isContent1=false;
+                    vm.isContent2=true;
+                    var code = err.code;
+                    console.log(code);
+                    if (code == "2202") {
+                        vm.sucCouupon="none";
+                        vm.buttonText="查看其他优惠";
+                        vm.statusText = "优惠券被领完啦！";
+                    }else if(code = "2115"){
+                          vm.isContent1=true;
+                          vm.isContent2=false;
+                        alert("当前设备已领取过此优惠券")
+                    }else{
+                        alert("领取失败");
+                    }
+                }else{
+                    alert("领取失败");
+                }
+            }
+        })
+    }
+    var webBridge = webViewBridge();
+    webBridge.bridgeInit(function (bridge) {
+        bridge.registerHandler('shareSuc', function (data,responseCallback){
+            vm.isLoading=true;
+            setTimeout(getCoupon(),2000);
+        });
+        bridge.registerHandler('goBack', function (data,responseCallback) {
+            var result = {};
+            result.isClose = true;
+            responseCallback(JSON.stringify(result));
+        });
+    });
+</script>
+</body>
+</html>

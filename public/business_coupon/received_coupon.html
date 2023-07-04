@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- http://t.co/dKP3o1e -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    <meta name="format-detection" content="telephone=no" />
+    <title>收券</title>
+    <link href="../general_file/general_css.css" rel="stylesheet" type="text/css" />
+    <link href="business_coupon.css" rel="stylesheet" type="text/css" />
+    <script src="libs/jquery.min.js"></script>
+    <!-- JQuery -->
+    <!--<script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>-->
+    <style>
+        #errCoupon {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin-top:-10px;
+            margin-left:-80px;
+            text-align: center;
+            font-size:20px;
+        }
+        body{
+            background-color:#f5f5f9;
+        }
+
+    </style>
+</head>
+<body>
+<!--<ul class="coupon">
+    <li>
+        <div class="money">
+            <span>¥<em>2</em></span>
+        </div>
+        <div class="border">&nbsp;</div>
+        <div class="infomation">
+            <ul>
+                <li class="coupon-name">会员专属代金券</li>
+                <li class="pay-for">仅用于向XXX付款</li>
+                <li class="time-line">有效期至2017-04-05</li>
+            </ul>
+        </div>
+    </li>
+</ul>-->
+<div class="coupon" id="couponThing" style="display: none">
+    <div class="money" id="money">
+        <p id ="shopName">黄焖鸡</p>
+    </div>
+    <div class="content">
+        <div class="moneyBorder">
+            <p><span id="title"></span>元</p>
+            <em id="venderTip"></em>
+        </div>
+       <!-- <img id="avatar" src="../assets/images/vip_wallet.png">-->
+        <!--<p class="coupon-id" id="unionCode">12345</p>-->
+        <!--<span id ="desc" style="text-align: center">满30元可用; 仅用于24热未来超市(热线号: 888-888-888)</span>-->
+        <div class="content-border">&nbsp;</div>
+        <div class="button">
+            <button id="receive" >确认收券</button>
+            <button class="btn" style="display:none"  id="errReceive">您不是此代金券指定商户，无法收券</button>
+        </div>
+        <div class="button-border">&nbsp;</div>
+    </div>
+</div>
+
+<div style="margin:0 12px">
+    <!--<button class="gen-long-full-btn" id="recieve" style="display:none">确认收券</button>-->
+    <!--<button class="gen-long-full-btn btn" id="errRecieve" style="display:none">您不是此代金券指定商户，无法收券</button>-->
+</div>
+<div id="errCoupon" style="display: none">您输入的编码有误</div>
+<div class="gen-gray-back"  style="display:none"></div>
+<div class="alert" style="padding:15px; width:170px; background-color:rgba(255,255,255,0.0);display:none" id="suc_alert">
+
+    <div class="cushion">
+        <img src="../apply_doctor/images/Loading@3x@3x.png" id="change">
+    </div>
+
+</div>
+</body>
+</html>
+<script src="../general_file/general_js.js"></script>
+<script src="../advertising/lib/connectWebViewJavascriptBridge.js"></script>
+<script>
+    window.alert = function(name){
+        var iframe = document.createElement("IFRAME");
+        iframe.style.display="none";
+        iframe.setAttribute("src", 'data:text/plain,');
+        document.documentElement.appendChild(iframe);
+        window.frames[0].window.alert(name);
+        iframe.parentNode.removeChild(iframe);
+    }
+    var data = '<%-data%>';
+    data = data.replace(new RegExp("\r\n", "gm"), "\\r\\n");
+    data = data.replace(new RegExp("\n\r", "gm"), "\\n\\r");
+    data = data.replace(new RegExp("\n", "gm"), "\\n");
+    data = data.replace(new RegExp("\'", "gm"), " ");
+    data = JSON.parse(data);
+    var webBridge = webViewBridge();
+    webBridge.bridgeInit(function (bridge) {
+        bridge.registerHandler('goBack', function(data,responseCallback){
+            var backInfo ={};
+            backInfo.isPaySuc = false;
+            responseCallback(JSON.stringify(backInfo));
+        })
+    });
+
+    var userId = data.userId;
+    var token = data.token;
+    var qrCode = data.qrCode;
+    var unionCode = data.code;
+    var zlycareCode = data.zlycareCode;
+    var codeInfo = "";
+    var receiveData = {};
+    var pageStatus = 'cityBuy';
+    if(qrCode){
+        codeInfo += "&qrCode=" + qrCode
+    }
+    if(unionCode){
+        codeInfo += "&unionCode=" + unionCode;
+        receiveData.checkinType = "unionCode";
+    }
+    var initCityBuy = function(){
+      $.ajax({
+        type: "GET",
+        url: "/1/customer/marketing/couponInfo?venderId=" + userId + codeInfo,
+        success: function(rs){
+          console.log(rs);
+          var data = rs;
+          $("#desc").text(data.desc);
+          $("#title").text(data.rmb );
+          if(data.venderTip)
+            $("#venderTip").text(data.venderTip);
+          var newName;
+          var nameWidth=document.body.clientWidth - 90;
+          var nameNumber=parseInt(nameWidth/16)-2;
+          console.log(nameNumber);
+          if(data.shopName.length>=nameNumber){
+            newName=data.shopName.slice(0,nameNumber)+"...";
+          }else{
+            newName=data.shopName;
+          }
+          $("#shopName").text(newName);
+          var avatar = data.avatar ?  ("https://cdn.juliye.net/" +  data.avatar) : "../assets/images/vip_wallet.png";
+          $("#avatar").attr("src",avatar);
+          if(data.isTheVender){
+            if(data.errObj){
+              var errText = data.errObj.message || "";
+              if($("#errReceive").text()){
+                $("#errReceive").text(errText);
+              }
+              $("#receive").hide();
+              $("#errReceive").show();
+            }else{
+              $("#receive").show();
+              $("#errReceive").hide();
+            }
+          }else{
+            $("#receive").hide();
+            $("#errReceive").show();
+          }
+          receiveData.venderId = userId;
+          receiveData.couponId = data._id;
+
+          $("#couponThing").show();
+          $("#errCoupon").hide();
+
+
+        },
+        error: function(err){
+          if(JSON.parse(err.responseText).code == 2111){
+            $("#couponThing").hide();
+            $("#errCoupon").show();
+          }else if(JSON.parse(err.responseText).code == 2107){
+            alert("无效,该代金券已被使用!");
+          }
+
+        }
+      });
+    }
+    var initZlycare = function(code){
+      $.ajax({
+        type: "GET",
+//        url: "../1/zlycare/trade?certification_code=" + code,
+        url: "/1/zlycare/trade?certification_code=" + code,
+        headers: {
+          "x-docchat-user-id": userId,
+          "x-docchat-session-token": token
+        },
+        success: function(rs){
+          console.log(rs);
+          var data = rs;
+          var newName;
+          var nameWidth=document.body.clientWidth - 90;
+          var nameNumber=parseInt(nameWidth/16)-2;
+          console.log(nameNumber);
+          if(data.certification_for.length>=nameNumber){
+            newName=data.certification_for.slice(0,nameNumber)+"...";
+          }else{
+            newName=data.certification_for;
+          }
+          $("#title").text(data.certification_value );
+          $("#shopName").text(newName);
+          receiveData.trade_id = data.trade_id;
+
+          $("#couponThing").show();
+          $("#errCoupon").hide();
+        },
+        error: function(err){
+          if(JSON.parse(err.responseText).code == 2111){
+            $("#couponThing").hide();
+            $("#errCoupon").show();
+          }else if(JSON.parse(err.responseText).code == 2416){
+            alert("无效,已被使用!");
+          }else if(JSON.parse(err.responseText).code == 2417){
+            alert("您不是此券指定商户");
+          }else{
+            alert(JSON.parse(err.responseText).msg);
+          }
+        }
+      });
+    }
+    var initPage = function(){
+        if( unionCode && unionCode.length >= 12 || zlycareCode){
+          pageStatus = 'zlycare'
+          $("#title").text("核销");
+          if(zlycareCode){
+            initZlycare(zlycareCode);
+          }else{
+            initZlycare(unionCode);
+          }
+
+        }else{
+          initCityBuy();
+        }
+    }
+    initPage();
+    var receiveCityBuy = function(){
+      $.ajax({
+        type: "POST",
+        url: "/1/customer/coupon/checkin",
+        headers: {
+          "x-docchat-user-id": userId,
+          "x-docchat-session-token": token
+        },
+        data: receiveData,
+        dataType:'json',
+        success: function(rs){
+          console.log(rs);
+          $(".alert").hide();
+          $(".gen-gray-back").hide();
+          rs.checkinType = 0;
+          webBridge.upload("receivedSec",JSON.stringify(rs));
+//                setTimeout(function(){
+//                    alert("收券成功");
+//                },200);
+        },
+        error: function(err){
+          $(".alert").hide();
+          $(".gen-gray-back").hide();
+          $("#receive").removeAttr("disabled").css("background-color","#ff9000");
+          if(err.responseText){
+            var errMsg = JSON.parse(err.responseText).msg || "收券失败";
+            alert(errMsg);
+          }else{
+            alert("收券失败");
+          }
+        }
+      });
+    }
+    var receiveZlycare = function(){
+      console.log(receiveData);
+      $.ajax({
+        type: "POST",
+        url: "/1/zlycare/checkin",
+        headers: {
+          "x-docchat-user-id": userId,
+          "x-docchat-session-token": token
+        },
+        data: receiveData,
+        dataType:'json',
+        success: function(rs){
+          console.log(rs);
+          $(".alert").hide();
+          $(".gen-gray-back").hide();
+          rs.checkinType = 1;
+          webBridge.upload("receivedSec",JSON.stringify(rs));
+//                setTimeout(function(){
+//                    alert("收券成功");
+//                },200);
+        },
+        error: function(err){
+          console.log(err);
+          $(".alert").hide();
+          $(".gen-gray-back").hide();
+          $("#receive").removeAttr("disabled").css("background-color","#ff9000");
+          if(err.responseText){
+            var errMsg = JSON.parse(err.responseText).msg || "收券失败";
+            alert(errMsg);
+          }else{
+            alert("收券失败");
+          }
+        }
+      });
+    }
+    $("#receive").click(function(){
+        $("#receive").attr("disabled","disabled").css("background-color","#939393");
+        $(".alert").show();
+        $(".gen-gray-back").show();
+        if(pageStatus == 'cityBuy'){
+          receiveCityBuy();
+        }else if(pageStatus == 'zlycare'){
+          receiveZlycare();
+        }
+
+    })
+</script>

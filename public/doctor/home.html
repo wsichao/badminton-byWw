@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>朱李叶健康</title>
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    <!--qq分享-->
+  <meta itemprop="name" content="分享标题"/>
+  <meta itemprop="image" content="http://img.xmiles.cn/fortune/icon.png" />
+  <meta name="description" itemprop="description" content="分享描述" />
+    <script src="https://cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script>
+    <script src="/health/libs/common.js"></script>
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <!--qq分享-->
+    <script src="https://qzonestyle.gtimg.cn/qzone/qzact/common/share/share.js"></script>
+
+    <script src="https://cdn.bootcss.com/iScroll/5.1.1/iscroll-infinite.min.js"></script>
+    <link href="/general_file/general_css.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/doctor/home.css">
+</head>
+<body>
+<div id="wrapper">
+    <div>
+<div style="margin: 0 12px">
+    <img id="downloadImg" src="/doctor/images/downloadingapp.png" style="margin-top: 10px;width: 100%;" onclick="download()">
+</div>
+<div class="doctor">
+    <div class="doctor_icon" >
+        <!--<img src="/doctor/images/well_pre%20copy%202@3x.png" alt="">-->
+    </div>
+    <div class="doctor_intro">
+        <p class="doctor_name">
+            <strong id="d_name"></strong>
+            <span id="d_title"></span>
+        </p>
+        <p class="desk"></p>
+    </div>
+</div>
+<div class="price"></div>
+<div class="visit-time">
+    <div class="strong-line"></div>
+    <p class="title">常规出诊时间</p>
+    <div class="time-detail" id="d_visitCycle"></div>
+</div>
+<div class="intro">
+    <div class="strong-line"></div>
+    <p class="title">医生简介</p>
+    <div class="time-detail">
+        <span>擅长：</span><br>
+        <p id="d_speciality"></p><br>
+        <span>医生描述：</span>
+        <p id="d_remark"></p>
+    </div>
+</div>
+
+<!--服务详情-->
+<div class="server-detail">
+    <div class="strong-line"></div>
+    <p class="title" style="border-bottom: 0">服务详情</p>
+    <ul id="d_packageServices">
+        <!--<li>-->
+            <!--<p class="package">专属医生-豪华服务包<span>￥9000</span></p>-->
+            <!--<div class="package-exp">-->
+                <!--<p>1. 优先享有平台医药相关产品报销优惠额度</p>-->
+                <!--<p>2. 根据实际需要在专家库中选择三位主任医师级别专家签约，对应家庭成员三人。</p>-->
+            <!--</div>-->
+        <!--</li>-->
+        <!--<li>-->
+            <!--<p class="package">专属医生-豪华服务包<span>￥9000</span></p>-->
+            <!--<div class="package-exp">-->
+                <!--<p>1. 优先享有平台医药相关产品报销优惠额度</p>-->
+                <!--<p>2. 根据实际需要在专家库中选择三位主任医师级别专家签约，对应家庭成员三人。</p>-->
+            <!--</div>-->
+        <!--</li>-->
+    </ul>
+</div>
+
+<!--用户评价-->
+<div>
+    <div class="evaluate">
+        <div class="strong-line"></div>
+        <p class="title">用户评价</p>
+        <ul id="d_comment">
+            <!--<li class="review">-->
+            <!--<div class="user-icon">-->
+            <!--<img src="/doctor/images/well_pre%20copy%202@3x.png" alt="">-->
+            <!--</div>-->
+            <!--<div class="review-con">-->
+            <!--<p class="user-name">-->
+            <!--追风少年追风少年追风少年追风少年风少…-->
+            <!--<span class="zan">-->
+            <!--<i></i>赞-->
+            <!--</span>-->
+            <!--</p>-->
+            <!--<p class="content">-->
+            <!--想购买豪华服务包，购买过的亲们回复下怎值不值得买？-->
+            <!--</p>-->
+            <!--</div>-->
+            <!--</li>-->
+            <!--<li class="review">-->
+            <!--<div class="user-icon">-->
+            <!--<img src="/doctor/images/well_pre%20copy%202@3x.png" alt="">-->
+            <!--</div>-->
+            <!--<div class="review-con">-->
+            <!--<p class="user-name">-->
+            <!--Sunny-->
+            <!--<span class="zan">-->
+            <!--<i></i>1200-->
+            <!--</span>-->
+            <!--</p>-->
+            <!--<p class="content">-->
+            <!--华医生真的很不错，根治了我的病不说，还给了我很多建议，受益匪浅～给华医生点10个赞-->
+            <!--</p>-->
+            <!--<div class="reply-time">-->
+            <!--<span>09-03&nbsp;13:27</span>-->
+            <!--<a href="javascript:;" class="reply">322回复</a>-->
+            <!--</div>-->
+
+            <!--</div>-->
+            <!--</li>-->
+        </ul>
+    </div>
+</div>
+
+<!--咨询-->
+<a class="refer" href="" id="d_zixun">
+    <i></i>
+    立即咨询
+</a>
+<input type=hidden id="d_bookmark" value="" />
+<input type=hidden id="d_weight" value="" />
+</div>
+</div>
+</div>
+</body>
+</html>
+<script>
+    $('#d_bookmark').val('')
+    $('#d_weight').val('')
+    var end = false;//数据加载完成后的标识
+    var d_isrequest=false;
+    var myScroll;
+   $(function (){
+       var data = <%-data%>;
+     wxShare((data.name + ' ' + data.title  + ' ' + data.department + " " + data.hospital ), ('擅长：'+data.desc),
+      ('https://cdn.juliye.net/'+data.avatar), window.location.href);
+       //data = JSON.parse(data);
+     setShareInfo({
+       title: (data.name + ' ' + data.title  + ' ' + data.department + " " + data.hospital ),
+       summary: ('擅长：'+data.desc),
+       pic:  ('https://cdn.juliye.net/'+data.avatar),
+       url: window.location.href + '&tencentShare=1'
+     });
+           console.log(data);
+
+
+//医生信息处理：
+       if(!data.avatar){
+           $('.doctor_icon').html('<img src="/doctor/images/moren.png">');
+       }else {
+           $('.doctor_icon').html('<img src=https://cdn.juliye.net/' + data.avatar + '>');
+       }
+
+       $("#d_name").html(data.name);
+       $("#d_title").html(data.title);
+       $(".desk").html(data.department+"|"+data.hospital);
+       if(data.minPrice == data.maxPrice){
+           $(".price").html("￥"+data.minPrice);
+       }else {
+           $(".price").html("￥"+data.minPrice+"-"+data.maxPrice);
+       }
+       $("#d_zixun").attr("href","tel:"+data.assistantPhone);
+       var visitCycleData=["","早上","中午","晚上"];
+       var visitCycleWeek = ["","一","二","三","四","五","六","日"];
+       var html="";
+       for(var i=0;i<data.visitCycle.length;i++){
+           html+= "<p>周"+ visitCycleWeek[data.visitCycle[i].week]+"&nbsp;&nbsp;"+data.visitCycle[i].startTime+"-"+data.visitCycle[i].endTime+"</p>";
+       }
+       $("#d_visitCycle").html(html);
+       $("#d_speciality").html(data.speciality);
+       $("#d_remark").html(data.desc);
+       html="";
+       for(var i=0;i<data.packageServices.length;i++){
+           html+=  '<li><p class="package" >'+data.packageServices[i].name+'<span>￥'+data.packageServices[i].vipPrice+'</span></p><div class="package-exp">'+data.packageServices[i].desc.replace(/\n/g,'<br/>')+' </div></li>';
+       }
+       $("#d_packageServices").html(html);
+
+
+
+       getList();
+       function getList(){
+           if(d_isrequest){
+               return;
+           }
+           d_isrequest=true;
+
+           var d={
+                   doctor_id:data._id,
+                   pageSize:20
+               }
+           if($("#d_bookmark").val()){
+               d.bookmark = $("#d_bookmark").val(),
+               d.weight = $("#d_weight").val()
+           }
+           if($("#d_bookmark").val() == "0"){
+               return;
+           }
+           $.ajax({
+               type: "GET",
+               url: "/1/doctor_comment/comment_list",
+               data:d,
+               success: function(rs){
+                   var datac=rs;
+                   html="";
+                   for(var i=0;i<datac.items.length;i++){
+                       html+='<li class="review">';
+                       html+='<div class="user-icon">';
+                       if(!datac.items[i].user.avatar){
+                           html+='<img src="/doctor/images/moren.png">';
+                       }else {
+                           html+='<img src=https://cdn.juliye.net/' + datac.items[i].user.avatar + '>';
+                       }
+                       html+='</div>';
+                       html+='<div class="review-con">';
+                       html+='<p class="user-name">';
+                       html+=datac.items[i].user.name
+                       html+='<span class="zan">';
+                       html+='<i></i>';
+                       if(!datac.items[i].is_liked){
+                           if(datac.items[i].like_count>0){
+                               html+=datac.items[i].like_count;
+                           }else
+                           {
+                               html+='赞';
+                           }
+                       }
+                       html+='</span>';
+                       html+='</p>';
+                       html+='<p class="content">';
+                       html+=datac.items[i].content
+                       html+='</p>';
+                       html+='<div class="reply-time">';
+//                       html+='<span>'+formatDateTime(datac.items[i].commentTime)+'</span>';
+                       if(datac.items[i].reply_count>0){
+                       html+='<a href=/1/doctor_comment/reply_page?comment_id='+datac.items[i]._id +' class="reply">'+datac.items[i].reply_count+'回复</a>';
+                       }
+                       html+='</div>';
+                       html+='</div>';
+                       html+='</li>';
+                   }
+                   $("#d_bookmark").val(datac.bookmark);
+                   $("#d_weight").val(datac.weight);
+                   $("#d_comment").append(html);
+                    myScroll.refresh();
+                   d_isrequest=false;
+                   end = false;
+               //console.log(myScroll)
+                myScroll.refresh();
+               },
+               error:function(err){
+               }
+           });
+       }
+
+
+
+   function formatDateTime(inputTime) {
+       var date = new Date(inputTime);
+       var y = date.getFullYear();
+       var m = date.getMonth() + 1;
+       m = m < 10 ? ('0' + m) : m;
+       var d = date.getDate();
+       d = d < 10 ? ('0' + d) : d;
+       var h = date.getHours();
+       h = h < 10 ? ('0' + h) : h;
+       var minute = date.getMinutes();
+       var second = date.getSeconds();
+       minute = minute < 10 ? ('0' + minute) : minute;
+       second = second < 10 ? ('0' + second) : second;
+       return  m + '-' + d+' '+h+':'+minute+':'+second;
+   };
+
+    myScroll = new IScroll("#wrapper", {
+       useTransition: true,
+       useTransform: true,
+       mouseWheel: true,
+       scrollbars: "custom",//只有该属性的值为"custom"，才能通过.iScrollVerticalScrollbar和.iScrollIndicator设置凹槽和滚动条的样式
+       interactiveScrollbars: true,
+       resizeScrollbars: false,//当这个属性设置为否时,才可以通过.iScrollIndicator改变滚动条(不是凹槽的的宽和高）
+       probeType: 3,//这个值设置为3而且必须引入iscroll-probe.js才能触发onscroll事件
+       click: true,
+       taps:true
+   });
+
+   var down = document.getElementById("down");
+   var up = document.getElementById("up");
+   var scroller = document.getElementById("scroller");
+   var list = document.getElementById("list");
+   var step = 3;//上拉加载时的动态创建的li的个数
+   var max = 30;//li的最大个数
+   var flag = false;//滚动条滚动到最底部的标识
+
+   myScroll.on("scroll", function () {
+//   console.log(this)
+       if (parseInt(this.y) >= 0 && this.directionY == -1) {//down
+           if (parseInt(this.y) == 0) {
+               this.refresh();
+           }
+       }
+
+//           console.log(this.y);
+//           console.log(this.maxScrollY)
+       if (parseInt(this.y) == this.maxScrollY) {
+           if (end) {
+               return;
+           }
+           end = true;
+           getList();
+
+       }
+       if (flag && this.directionY == 1 && this.y < this.maxScrollY) {
+           if (end) {
+               return;
+           }
+           flag = false;
+           down.style.display = "none";
+           var fragment = document.createDocumentFragment();
+           var len = list.children.length;//每次上拉时动态获取当前li的总个数
+           var num = max - len;//最大个数和总个数的差值
+           step = num <= step && num >= 0 ? num : step;//当两个数的差值大于等于0小于等于step的时候，step等于两者之差，否则step不变
+           for (var i = 0; i < step; i++) {
+               var li = document.createElement("li");
+               li.innerHTML = list.children.length + i + 1;
+               fragment.appendChild(li);
+           }
+           list.appendChild(fragment);
+       }
+   });
+   //window.addEventListener("load", load, false);
+   });
+</script>

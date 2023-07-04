@@ -1,0 +1,216 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body,html{
+    width: 100%;
+    height: 100%;
+    color:#000;
+}
+.all{
+    width: 100%;
+    height: 100%;
+    background: #ffffff;
+}
+.wrapper{
+    width: 100%;
+    background: url("https://cdn.juliye.net/2030_activity_bg@1.5x.png") no-repeat top center;
+    background-size: contain;
+    padding-bottom: 84px;
+    height: 100%;
+}
+.card{
+    width: 94%;
+    background: #FFFFFF;
+    box-shadow: 0 0 9px 0 rgba(0,0,0,0.19);
+    border-radius: 20px;
+    margin: 0 auto;
+    padding: 13px 12px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+.desc{
+    width: 100%;
+    line-height: 21px;
+    font-size: 15px;
+    color: #666666;
+    letter-spacing: 0.19px;
+}
+.inputSp{
+    width: 100%;
+}
+.detail{
+    width: 100%;
+}
+.brand,.product,.money,.other,.name,.phone{
+    width: 100%;
+    height: 50px;
+}
+.title{
+    width: 52px;
+    height: 50px;
+    line-height: 50px;
+    float: left;
+    font-size: 17px;
+    color: #000000;
+}
+.select{
+    width: 270px;
+    height: 49px;
+    float: left;
+    border-bottom:solid 1px #F0F0F0;
+}
+.select_style{
+    width: 100%;
+    height: 100%;
+    appearance:none;
+    -moz-appearance:none;
+    -webkit-appearance:none;
+    background: #ffffff;
+    border: none;
+    outline: none;
+    font-size: 17px;
+}
+.input_money{
+    width: 80%;
+    height: 100%;
+    border: none;
+    outline: none;
+    font-size: 17px;
+    float: left;
+}
+.unit{
+    width: 20%;
+    font-size: 17px;
+    color: #666666;
+    text-align: right;
+    float: left;
+    height: 49px;
+    line-height:49px;
+}
+.btn_sp{
+    width: 100%;
+    height: 60px;
+
+}
+.left_btn{
+    width: 90px;
+    height: 60px;
+    float: left;
+}
+.plus{
+    width: 17px;
+    height: 17px;
+    float: left;
+    margin-top: 22px;
+    margin-right: 5px;
+}
+.plus_word{
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    font-size: 15px;
+    color: #666666;
+    float: left;
+}
+.right_btn{
+    width: 120px;
+    height: 60px;
+    float: right;
+}
+.more_word{
+    height: 60px;
+    line-height: 60px;
+    font-size: 15px;
+    color: #666666;
+    float: right;
+}
+.more,.back{
+    width: 17px;
+    height: 17px;
+    float: right;
+    margin-top: 22px;
+    margin-right: 5px;
+}
+
+.card_other{
+    width: 94%;
+    height: 162px;
+    background: #FFFFFF;
+    box-shadow: 0 0 9px 0 rgba(0,0,0,0.19);
+    border-radius: 20px;
+    margin: 0 auto;
+    padding: 13px 12px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+.input_other{
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    font-size: 17px;
+    float: left;
+}
+.card_user{
+    width: 94%;
+    height: 162px;
+    background: #FFFFFF;
+    box-shadow: 0 0 9px 0 rgba(0,0,0,0.19);
+    border-radius: 20px;
+    margin: 0 auto;
+    padding: 13px 12px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+.upload{
+    width: 100%;
+    height: 50px;
+    background: #ffffff;
+    padding-top: 5px;
+    margin-top: 80px;
+}
+.btn{
+    width: 96%;
+    height: 44px;
+    line-height: 44px;
+    margin: 0 auto;
+    background-image: linear-gradient(123deg, #FF906D 0%, #FF3D45 100%);
+    border-radius: 22px;
+    text-align: center;
+    font-size: 17px;
+    color: #FFFFFF;
+}
+.btn_no{
+    width: 96%;
+    height: 44px;
+    line-height: 44px;
+    margin: 0 auto;
+    background: #999999;
+    border-radius: 22px;
+    text-align: center;
+    font-size: 17px;
+    color: #FFFFFF;
+}
+.cover{
+    width: 100%;
+    height:100%;
+    position: fixed;
+    top: 0;
+    z-index: 999;
+}
+.msg_card{
+    width: 70%;
+    height: 80px;
+    line-height: 80px;
+    border-radius: 5px;
+    background: #ffffff;
+    position: absolute;
+    top: 45%;
+    left: 15%;
+    text-align: center;
+    font-size: 17px;
+    color: #000;
+    border: solid 2px #eeeeee;
+}

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="format-detection" content="telephone=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>朱李叶健康</title>
+
+</head>
+<style>
+    body {
+        margin: 0px;
+        padding: 0px;
+        background-color: #E1F6F6;
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    img {
+        padding: 0;
+        margin: 0;
+        display: inline-block;
+    }
+
+    input {
+        -webkit-appearance: none;
+        outline: none
+    }
+
+    input::-webkit-input-placeholder {
+        color: #B9B9B9
+    }
+</style>
+
+<body>
+<div style="z-index:20;text-align: center;
+        vertical-align: middle;">
+    <div id="logoDefault" style="margin:0 auto;margin-top:58px;text-align: center;
+    vertical-align: middle;">
+        <img src="images/registerlogo.png" style="width: 70px;height: 70px">
+    </div>
+    <div style="display:none;margin-top:20px;text-align: center;vertical-align: middle;" id="logoImage">
+        <img id="showImage" src="images/Group 3@3x.png" style="border: 1px solid #E0E0E0;
+border-radius: 8px;">
+    </div>
+
+    <div id="inputPhoneNum" style="margin-top:30px;height: 50px;">
+        <input  type="text" id="phoneNum" placeholder="请输入手机号码" style="height:46px;border: 1px solid #12B6BB;border-radius: 8px;font-size: 17px;;
+letter-spacing: 0.06px;padding-left: 20px;">
+    </div>
+    <div id="downloadButton" style="margin-top:25px;height: 50px;">
+        <input type="button" id="downloadButton1" value="提交并下载APP" style="height:50px;background-color: #12B6BB;border: 1px solid #12B6BB;border-radius: 8px;font-size: 17px;
+color: #FFFFFF;
+letter-spacing: 0.06px;" onclick="tagUserSubmit()">
+    </div>
+
+    <div style="margin:auto;margin-top:32px;height: 50px;font-size: 14px;
+color: #333333;
+letter-spacing: -0.05px;
+line-height: 26px;
+/*width:305px*/
+">
+        <p>填写手机号，免费获得专属定制的健康资讯
+            <br>
+            下载APP, 线下买药, 线上返现
+        </p>
+    </div>
+    <div id="bottom" style="font-size: 15px;margin-left: 20%;
+color: #333333;
+letter-spacing: 0;
+line-height: 24px
+;position: absolute;
+    /*bottom: 18px;*/
+    margin-top: 173px;
+    padding-bottom: 18px;
+">
+        <img id="logo" src="images/logolittle.png" onclick=""
+             style="display: inline-block;width: 30px;height: 30px;float: left;">
+
+        <label style="font-size: 15px;float: right;width: 183px;line-height: 30px">
+            朱李叶健康APP为你提供
+        </label>
+
+    </div>
+
+</div>
+</body>
+<script src="libs/jquery.min.js"></script>
+<script src="libs/common.js"></script>
+<script>
+    window.onload = function () {
+        var windowWidth=$(window).width();
+        var imgUri = 'https://cdn.juliye.net/';
+        var imageId = getUrlQueryObject().image;
+        $("#footer").css('margin-left', (windowWidth - 259) / 2);
+        $("#background").css('height', windowWidth * 1206 / 750);
+
+        $("#phoneNum").css({'width':windowWidth - 66*windowWidth/320,'height':44*windowWidth/320});
+        $("#downloadButton1").css({'width': windowWidth - 40*windowWidth/320,'height':48*windowWidth/320});
+
+        if(windowWidth<330){
+            $("#bottom").css('margin-left', '10%');
+        }
+        if (imageId) {
+            $('#logoDefault').css('display', 'none');
+            $('#logoImage').css('display', 'block');
+            $('#showImage').attr('src', imgUri + imageId);
+            var downloadButtonWidth = ($('#phoneNum').width() + $('#downloadButton').width()) / 2;
+//alert(downloadButtonWidth)
+            $('#showImage').css('height', downloadButtonWidth * $('#showImage').height() / $('#showImage').width());
+            $('#showImage').css('width', downloadButtonWidth);
+        }
+    }
+    function tagUserSubmit() {
+        var tagId = getUrlQueryObject().id, tagTitle = getUrlQueryObject().title, code = getUrlQueryObject().code,
+            phoneNum = $('#phoneNum').val();
+        if (!isValidPhone(phoneNum)) {
+            alert('手机号码输入错误！');
+        } else if (!tagId) {
+            alert('标签组ID输入错误！');
+        } else if (!tagTitle) {
+            alert('标签组名称输入错误！');
+        } else {
+            var postData = {phoneNum: phoneNum, tagId: tagId, tagTitle: tagTitle, code: code};
+            console.log('请求参宿', postData);
+            $.ajax({
+                url: '/1/feedFlow/tagUser',
+                type: 'POST',
+                headers: {
+//                    "x-docchat-user-id": '',
+//                    "x-docchat-session-token": '',
+//                    "x-docchat-application-device-mark": ''
+                },
+                data: postData,
+                dataType: 'json',
+                success: function (result) {
+//                    alert(result);
+                    console.log('正确返回值', result.type);
+                    if (result.type == 'goDownload') {
+
+                    } else {
+                        console.log('跳转到应用');
+                    }
+
+                    download();
+                },
+                error: function (err) {
+//                    alert(err)
+                    console.log('错误返回值', err);
+                }
+            });
+        }
+    }
+</script>
+</html>
+

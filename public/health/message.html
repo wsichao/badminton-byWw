@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>健康头条</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="yes">
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimal-ui">
+    <script src="libs/jquery.min.js"></script>
+    <script src="libs/connectWebViewJavascriptBridge.js"></script>
+    <script src="libs/common.js"></script>
+    <!--<script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>-->
+</head>
+<style>
+    body {
+        padding: 0px;
+        margin: 0px;
+    }
+</style>
+<body>
+<div style="margin-left:12px;margin-right:12px;">
+    <header style="margin-top: 13px;">
+        <label id="title" style="text-align: center;font-size: 21px;font-weight: bold;"></label>
+        <div style="margin-top: 17px;line-height:12px">
+            <label id="createdAt" style="color: #999999;font-size: 13px;line-height: 18px"></label>
+        </div>
+    </header>
+    <div style="margin-top: 17px;">
+        <div style="font-size: 17px;line-height: 24px" id="mainBody">
+        </div>
+    </div>
+</div>
+
+
+</body>
+<script>
+    var messageId;
+    var serverUri = 'https://' + location.host;
+//    var serverUri = 'http://' + location.host;
+
+    window.onload = function () {
+        messageId = getUrlQueryObject().messageId;
+//        pageId = getUrlQueryObject().pageId, token = getUrlQueryObject().token, deviceId = getUrlQueryObject().deviceId;
+        $.ajax({
+            type: "GET",
+            url: "/1/zlycare/message/getMessage?messageId="+messageId,
+            headers: {
+//                "x-docchat-user-id": userId,
+//                "x-docchat-session-token": token,
+//                "x-docchat-application-device-mark": deviceId
+            },
+            success: function (ret) {
+                console.log('返回结果', ret)
+                ret=JSON.parse(JSON.stringify(ret));
+                if (ret) {
+//                    $('#source').html(ret.user_name);
+                    $('#title').html(ret.title);
+                    $('#createdAt').html(formatDate(ret.createdAt));
+                    $('#mainBody').html(ret.content);
+                    $('img').css('width',window.screen.width-24);
+//                    $('img').css('height','auto');
+//                    $('img').css('float','left');
+//                    $('p').css('padding-left',0);
+//
+//                    $('#view').css('width',18);
+//                    $('#view').css('height',12);
+//                    $('#view').css('float','right');
+//
+
+
+                } else {
+                    alert('获取消息信息失败');
+                }
+            }
+        });
+
+    };
+</script>
+</html>

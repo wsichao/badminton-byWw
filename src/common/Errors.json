@@ -1,0 +1,950 @@
+{
+  "200": {
+    "code": "200",
+    "sysMessage": "200",
+    "businessMessage": "200",
+    "httpCode": "200"
+  },
+  "1001": {
+    "code": "1001",
+    "sysMessage": "404请求未找到",
+    "businessMessage": "404请求未找到",
+    "httpCode": "404"
+  },
+  "1003": {
+    "code": "1003",
+    "sysMessage": "token失效,请重新请求!",
+    "businessMessage": "token失效,请重新请求!",
+    "httpCode": "404"
+  },
+  "1005": {
+    "code": "1005",
+    "sysMessage": "资源操作无效",
+    "businessMessage": "资源操作无效",
+    "httpCode": "404"
+  },
+  "1201": {
+    "code": "1201",
+    "sysMessage": "用户信息不全,无法创建用户",
+    "businessMessage": "用户信息不全,无法创建用户",
+    "httpCode": "400"
+  },
+  "1202": {
+    "code": "1202",
+    "sysMessage": "手机号码已存在",
+    "businessMessage": "手机号码已存在",
+    "httpCode": "400"
+  },
+  "1203": {
+    "code": "1203",
+    "sysMessage": "手机号码错误",
+    "businessMessage": "手机号码错误",
+    "httpCode": "400"
+  },
+  "1204": {
+    "code": "1204",
+    "sysMessage": "昵称已存在",
+    "businessMessage": "昵称已存在",
+    "httpCode": "400"
+  },
+  "1205": {
+    "code": "1205",
+    "sysMessage": "您拨打的号码是空号",
+    "businessMessage": "您拨打的号码是空号",
+    "httpCode": "400"
+  },
+  "1206": {
+    "code": "1206",
+    "sysMessage": "充值金额必须大于0元",
+    "businessMessage": "充值金额必须大于0元",
+    "httpCode": "400"
+  },
+  "1207": {
+    "code": "1207",
+    "sysMessage": "微信充值失败",
+    "businessMessage": "微信充值失败",
+    "httpCode": "400"
+  },
+  "1208": {
+    "code": "1208",
+    "sysMessage": "邀请码不存在",
+    "businessMessage": "邀请码不存在",
+    "httpCode": "400"
+  },
+  "1209": {
+    "code": "1209",
+    "sysMessage": "您呼叫的号码已被冻结，无法呼叫该用户",
+    "businessMessage": "您呼叫的号码已被冻结，无法呼叫该用户",
+    "httpCode": "400"
+  },
+  "1210": {
+    "code": "1210",
+    "sysMessage": "好友姓名不能为空，请在手机通讯录中完善后再尝试",
+    "businessMessage": "好友姓名不能为空，请在手机通讯录中完善后再尝试",
+    "httpCode": "400"
+  },
+  "1211": {
+    "code": "1211",
+    "sysMessage": "您号码已被冻结,无法登录",
+    "businessMessage": "您号码已被冻结,无法登录",
+    "httpCode": "400"
+  },
+  "1212": {
+    "code": "1212",
+    "sysMessage": "最低出价1元",
+    "businessMessage": "最低出价1元",
+    "httpCode": "400"
+  },
+  "1213": {
+    "code": "1213",
+    "sysMessage": "修改价格一天只能修改一次",
+    "businessMessage": "修改价格一天只能修改一次",
+    "httpCode": "400"
+  },
+  "1214": {
+    "code": "1214",
+    "sysMessage": "type错误",
+    "businessMessage": "type错误",
+    "httpCode": "400"
+  },
+  "1215": {
+    "code": "1215",
+    "sysMessage": "手机号已被其他账号绑定",
+    "businessMessage": "手机号已被其他账号绑定",
+    "httpCode": "400"
+  },
+  "1301": {
+    "code": "1301",
+    "sysMessage": "您呼叫的用户未在线，我们已通知其尽快上线，上线后我们会立即短信告知您。",
+    "businessMessage": "您呼叫的用户未在线，我们已通知其尽快上线，上线后我们会立即短信告知您。",
+    "httpCode": "400"
+  },
+  "1302": {
+    "code": "1302",
+    "sysMessage": "您呼叫的用户正在接听电话，请稍后再拨。",
+    "businessMessage": "您呼叫的用户正在接听电话，请稍后再拨。",
+    "httpCode": "400"
+  },
+  "1303": {
+    "code": "1303",
+    "sysMessage": "在本应用中充值后即与该用户通话",
+    "businessMessage": "在本应用中充值后即可与该用户通话",
+    "httpCode": "400"
+  },
+  "1304": {
+    "code": "1304",
+    "sysMessage": "您呼叫的用户正在接听电话，请稍后再与其联系。",
+    "businessMessage": "您呼叫的用户正在接听电话，请稍后再与其联系。",
+    "httpCode": "400"
+  },
+  "1305": {
+    "code": "1305",
+    "sysMessage": "余额不足，无法拨打",
+    "businessMessage": "余额不足，无法拨打",
+    "httpCode": "400"
+  },
+  "1401": {
+    "code": "1401",
+    "sysMessage": "订单不存在",
+    "businessMessage": "订单不存在",
+    "httpCode": "400"
+  },
+  "1402": {
+    "code": "1402",
+    "sysMessage": "您的账号或当前设备有待支付订单，请支付后重试。",
+    "businessMessage": "您的账号或当前设备有待支付订单，请支付后重试。",
+    "httpCode": "400"
+  },
+  "1403": {
+    "code": "1403",
+    "sysMessage": "订单已处理",
+    "businessMessage": "订单已处理",
+    "httpCode": "400"
+  },
+  "1501": {
+    "code": "1501",
+    "sysMessage": "验证码错误",
+    "businessMessage": "验证码错误",
+    "httpCode": "400"
+  },
+  "1502": {
+    "code": "1502",
+    "sysMessage": "验证码错误",
+    "businessMessage": "验证码错误",
+    "httpCode": "400"
+  },
+  "1503": {
+    "code": "1503",
+    "sysMessage": "用户不存在",
+    "businessMessage": "用户不存在",
+    "httpCode": "400"
+  },
+  "1504": {
+    "code": "1504",
+    "sysMessage": "没有用户信息",
+    "businessMessage": "没有用户信息",
+    "httpCode": "400"
+  },
+  "1505": {
+    "code": "1505",
+    "sysMessage": "您输入的密码有误，请重新输入",
+    "businessMessage": "您输入的密码有误，请重新输入",
+    "httpCode": "400"
+  },
+  "1506": {
+    "code": "1506",
+    "sysMessage": "顾问不存在",
+    "businessMessage": "顾问不存在",
+    "httpCode": "400"
+  },
+  "1507": {
+    "code": "1507",
+    "sysMessage": "医生暂未开通专属医生服务，敬请期待！",
+    "businessMessage": "医生暂未开通专属医生服务，敬请期待！",
+    "httpCode": "400"
+  },
+  "1508": {
+    "code": "1508",
+    "sysMessage": "医聊号已存在",
+    "businessMessage": "医聊号已存在",
+    "httpCode": "400"
+  },
+  "1509": {
+    "code": "1509",
+    "sysMessage": "手机号已存在",
+    "businessMessage": "手机号已存在",
+    "httpCode": "400"
+  },
+  "1510": {
+    "code": "1510",
+    "sysMessage": "您还没有热线号，请先“开通热线号”",
+    "businessMessage": "您还没有热线号，请先“开通热线号”",
+    "httpCode": "400"
+  },
+  "1518": {
+    "code": "1518",
+    "sysMessage": "信息正在审核中，如有疑问请联系客服",
+    "businessMessage": "信息正在审核中，如有疑问请联系客服",
+    "httpCode": "400"
+  },
+  "1519": {
+    "code": "1519",
+    "sysMessage": "您提现的金额大于您的余额，请核对提现金额",
+    "businessMessage": "您提现的金额大于您的余额，请核对提现金额",
+    "httpCode": "400"
+  },
+  "1520": {
+    "code": "1520",
+    "sysMessage": "提现申请不存在",
+    "businessMessage": "提现申请不存在",
+    "httpCode": "400"
+  },
+  "1521": {
+    "code": "1521",
+    "sysMessage": "你的帐号已被冻结，暂时无法进行提现",
+    "businessMessage": "你的帐号已被冻结，暂时无法进行提现",
+    "httpCode": "400"
+  },
+  "1522": {
+    "code": "1522",
+    "sysMessage": "支付金额1元起",
+    "businessMessage": "支付金额1元起",
+    "httpCode": "400"
+  },
+  "1523": {
+    "code": "1523",
+    "sysMessage": "服务代号错误",
+    "businessMessage": "服务代号错误",
+    "httpCode": "400"
+  },
+  "1524": {
+    "code": "1524",
+    "sysMessage": "支付密码错误，请重试",
+    "businessMessage": "支付密码错误，请重试",
+    "httpCode": "400"
+  },
+  "1525": {
+    "code": "1525",
+    "sysMessage": "身份证格式不正确",
+    "businessMessage": "身份证格式不正确",
+    "httpCode": "400"
+  },
+  "1526": {
+    "code": "1526",
+    "sysMessage": "已进行过实名认证",
+    "businessMessage": "已进行过实名认证",
+    "httpCode": "400"
+  },
+  "1527": {
+    "code": "1527",
+    "sysMessage": "已邀请过此用户",
+    "businessMessage": "已邀请过此用户",
+    "httpCode": "400"
+  },
+  "1528": {
+    "code": "1528",
+    "sysMessage": "用户已存在",
+    "businessMessage": "用户已存在",
+    "httpCode": "400"
+  },
+  "1529": {
+    "code": "1529",
+    "sysMessage": "账号或密码错误，请重新输入",
+    "businessMessage": "账号或密码错误，请重新输入",
+    "httpCode": "400"
+  },
+  "1530": {
+    "code": "1530",
+    "sysMessage": "免费电话仅支持手机或带区号座机",
+    "businessMessage": "免费电话仅支持手机或带区号座机",
+    "httpCode": "400"
+  },
+  "1531": {
+    "code": "1531",
+    "sysMessage": "您本周已购买过一张代金券",
+    "businessMessage": "您本周已购买过一张代金券",
+    "httpCode": "400"
+  },
+  "1532": {
+    "code": "1532",
+    "sysMessage": "没有找到能使用的优惠券",
+    "businessMessage": "没有找到能使用的优惠券",
+    "httpCode": "400"
+  },
+  "1533": {
+    "code": "1533",
+    "sysMessage": "时间设置有误",
+    "businessMessage": "时间设置有误",
+    "httpCode": "400"
+  },
+  "1534": {
+    "code": "1534",
+    "sysMessage": "商家名称过长",
+    "businessMessage": "商家名称过长",
+    "httpCode": "400"
+  },
+  "1535": {
+    "code": "1535",
+    "sysMessage": "该商户已是运营商户",
+    "businessMessage": "该商户已是运营商户",
+    "httpCode": "400"
+  },
+  "1600": {
+    "code": "1600",
+    "sysMessage": "活动已结束",
+    "businessMessage": "活动已结束",
+    "httpCode": "400"
+  },
+  "1601": {
+    "code": "1601",
+    "sysMessage": "已领取过代金券",
+    "businessMessage": "已领取过代金券",
+    "httpCode": "400"
+  },
+  "1602": {
+    "code": "1602",
+    "sysMessage": "优惠券不存在",
+    "businessMessage": "优惠券不存在",
+    "httpCode": "400"
+  },
+  "1603": {
+    "code": "1603",
+    "sysMessage": "已领取过折扣券",
+    "businessMessage": "已领取过折扣券",
+    "httpCode": "400"
+  },
+  "1604": {
+    "code": "1604",
+    "sysMessage": "已领取过",
+    "businessMessage": "已领取过",
+    "httpCode": "400"
+  },
+  "1701": {
+    "code": "1701",
+    "sysMessage": "不是新用户",
+    "businessMessage": "不是新用户",
+    "httpCode": "400"
+  },
+  "1801": {
+    "code": "1801",
+    "sysMessage": "非法操作或没有权限",
+    "businessMessage": "非法操作或没有权限",
+    "httpCode": "400"
+  },
+  "1802": {
+    "code": "1802",
+    "sysMessage": "accid已经注册",
+    "businessMessage": "accid已经注册",
+    "httpCode": "400"
+  },
+  "1803": {
+    "code": "1803",
+    "sysMessage": "accid请求频率控制",
+    "businessMessage": "accid请求频率控制",
+    "httpCode": "400"
+  },
+  "1804": {
+    "code": "1804",
+    "sysMessage": "HTTP重复请求accid",
+    "businessMessage": "HTTP重复请求accid",
+    "httpCode": "400"
+  },
+  "1805": {
+    "code": "1805",
+    "sysMessage": "网易云服务器内部错误",
+    "businessMessage": "网易云服务器内部错误",
+    "httpCode": "400"
+  },
+  "1806": {
+    "code": "1806",
+    "sysMessage": "accid或token不匹配",
+    "businessMessage": "accid或token不匹配",
+    "httpCode": "400"
+  },
+  "1807": {
+    "code": "1807",
+    "sysMessage": "主叫方accid或token不存在",
+    "businessMessage": "您的版本过低,不支持网络通话,请选择普通通话",
+    "httpCode": "400"
+  },
+  "1808": {
+    "code": "1808",
+    "sysMessage": "被叫方accid或token不存在",
+    "businessMessage": "对方暂时无法接听网络电话,请选择普通电话拨打",
+    "httpCode": "400"
+  },
+  "1809": {
+    "code": "1809",
+    "sysMessage": "校验错误",
+    "businessMessage": "校验错误",
+    "httpCode": "400"
+  },
+  "1810": {
+    "code": "1810",
+    "sysMessage": "获取用户accid和token失败",
+    "businessMessage": "获取用户accid和token失败",
+    "httpCode": "400"
+  },
+  "1811": {
+    "code": "1811",
+    "sysMessage": "提交的数据有误",
+    "businessMessage": "提交的数据有误",
+    "httpCode": "400"
+  },
+  "1812": {
+    "code": "1812",
+    "sysMessage": "您无法呼叫自己",
+    "businessMessage": "您无法呼叫自己",
+    "httpCode": "400"
+  },
+  "1813": {
+    "code": "1813",
+    "sysMessage": "对方拒绝接听电话",
+    "businessMessage": "对方拒绝接听电话",
+    "httpCode": "400"
+  },
+  "1814": {
+    "code": "1814",
+    "sysMessage": "您输入的旧密码有误",
+    "businessMessage": "您输入的旧密码有误",
+    "httpCode": "400"
+  },
+  "1815": {
+    "code": "1815",
+    "sysMessage": "您已提醒过该用户",
+    "businessMessage": "您已提醒过该用户",
+    "httpCode": "400"
+  },
+  "1816": {
+    "code": "1816",
+    "sysMessage": "异常,无法呼叫",
+    "businessMessage": "异常,无法呼叫",
+    "httpCode": "400"
+  },
+  "1818": {
+    "code": "1818",
+    "sysMessage": "您的版本过低,请及时升级",
+    "businessMessage": "您的版本过低,请及时升级",
+    "httpCode": "400"
+  },
+  "3001": {
+    "code": "3001",
+    "sysMessage": "查询参数有误",
+    "businessMessage": "查询参数有误",
+    "httpCode": "400"
+  },
+  "4001": {
+    "code": "4001",
+    "sysMessage": "密码错误",
+    "businessMessage": "密码错误",
+    "httpCode": "400"
+  },
+  "4002": {
+    "code": "4002",
+    "sysMessage": "您的登录信息已失效，请重新登录",
+    "businessMessage": "您的登录信息已失效，请重新登录",
+    "httpCode": "400"
+  },
+  "4003": {
+    "code": "4003",
+    "sysMessage": "非法IP",
+    "businessMessage": "非法IP",
+    "httpCode": "403"
+  },
+  "5001": {
+    "code": "5001",
+    "sysMessage": "双向回拨请求失败",
+    "businessMessage": "双向回拨请求失败",
+    "httpCode": "400"
+  },
+  "5002": {
+    "code": "5002",
+    "sysMessage": "消息推送失败",
+    "businessMessage": "消息推送失败",
+    "httpCode": "400"
+  },
+  "5003": {
+    "code": "5003",
+    "sysMessage": "未获取到结果",
+    "businessMessage": "未获取到结果",
+    "httpCode": "400"
+  },
+  "5004": {
+    "code": "5004",
+    "sysMessage": "验证失败",
+    "businessMessage": "验证失败",
+    "httpCode": "400"
+  },
+  "5005": {
+    "code": "5005",
+    "sysMessage": "IAP验证不匹配",
+    "businessMessage": "IAP验证不匹配",
+    "httpCode": "400"
+  },
+  "8001": {
+    "code": "8001",
+    "sysMessage": "非法操作",
+    "businessMessage": "非法操作",
+    "httpCode": "400"
+  },
+  "8002": {
+    "code": "8002",
+    "sysMessage": "数据异常",
+    "businessMessage": "数据异常",
+    "httpCode": "400"
+  },
+  "8003": {
+    "code": "8003",
+    "sysMessage": "操作过频繁,请稍后再操作",
+    "businessMessage": "操作过频繁,请稍后再操作",
+    "httpCode": "400"
+  },
+  "8005": {
+    "code": "8005",
+    "sysMessage": "请求参数有误",
+    "businessMessage": "请求参数有误",
+    "httpCode": "400"
+  },
+  "8006": {
+    "code": "8006",
+    "sysMessage": "该申请不能操作",
+    "businessMessage": "该申请不能操作",
+    "httpCode": "400"
+  },
+  "8007": {
+    "code": "8007",
+    "sysMessage": "请求失败",
+    "businessMessage": "请求失败",
+    "httpCode": "400"
+  },
+  "8008": {
+    "code": "8008",
+    "sysMessage": "今日已发起过提现申请",
+    "businessMessage": "今日已发起过提现申请",
+    "httpCode": "400"
+  },
+  "9000": {
+    "code": "9000",
+    "sysMessage": "服务器异常",
+    "businessMessage": "服务器异常",
+    "httpCode": "500"
+  },
+  "9001": {
+    "code": "9001",
+    "sysMessage": "系统错误",
+    "businessMessage": "系统错误",
+    "httpCode": "500"
+  },
+  "2001": {
+    "code": "2001",
+    "sysMessage": "您的收藏数已到达上限，请先取消不再需要的收藏后再尝试",
+    "businessMessage": "您的收藏数已到达上限，请先取消不再需要的收藏后再尝试",
+    "httpCode": "500"
+  },
+  "2002": {
+    "code": "2002",
+    "sysMessage": "您无权限查看该订单",
+    "businessMessage": "您无权限查看该订单",
+    "httpCode": "500"
+  },
+  "2100": {
+    "code": "2100",
+    "sysMessage": "没有找到相应的数据",
+    "businessMessage": "没有找到相应的数据",
+    "httpCode": "400"
+  },
+  "2101": {
+    "code": "2101",
+    "sysMessage": "红包未支付",
+    "businessMessage": "红包未支付,请先支付红包",
+    "httpCode": "400"
+  },
+  "2102": {
+    "code": "2102",
+    "sysMessage": "红包设置有误",
+    "businessMessage": "非法红包,请重新配置",
+    "httpCode": "400"
+  },
+  "2103": {
+    "code": "2103",
+    "sysMessage": "动态内容包含非法字符",
+    "businessMessage": "动态内容包含非法字符",
+    "httpCode": "400"
+  },
+  "2104": {
+    "code": "2104",
+    "sysMessage": "动态内容过长",
+    "businessMessage": "动态内容过长",
+    "httpCode": "400"
+  },
+  "2105": {
+    "code": "2105",
+    "sysMessage": "您的会员额度不足,无法领取此类代金券,是否购买会员额度?",
+    "businessMessage": "您的会员额度不足,无法领取此类代金券,是否购买会员额度?",
+    "httpCode": "400"
+  },
+  "2106": {
+    "code": "2106",
+    "sysMessage": "该商户的代金券已被抢完!",
+    "businessMessage": "该商户的代金券已被抢完!",
+    "httpCode": "400"
+  },
+  "2107": {
+    "code": "2107",
+    "sysMessage": "该代金券已被使用,无法收券",
+    "businessMessage": "该代金券已被使用,无法收券",
+    "httpCode": "400"
+  },
+  "2108": {
+    "code": "2108",
+    "sysMessage": "您的推广费用不足,无法收券",
+    "businessMessage": "您的推广费用不足,无法收券",
+    "httpCode": "400"
+  },
+  "2109": {
+    "code": "2109",
+    "sysMessage": "失败,您的会员额度不足!",
+    "businessMessage": "失败,您的会员额度不足!",
+    "httpCode": "400"
+  },
+  "2110": {
+    "code": "2110",
+    "sysMessage": "失败,该优惠券已过期!",
+    "businessMessage": "失败,该优惠券已过期!",
+    "httpCode": "400"
+  },
+  "2111": {
+    "code": "2111",
+    "sysMessage": "您输入的编码有误",
+    "businessMessage": "您输入的编码有误",
+    "httpCode": "400"
+  },
+  "2112": {
+    "code": "2112",
+    "sysMessage": "您不是此代金券指定商户,无法收券",
+    "businessMessage": "您不是此代金券指定商户,无法收券",
+    "httpCode": "400"
+  },
+  "2113": {
+    "code": "2113",
+    "sysMessage": "向该用户付款不可使用优惠券",
+    "businessMessage": "向该用户付款不可使用优惠券",
+    "httpCode": "400"
+  },
+  "2114": {
+    "code": "2114",
+    "sysMessage": "该商户已暂停发放代金券",
+    "businessMessage": "该商户已暂停发放代金券",
+    "httpCode": "400"
+  },
+  "2115": {
+    "code": "2115",
+    "sysMessage": "当前设备已领取过此优惠",
+    "businessMessage": "当前设备已领取过此优惠",
+    "httpCode": "400"
+  },
+  "2116": {
+    "code": "2116",
+    "sysMessage": "此用户收费",
+    "businessMessage": "此用户收费",
+    "httpCode": "400"
+  },
+  "2117": {
+    "code": "2117",
+    "sysMessage": "您不能领取自己的代金券",
+    "businessMessage": "您不能领取自己的代金券",
+    "httpCode": "400"
+  },
+  "2118": {
+    "code": "2118",
+    "sysMessage": "还未到代金券使用时间",
+    "businessMessage": "还未到代金券使用时间",
+    "httpCode": "400"
+  },
+  "2119": {
+    "code": "2119",
+    "sysMessage": "失败, 用户一天只能使用一张通用券",
+    "businessMessage": "失败,用户一天只能使用一张通用券",
+    "httpCode": "400"
+  },
+  "2200": {
+    "code": "2200",
+    "sysMessage": "暂时只支持扫码收券",
+    "businessMessage": "暂时只支持扫码收券",
+    "httpCode": "400"
+  },
+  "2201": {
+    "code": "2201",
+    "sysMessage": "领取失败，请刷新后重试",
+    "businessMessage": "领取失败，请刷新后重试",
+    "httpCode": "400"
+  },
+  "2202": {
+    "code": "2202",
+    "sysMessage": "已被领完",
+    "businessMessage": "已被领完",
+    "httpCode": "400"
+  },
+  "2203": {
+    "code": "2203",
+    "sysMessage": "商家未绑定 pushId",
+    "businessMessage": "商家未绑定 pushId",
+    "httpCode": "400"
+  },
+  "2326": {
+    "code": "2326",
+    "sysMessage": "添加IM好友失败",
+    "businessMessage": "添加IM好友失败",
+    "httpCode": "400"
+  },
+  "2327": {
+    "code": "2327",
+    "sysMessage": "删除好友失败",
+    "businessMessage": "删除好友失败",
+    "httpCode": "400"
+  },
+  "2328": {
+    "code": "2328",
+    "sysMessage": "删除会话列表失败",
+    "businessMessage": "删除会话列表失败",
+    "httpCode": "400"
+  },
+  "2329": {
+    "code": "2329",
+    "sysMessage": "删除消息失败",
+    "businessMessage": "删除消息失败",
+    "httpCode": "400"
+  },
+  "2403": {
+    "code": "2403",
+    "sysMessage": "获取用户信息失败",
+    "businessMessage": "获取用户信息失败",
+    "httpCode": "400"
+  },
+  "2405": {
+    "code": "2405",
+    "sysMessage": "会员维护计划不存在或计划已取消",
+    "businessMessage": "会员维护计划不存在或计划已取消",
+    "httpCode": "400"
+  },
+  "2406": {
+    "code": "2406",
+    "sysMessage": "移除黑名单失败",
+    "businessMessage": "移除黑名单失败",
+    "httpCode": "400"
+  },
+  "2410": {
+    "code": "2410",
+    "sysMessage": "未找到该服务内容",
+    "businessMessage": "未找到该服务内容",
+    "httpCode": "400"
+  },
+  "2411": {
+    "code": "2411",
+    "sysMessage": "您的会员额度不足，请充值后继续",
+    "businessMessage": "您的会员额度不足，请充值后继续",
+    "httpCode": "400"
+  },
+  "2413": {
+    "code": "2413",
+    "sysMessage": "推送透传消息失败",
+    "businessMessage": "推送透传消息失败",
+    "httpCode": "400"
+  },
+  "2414": {
+    "code": "2414",
+    "sysMessage": "本次活动仅限新用户参加",
+    "businessMessage": "本次活动仅限新用户参加",
+    "httpCode": "400"
+  },
+  "2415": {
+    "code": "2415",
+    "sysMessage": "您已领取过此类优惠",
+    "businessMessage": "您已领取过此类优惠",
+    "httpCode": "400"
+  },
+  "2416": {
+    "code": "2416",
+    "sysMessage": "该凭证已使用过",
+    "businessMessage": "该凭证已使用过",
+    "httpCode": "400"
+  },
+  "2417": {
+    "code": "2417",
+    "sysMessage": "您不是此券指定商户",
+    "businessMessage": "您不是此券指定商户",
+    "httpCode": "400"
+  },
+  "2418": {
+    "code": "2418",
+    "sysMessage": "该凭证已取消",
+    "businessMessage": "该凭证已取消",
+    "httpCode": "400"
+  },
+  "2301": {
+    "code": "2301",
+    "sysMessage": "常用药品报销额度不足",
+    "businessMessage": "常用药品报销额度不足",
+    "httpCode": "400"
+  },
+  "2302": {
+    "code": "2302",
+    "sysMessage": "常用药品报销额度不足",
+    "businessMessage": "常用药品报销额度不足",
+    "httpCode": "400"
+  },
+  "2433": {
+    "code": "2433",
+    "sysMessage": "用户评论不存在或已被删除",
+    "businessMessage": "用户评论不存在或已被删除",
+    "httpCode": "400"
+  },
+  "2434": {
+    "code": "2434",
+    "sysMessage": "用户评论回复不存在或已被删除",
+    "businessMessage": "用户评论回复不存在或已被删除",
+    "httpCode": "400"
+  },
+  "2435": {
+    "code": "2435",
+    "sysMessage": "该医生不存在或已删除",
+    "businessMessage": "该医生不存在或已删除",
+    "httpCode": "400"
+  },
+  "2436": {
+    "code": "2436",
+    "sysMessage": "购买医生服务之后才可进行评价哟",
+    "businessMessage": "购买医生服务之后才可进行评价哟",
+    "httpCode": "400"
+  },
+  "2437": {
+    "code": "2437",
+    "sysMessage": "药品不存在",
+    "businessMessage": "药品不存在",
+    "httpCode": "400"
+  },
+  "2438": {
+    "code": "2438",
+    "sysMessage": "该药品不在补贴范围，请扫描其他药品",
+    "businessMessage": "该药品不在补贴范围，请扫描其他药品",
+    "httpCode": "400"
+  },
+  "2439": {
+    "code": "2439",
+    "sysMessage": "您的该药品补贴数量已用完，请扫描其他药品",
+    "businessMessage": "您的该药品补贴数量已用完，请扫描其他药品",
+    "httpCode": "400"
+  },
+  "2441": {
+    "code": "2441",
+    "sysMessage": "当前订单已无可补贴药品，是否退出当前订单？",
+    "businessMessage": "当前订单已无可补贴药品，是否退出当前订单？",
+    "httpCode": "400"
+  },
+  "2442": {
+    "code": "2442",
+    "sysMessage": "该药品已无法申请补贴",
+    "businessMessage": "该药品已无法申请补贴",
+    "httpCode": "400"
+  },
+  "2500": {
+    "code": "2500",
+    "sysMessage": "您不是店员，无法进行此操作！",
+    "businessMessage": "您不是店员，无法进行此操作！",
+    "httpCode": "400"
+  },
+  "2501": {
+    "code": "2501",
+    "sysMessage": "没有找到该优惠券信息！",
+    "businessMessage": "没有找到该优惠券信息！",
+    "httpCode": "400"
+  },
+  "2502": {
+    "code": "2502",
+    "sysMessage": "优惠券已被使用",
+    "businessMessage": "优惠券已被使用",
+    "httpCode": "400"
+  },
+  "2503": {
+    "code": "2503",
+    "sysMessage": "该优惠券信息有错误！",
+    "businessMessage": "该优惠券信息有错误！",
+    "httpCode": "400"
+  },
+  "2504": {
+    "code": "2504",
+    "sysMessage": "您没有该优惠券！",
+    "businessMessage": "您没有该优惠券！",
+    "httpCode": "400"
+  },
+  "2505": {
+    "code": "2505",
+    "sysMessage": "优惠券已过期",
+    "businessMessage": "优惠券已过期",
+    "httpCode": "400"
+  },
+  "2506": {
+    "code": "2506",
+    "sysMessage": "没找到相应的活动！",
+    "businessMessage": "没找到相应的活动！",
+    "httpCode": "400"
+  },
+  "2507": {
+    "code": "2507",
+    "sysMessage": "缺少查询参数！",
+    "businessMessage": "缺少查询参数！",
+    "httpCode": "400"
+  },
+  "2508": {
+    "code": "2508",
+    "sysMessage": "优惠券还未到使用时间",
+    "businessMessage": "优惠券还未到使用时间",
+    "httpCode": "400"
+  },
+  "2509": {
+    "code": "2509",
+    "sysMessage": "该药品不在活动范围",
+    "businessMessage": "该药品不在活动范围",
+    "httpCode": "400"
+  }
+}

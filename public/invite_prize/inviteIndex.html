@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    <!-- vue -->
+    <script src="https://cdn.bootcss.com/vue/2.5.13/vue.min.js"></script>
+    <!-- js -->
+    <script src="https://cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script>
+    <script src="../invite_prize/jquery.qrcode.js"></script>
+    <!-- css -->
+    <link href="../invite_prize/css/invite.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div class = "homepage" id="web">
+    <div class = "imgSp">
+        <img src="https://oij06m690.qnssl.com/app_1@3x.png"/>
+    </div>
+
+    <div class = "imgSp wm">
+        <!--<img src="../invite_prize/img/2wm@3x.png" />-->
+        <div class="bg_w">
+            <div id="container">
+                <img id="QRImg"/>
+            </div>
+        </div>
+
+    </div>
+    <div class="detial">
+        <p class="lineB"></p>
+        <span class="title">分享拿现金</span>
+        <div class="iconSp">
+            <div class="iconL">
+                <img src="../invite_prize/img/weixin@3x.png" id="goWF"/>
+                <p>微信好友</p>
+            </div>
+            <div class="iconR">
+                <img src="../invite_prize/img/pengyouquan@3x.png" id="goQ"/>
+                <p>微信朋友圈</p>
+            </div>
+        </div>
+        <div class="intro">
+            <p>活动规则：</p>
+            <p>1.邀请好友扫码注册，即可赠送新人总价值100元的优惠券；</p>
+            <p>2.分享文章，有朋友注册，即可赠送新人总价值100元优惠券。</p>
+            <p>3.邀请的新人，购买专属医生服务并完成1次预约，则奖励邀请人100元/人。</p>
+            <p>4.邀请的新人，购买99VIP或者购买非专属医生服务，则奖励邀请人10元/人。</p>
+            <p style="font-size: 13px;color: #965500;text-align: center;margin-top: 20px;margin-bottom: 15px; ">最终解释权归平台所有</p>
+        </div>
+    </div>
+</div>
+<script src="../invite_prize/lib/connectWebViewJavascriptBridge.js"></script>
+<script>
+    var data = '<%-data%>';
+    data = JSON.parse(data);
+    console.log(data);
+
+    var webBridge = webViewBridge();
+    webBridge.bridgeInit(function (bridge) { });
+    $("#goWF").click(function(){
+        webBridge.upload("invite_reward_share",{type:1,url:data.share_url});
+    });
+    $("#goQ").click(function(){
+        webBridge.upload("invite_reward_share",{type:2,url:data.share_url});
+    });
+
+
+
+
+    host = window.location.host;
+    console.log(host);
+
+    var sc=screen.width;
+
+    windowWidth=sc*0.43;
+    bgWidth = sc*0.47;
+    $(".bg_w").css("width",154);
+    $(".bg_w").css("height",154);
+
+    function getQR(url) {
+        console.log('https://dev.mtxhcare.com' + url);
+        var options = {
+            render: "canvas",
+            ecLevel: 'H',//识别度
+            fill: '#000',//二维码颜色
+            //背景颜色
+            quiet: 2,//边距
+            width: 138,//宽度
+            height: 138,
+            text: 'https://' + host + url,//二维码内容
+            //中间logo start
+            mode: 4,
+            mSize: 11 * 0.01,
+            mPosX: 50 * 0.01,
+            mPosY: 50 * 0.01,
+            //src: 'http://7j1ztl.com1.z0.glb.clouddn.com/WechatIMG1.png'
+            //image:$('#logo'),//logo图片
+            //中间logo end
+        };
+        $('#container').empty().qrcode(options);
+        var canvas1=$("#container canvas")[0];
+
+        var image=$("#QRImg");
+        image.src = canvas1.toDataURL("image/png");
+        $("#QRImg").attr("src",image.src);
+
+        var le = (bgWidth-windowWidth)/2+ 'px';
+        $("#container").css("left",9);
+        $("#container").css("top",9);
+
+//        var mt = (150 - bgWidth)/2 + 'px';
+//        $(".bg_w").css("margin-top",mt);
+    }
+
+
+    getQR(data.share_url);
+
+
+
+
+</script>
+</body>
+</html>

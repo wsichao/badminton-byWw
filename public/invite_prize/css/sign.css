@@ -1,0 +1,159 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body, html {
+    width: 100%;
+    height: 100%;
+}
+
+input[type="button"], input[type="submit"], input[type="reset"] {
+    -webkit-appearance: none;
+}
+
+.bgAll {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: absolute;
+}
+
+.bgAll .top {
+    width: 100%;
+    overflow: hidden;
+    text-align: center
+}
+
+.bgAll .top img {
+    width: 100%;
+    display: block;
+}
+
+.inputSp {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    padding-top: 28px;
+    background: url("https://oij06m690.qnssl.com/app_bg_2@1x.png") no-repeat;
+    background-size: cover;
+    margin-top: -1px;
+}
+
+.security {
+    width: 100%;
+    height: 50px;
+    margin-top: 20px;
+}
+
+.phoneIn {
+    width: 90%;
+    height: 50px;
+    background: #FFFFFF;
+    border: 1px solid #EE412F;
+    border-radius: 8px;
+    margin: 0 auto;
+    font-size: 17px;
+    padding: 13px 15px;
+    box-sizing: border-box;
+    outline: none;
+    letter-spacing: 0.06px;
+}
+
+.codeIn {
+    width: 47%;
+    height: 50px;
+    background: #FFFFFF;
+    border: 1px solid #EE412F;
+    border-radius: 8px;
+    font-size: 17px;
+    padding: 13px 15px;
+    box-sizing: border-box;
+    float: left;
+    margin-left: 5%;
+    outline: none;
+    letter-spacing: 0.06px;
+}
+
+.btnYz {
+    width: 40%;
+    height: 50px;
+    background: #FF7768;
+    font-size: 15px;
+    color: #ffffff;
+    border-radius: 8px;
+    line-height: 50px;
+    text-align: center;
+    float: left;
+    margin-left: 3%;
+    border: none;
+    outline: none;
+}
+
+.upload {
+    width: 90%;
+    height: 50px;
+    color: #ffffff;
+    margin-top: 20px;
+    line-height: 50px;
+    background: #EE412F;
+    border: 1px solid #EE412F;
+    border-radius: 8px;
+    font-size: 17px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.inputSp p {
+    margin-top: 30px;
+    font-size: 15px;
+    color: #8D4500;
+    letter-spacing: -0.05px;
+    line-height: 26px;
+    text-align: center;
+}
+
+.bottom {
+    width: 172px;
+    height: 36px;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    text-align: center;
+
+}
+
+.bottom .logo {
+    width: 36px;
+    height: 36px;
+    float: left;
+}
+
+.bottom .logo img {
+    width: 36px;
+    height: 36px;
+}
+
+.show {
+    float: right;
+    margin-left: 6px;
+    width: 130px;
+    text-align: left;
+    font-size: 13px;
+    color: #8D4500;
+    letter-spacing: 0;
+    line-height: 18px;
+}
+
+.mg-t {
+    width: 100%;
+    position: absolute;
+    bottom: 20px;
+}
+
+@media (max-height: 400px) {
+    .mg-t {
+        display: none;　
+    }
+}

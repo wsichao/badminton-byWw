@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?a0a3eb32605b0e2ffad5dbef973a57d8";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+<style>
+  a,a:hover, a:visited, a:link, a:active {
+    text-decoration: none;
+    out-line: none;
+    color: #000000;
+  }
+</style>
+<head>
+    <meta charset="UTF-8">
+    <title>健康头条</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="yes">
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimal-ui">
+    <link href="./styles/flowPage.css" rel="stylesheet" type="text/css">
+  <meta itemprop="name" content="这是分享的标题"/>
+  <meta itemprop="image" content="http://imgcache.qq.com/qqshow/ac/v4/global/logo.png" />
+  <meta name="description" itemprop="description" content="这是要分享的内容" />
+    <script src="https://static.mlinks.cc/scripts/dist/mlink.min.js"></script>
+
+    <!--qq分享-->
+  <script src="https://qzonestyle.gtimg.cn/qzone/qzact/common/share/share.js"></script>
+
+  <style>
+        @media only screen and (device-width: 375px) and (device-height: 812px) and
+
+        (-webkit-device-pixel-ratio: 3) {
+
+        /*增加底部适配层*/
+
+        .has-bottombar {
+            background: #FFFFFF;
+            height : 91px;
+            position: fixed;
+
+            left: 0;
+
+            bottom: 0;
+
+            }
+
+        }
+    </style>
+</head>
+<body>
+    <div class="under" style="width:100%;height: 100%;">
+        <div style="margin-left:12px;margin-right:12px;">
+            <img id="downloadImg" src="images/downloadingapp.png" style="margin-top: 10px;width: 100%;" onclick="gotoSignIn()">
+        </div>
+        <div style="margin-left:12px;margin-right:12px;margin-bottom: 40px">
+            <header style="margin-top: 13px;">
+                <label id="title"
+                       style="color: #000;text-align: center;font-size: 23px;font-weight: 700;line-height: 33px;letter-spacing: 1.1px"></label>
+                <div id="normal" class="titleCss">
+                    <label id="source" style="color: #999999;font-size: 13px;line-height: 12px"></label>
+                    <!--<label id="createdAt" style="margin-left:5px;color: #999999;font-size: 13px;line-height: 18px"></label>-->
+                </div>
+
+                <div id="special" class="titleCss" style="padding-top: 10px;">
+                    <div>
+                        <img id="specialImg"
+                             style="width: 38px;height: 38px;    border-radius: 38px;margin-left: 5px;display: inline-block"
+                             class="left" onclick="goHomePage()">
+
+                        <div style="display: inline-block;" onclick="goHomePage()">
+                            <div id="facName" style="display:none;font-size: 15px;line-height:21px;color: #000000;letter-spacing: -0.36px;margin-left: 10px;margin-top: 6px;"></div>
+                            <div id="docName" style="display:none;font-size: 15px;line-height:21px;color: #000000;letter-spacing: -0.36px;margin-left: 10px;"></div>
+                            <div id="docPosition" style="font-size: 13px;color: #999999;line-height:18px;letter-spacing: -0.36px;display: block;margin-left: 10px;"></div>
+                            <!--<label id="specialSource" class="source"></label>-->
+
+                            <br>
+                            <!--<label id="specialCreatedAt" class="createdAt"></label>-->
+
+                        </div>
+                        <input type="button" id="favorite" class="favoriteBtnH5" value="关注" style="margin-right: 12px;">
+
+                    </div>
+                </div>
+            </header>
+            <div style="margin-top: 17px">
+                <div style="font-size: 18px;line-height: 29px;letter-spacing: 0.8px;word-wrap: break-word;color: #222222;text-align: justify"
+                     id="mainBody">
+                    <!--假蜂蜜危害大！70岁蜂农教你一杯清水，鉴别真假防受骗，假蜂蜜危害大！70岁蜂农教你一杯清水，鉴别真假防受骗。假蜂蜜危害大！70岁蜂农教你一杯清水，鉴别真假防受骗。假蜂蜜危害大！70岁蜂农教你一杯清水，鉴别真假防受骗。-->
+                </div>
+
+            </div>
+        </div>
+        <div>
+            <div style="margin-top: 17px;line-height:12px;font-size: 13px">
+                <img src="images/glanceover.png"
+                     id="view"
+                     style="float: left;width: 18px;height: 12px;margin-left: 3px;margin-top: 5px;display: inline-block;visibility: hidden">
+                <label id="viewNum"
+                       style="float: left;color: #B9B9B9 ;font-size: 13px;margin-right: 5px;margin-top: 5px;margin-left: 5px;"></label>
+
+            </div>
+            <footer id="approveDiv" style="position: relative;visibility: hidden;top: 30px;">
+                <div style="clear: both;width: 156px;height: 40px;border: 1px solid #E0E0E0;border-radius: 20px;margin-left: 28%;">
+                    <img id="approveId" src="images/nice_disabled.png"
+                         style="float: left;display: inline-block;width: 20px;height: 20px;margin-left: 35%;margin-right: 10px;margin-top: 10px;">
+                    <!--<label id="approveNum" style="font-size: 17px;color: #666666;line-height: 24px">3</label>-->
+                    <!--<span style="margin-top: 10px;line-height: 24px;float: left;">-->
+                    <label id="approveNum"
+                           style="margin-top: 10px;line-height: 24px;float: left;font-size: 17px;color: #666666;"></label>
+                    <!--</span>-->
+                </div>
+            </footer>
+
+            <ul class="articleList">
+                <!--<li class="jumpBrowser">
+                    <p class="part1">饭后有7个习惯最伤身体可很多人在天天做！饭后有7个习惯最伤身体可很多人在天天做！</p>
+                    <img src="images/banner938-388.jpg"/>
+                </li>
+                <li class="jumpBrowser">
+                    <p class="part2">饭后有7个习惯最伤身体可很多人在天天做！饭后有7个习惯最伤身体可很多人在天天做！</p>
+                </li>-->
+            </ul>
+
+            <!--评论样式-->
+            <!--<div style="padding-top: 60px">-->
+            <div id="comment" style="padding-top: 30px;padding-left:12px;padding-right:12px;padding-bottom: 30px;clear:both">
+                <!--<div style="margin-top: 30px">-->
+                    <!--<img class="image" src="images/avatar@3x.png"-->
+                         <!--style="width: 40px;height: 40px;border-radius: 20px;float: left">-->
+                    <!--<div style="margin-left: 50px">-->
+                        <!--<label style="font-size: 15px;color: #2766A9 ;">李浩然</label>-->
+                        <!--<div style="margin-top:10px;font-size: 17px;line-height: 24px;letter-spacing:0.4px">-->
+                            <!--鉴别真假防受骗。假蜂蜜危害大！70岁蜂农教你一杯清水，鉴别真假防受骗。-->
+                        <!--</div>-->
+                        <!--<span style="margin-top:10px;margin-bottom: 110px;font-size: 13px">-->
+                                <!--09-03 13:27-->
+                            <!--</span>-->
+                        <!--<span style="float: right;right: 12px;" onclick="deleteComment('eee')">删除</span>-->
+                    <!--</div>-->
+                <!--</div>-->
+            </div>
+            <div style="width: 100%;height: 70px;"></div>
+            <!--</div>-->
+            <!--固定底部-->
+
+
+        </div>
+
+
+        <div onclick="gotoSignIn()" class="downloadImg has-bottombar" style="width:100%;/*height:58px;*/display:none;/*background: url(images/download@3x.png) no-repeat;background-size:100% auto;*/">
+            <img src="images/download@3x.png" style="width: 100%;">
+        </div>
+    </div>
+    <div class="surface">
+        <img src="images/browser@3x.png"/>
+    </div>
+</body>
+<script src="libs/jquery.min.js"></script>
+
+<script src="libs/common.js"></script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+    $(window).scroll(function(){
+    // 滚动条距离顶部的距离 大于 200px时
+        if($(window).scrollTop() >= 55){
+            $(".downloadImg").show(); // 开始淡入
+        } else{
+            $(".downloadImg").hide(); // 如果小于等于 200 淡出
+        }
+    });
+
+//    $(".jumpBrowser").click(function () {
+//        $(".surface").show();
+//        $(".under").css("overflow","hidden");
+//    });
+
+    var userId, pageId, deviceId, token, authorId, authorType, shareTitle, shareImg, shareDes, approveNum = 0,
+        imgUri = 'https://cdn.juliye.net/';
+    var recPages = [], NUM, images = [];
+    var approveIdDom = $('#approveId'), commentDom = $('#comment'), approveNumDom = $('#approveNum');
+
+
+    var WIDTH = window.screen.width;
+
+    window.onload = function () {
+        var pageInfo, authorInfo;
+        NUM = parseInt(WIDTH / 22);
+        userId = getUrlQueryObject().userId, pageId = getUrlQueryObject().pageId, token = getUrlQueryObject().token,
+            deviceId = getUrlQueryObject().deviceId;
+        console.log('账户ID', userId);
+//文章主题
+        $.ajax({
+            type: "GET",
+            url: "/1/zlycare/page/detail?userId=" + userId + "&pageId=" + pageId,
+            headers: {
+                "x-docchat-user-id": userId,
+                "x-docchat-session-token": token,
+                "x-docchat-application-device-mark": deviceId
+            },
+            success: function (ret) {
+                if (ret) {
+                    pageInfo = ret;
+                    var source = pageInfo.user_name;
+
+                    authorId = pageInfo.authorId;
+                    authorType = pageInfo.authorType;
+
+                    console.log('cmsid', authorId);
+                    if (pageInfo.authorId && (pageInfo.authorType == 'doctor' || pageInfo.authorType == 'factory')) {
+                        console.log('请求作者信息');
+                        //作者信息
+                        $.ajax({
+                            type: "GET",
+                            url: "/1/feedFlow/getAuthorInfo?authorId=" + pageInfo.authorId + "&authorType=" + pageInfo.authorType + '&userId=' + userId,
+                            headers: {
+                                "x-docchat-user-id": userId,
+                                "x-docchat-session-token": token,
+                                "x-docchat-application-device-mark": deviceId
+                            },
+                            success: function (ret) {
+                                if (ret) {
+                                    authorInfo = ret;
+                                    console.log('作者信息', authorInfo);
+//                                    $('#specialSource').html(authorInfo.name);
+                                    if (pageInfo.authorType == 'doctor') {
+//                                        $('#specialSource').html(authorInfo.name + '|' + authorInfo.title);
+                                        /*console.log('医生信息', authorInfo);
+                                        source = authorInfo.name + ' | ' + authorInfo.title;*/
+                                      $('#docName').show();
+                                      $('#docName').html(formatSource(authorInfo.name));
+                                      $('#docPosition').html(formatSource(authorInfo.title));
+                                    } else {
+                                        /*source = authorInfo.name;*/
+                                      $('#facName').show();
+                                      $('#facName').html(formatSource(authorInfo.name));
+                                    }
+
+                                    /*$('#specialSource').html(formatSource(source));*/
+                                   /* $('#specialCreatedAt').html(formatDate(pageInfo.createdAt));*/
+                                    $('#specialImg').attr('src', imgUri + authorInfo.avatar);
+                                    $('#special').css('display', 'block');
+                                    pageMainBodyData(pageInfo.title, pageInfo.viewNum, pageInfo.mainBody);
+                                } else {
+                                    alert('获取作者信息失败');
+                                }
+                            }
+                        });
+                    } else {
+                        $('#source').html(formatSource(source));
+                        /*$('#createdAt').html(formatDate(pageInfo.createdAt));*/
+                        $('#normal').css('display', 'block');
+                        pageMainBodyData(pageInfo.title, pageInfo.viewNum, pageInfo.mainBody);
+                    }
+
+
+                    shareTitle = pageInfo.title;
+                    shareImg = pageInfo.pics[0] ||  '/health/images/logo150.png';
+                    shareDes = pageInfo.desc;
+
+                    wxShare(shareTitle, shareDes, shareImg, window.location.href);
+                  setShareInfo({
+                    title: shareTitle,
+                    summary: shareDes,
+                    pic:  shareImg,
+                    url: window.location.href + '&tencentShare=1'
+                  });
+                    var NUM = parseInt(WIDTH / 22);
+                    if (shareTitle.length > 2 * NUM) {
+                        shareTitle = shareTitle.substr(0, 2 * NUM - 2) + '...';
+                    }
+                    if (shareDes.length > 2 * NUM) {
+                        shareDes = shareDes.substr(0, 2 * NUM - 2) + '...';
+                    }
+
+                } else {
+                    alert('获取头条信息失败');
+                }
+            }
+        });
+        //推荐文章内容
+
+        $.ajax({
+            url: '/1/feedFlow/cmsRecommend?pageId=' + pageId,
+            type: 'GET',
+            success: function (res) {
+                console.log("获取文章列表");
+                console.log(res);
+                var options = []
+                for(var i=0;i<res.data.length;i++){
+                    if(res.data[i].pics.length>0){
+                        $(".articleList").append("<li class='jumpBrowser' ><a id='" + "gotoApp" + i + "'><p class='part1'>" + res.data[i].title + "</p><img src='"+ res.data[i].pics[0] +"'/></a></li>");
+                    }else{
+                        $(".articleList").append("<li class='jumpBrowser'><a id='" + "gotoApp" + i + "'><p class='part2'>" + res.data[i].title + "</p></a></li>")
+                    }
+                    var queryStr = 'a#gotoApp' + i
+                    var optionItem = {
+                      mlink: 'https://apbv6m.mlinks.cc/Ab7X?momentId='+ res.data[i].moment_id
+                      +'&authorId='+ res.data[i].authorId
+                      +'&authorType=' + res.data[i].authorType
+                      +'&fromad=true',
+                      button: document.querySelector(queryStr)
+                    };
+                  options.push(optionItem);
+                }
+                console.log(options);
+                new Mlink(options);
+            }
+        });
+        //评论内容
+        $.ajax({
+            type: "GET",
+            url: "/1/zlycare/page/comments?pageId=" + pageId,
+//            headers: {
+//                "x-docchat-user-id": userId,
+//                "x-docchat-session-token": token,
+//                "x-docchat-application-device-mark": deviceId
+//            },
+            success: function (ret) {
+                if (ret) {
+                    var retPageHtml = '';
+                    for (var i = 0; i < ret.length; i++) {
+                        retPageHtml += getPageComment(ret[i], i, ret.length)
+                    }
+
+                    commentDom.html(retPageHtml);
+                } else {
+                    alert('获取文章评论失败');
+                }
+            }
+        });
+//
+// 统计数据
+        $.ajax({
+            type: "GET",
+            url: "/1/zlycare/page/statisticals?userId=" + userId + "&pageId=" + pageId,
+//            headers: {
+//                "x-docchat-user-id": userId,
+//                "x-docchat-session-token": token,
+//                "x-docchat-application-device-mark": deviceId
+//            },
+            success: function (ret) {
+                if (ret) {
+                    approveNum = ret.approveNum || 0;
+                    commentNum = ret.commentNum;
+                    approveNumDom.html(approveNum);
+                    $('#approveDiv').css('visibility', 'visible');
+
+                }
+            }
+        });
+
+    };
+
+
+  function gotoSignIn() {
+    if(userId){
+      window.location  = '/invite_reward/sign_in?user_id=' + userId
+    }else{
+      download();
+    }
+
+  }
+
+
+    function getPageComment(page, index, length) {
+        var name = page.name;
+        var retItem = '';
+        if (page.name.length > 12) {
+            name = page.title.substr(0, 10) + '...';
+        }
+        var avatar = page.avatar ? imgUri + page.avatar : 'images/avatar@3x.png';
+        var createdAt = formatDate(page.createdAt);
+
+        retItem = '<div id='
+            + page.commentId
+            + ' style="margin-top: 30px" ><img class="image" src=' + avatar + ' style="width: 40px;height: 40px;border-radius: 20px;float: left"> <div style="margin-left: 50px"> <label style="font-size: 15px;color: #2766A9 ;">'
+            + name
+            + ' </label><div style="margin-top:10px;font-size: 17px;line-height: 24px;letter-spacing:0.4px">'
+            + page.content
+            + ' </div><span style="margin-top:10px;font-size: 13px">'
+            + createdAt
+            + ' </span></div></div>';
+
+        return retItem;
+    }
+
+    $('#favorite').click(function () {
+        download();
+    });
+
+
+    //进入作者主页
+    function goHomePage() {
+        window.location.href = '/health/homePageH5.html?userId=' + userId + '&deviceId=' + deviceId + '&token=' + token + '&authorId=' + authorId + '&authorType=' + authorType;
+    }
+
+
+</script>
+</html>

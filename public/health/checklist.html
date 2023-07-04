@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>产检时间表</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="yes">
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimal-ui">
+    <script src="libs/jquery.min.js"></script>
+</head>
+<style>
+    .con_t {
+        height: 48px;
+        line-height: 48px;
+        font-size: 17px;
+        color: #000000;
+        position: relative;
+        padding-left: 25px;
+    }
+    .con_per {
+        /*border-bottom: 5px solid #F4F4F4;*/
+        padding: 0 12px 15px;
+    }
+    .con_t img {
+        height: 17px;
+        width: 17px;
+        position: absolute;
+        top: 15px;
+        left: 0;
+    }
+    .line {
+        height: 5px;
+        background-color: #F4F4F4;
+        width: 100%;
+    }
+    .con_b {
+        font-family: PingFangSC-Regular;
+        font-size: 15px;
+        color: #333333;
+        line-height: 23px;
+    }
+
+</style>
+
+<body style="margin: 0">
+    <div class="con">
+        <div class="con_per">
+            <div class="con_t">
+                <img src="https://cdn.juliye.net/record@2x.png" alt=""> 孕6-12周
+            </div>
+            <div class="con_b">
+                1.普通妊娠B超<br>
+                2.HCG、孕酮检查<br>
+                3.血压、体重指数<br>
+                4.确定孕周、推算预产期<br>
+                5.评估妊娠期高危因素<br>
+                6.预约nt、早期唐筛<br>
+                7.生育保险定点（有交生育保险则可办理，公医医保无需定点）
+            </div>
+        </div>
+        <div class="line"></div>
+        <div class="con_per">
+            <div class="con_t">
+                <img src="https://cdn.juliye.net/record@2x.png" alt=""> 孕12周
+            </div>
+            <div class="con_b">
+                1.体重血压<br>
+                2.血常规、尿常规、血型、肝功能、肾功能、甲状腺功能、常规生化、地中海贫血、乙肝两对半+丙肝+梅毒+HIV等<br>
+                3.常规心电图<br>
+                4.妊娠11~13+6周B超测量胎儿ＮＴ厚度、早期唐氏综合征筛查<br>
+                5.14周前预约四维排畸B超（19—23周）
+            </div>
+        </div>
+        <div class="line"></div>
+        <div class="con_per">
+            <div class="con_t">
+                <img src="https://cdn.juliye.net/record@2x.png" alt=""> 孕16周
+            </div>
+            <div class="con_b">
+                1.体重血压、宫高腹围、胎心音<br>
+                2.分析首次产前检查的结果<br>
+                3.如NT有风险需进一步做无创或羊穿<br>
+                4.早期NT未查，需做中期唐氏综合征筛查<br>
+                5.建立围产保健档案
+            </div>
+        </div>
+        <div class="line"></div>
+
+            <div class="con_per">
+                <div class="con_t">
+                    <img src="https://cdn.juliye.net/record@2x.png" alt=""> 孕20周
+                </div>
+                <div class="con_b">
+                    1.体重血压、宫高腹围、胎心音<br>
+                    2.中期排畸彩超（19-23周）、预约孕晚期排畸B超（28—32周）
+                </div>
+            </div>
+            <div class="line"></div>
+        <div class="con_per">
+            <div class="con_t">
+                <img src="https://cdn.juliye.net/record@2x.png" alt=""> 孕24周
+            </div>
+            <div class="con_b">
+                1.体重血压、宫高腹围、胎心音<br>
+                2.糖尿病筛查（OGTT，24—28周）<br>
+                3.ＡＢＯ溶血（孕妇血型为“Ｏ”型，丈夫非“Ｏ”型）
+            </div>
+        </div>
+        <div class="line"></div>
+        <div class="con_per">
+            <div class="con_t">
+                <img src="https://cdn.juliye.net/record@2x.png" alt=""> 孕28周
+            </div>
+            <div class="con_b">
+                1.体重血压、宫高腹围、胎心音<br>
+                2.常规心电图（28—32周）<br>
+                3.预约营养分析
+            </div>
+        </div>
+        <div class="line"></div>
+        <div class="con_per">
+            <div class="con_t">
+                <img src="https://cdn.juliye.net/record@2x.png" alt=""> 孕30周
+            </div>
+            <div class="con_b">
+                1.体重血压、宫高腹围、胎心音、胎位<br>
+                2.孕晚期排畸B超（28-32周）<br>
+                3.血常规、尿常规
+            </div>
+        </div>
+        <div class="line"></div>
+        <div class="con_per">
+            <div class="con_t">
+                <img src="https://cdn.juliye.net/record@2x.png" alt=""> 孕32周
+            </div>
+            <div class="con_b">
+                1.体重血压、宫高腹围、胎心音、胎位
+            </div>
+        </div>
+        <div class="line"></div>
+        <div class="con_per">
+            <div class="con_t">
+                <img src="https://cdn.juliye.net/record@2x.png" alt=""> 孕34周
+            </div>
+            <div class="con_b">
+                1.体重血压、宫高腹围、胎心音、胎位
+            </div>
+        </div>
+        <div class="line"></div>
+        <div class="con_per">
+            <div class="con_t">
+                <img src="https://cdn.juliye.net/record@2x.png" alt=""> 孕36周
+            </div>
+            <div class="con_b">
+                1.体重血压、宫高腹围、胎心音、胎位<br>
+                2.胎心监测、胎儿脐血流监测<br>
+                3.骨盆测量、产前一套白带、血尿筛查
+            </div>
+        </div>
+        <div class="line"></div>
+        <div class="con_per">
+            <div class="con_t">
+                <img src="https://cdn.juliye.net/record@2x.png" alt=""> 孕37周
+            </div>
+            <div class="con_b">
+                1.体重血压、宫高腹围、胎心音、胎位<br>
+                2.胎心监测<br>
+                3.产前评估B超（37、38都可以）<br>
+                4.血常规、尿常规、白带常规、B族链球菌
+            </div>
+        </div>
+        <div class="line"></div>
+        <div class="con_per">
+            <div class="con_t">
+                <img src="https://cdn.juliye.net/record@2x.png" alt=""> 孕38周
+            </div>
+            <div class="con_b">
+                1.体重血压、宫高腹围、胎心音、胎位<br>
+                2.胎心监测
+            </div>
+        </div>
+        <div class="line"></div>
+        <div class="con_per">
+            <div class="con_t">
+                <img src="https://cdn.juliye.net/record@2x.png" alt=""> 孕39周
+            </div>
+            <div class="con_b">
+                1.体重血压、宫高腹围、胎心音、胎位<br>
+                2.胎心监测<br>
+                3.产前评估B超（37、38都可以）<br>
+                4.血常规、尿常规、白带常规、B族链球菌
+            </div>
+        </div>
+        <div class="line"></div>
+        <div class="con_per">
+            <div class="con_t">
+                <img src="https://cdn.juliye.net/record@2x.png" alt=""> 孕40周
+            </div>
+            <div class="con_b">
+                1.体重血压、宫高腹围、胎心音、胎位<br>
+                2.胎心监测
+            </div>
+        </div>
+        <div class="line"></div>
+        <div class="con_per">
+            <div class="con_t">
+                <img src="https://cdn.juliye.net/record@2x.png" alt=""> 孕41周
+            </div>
+            <div class="con_b">
+                1.体重血压、宫高腹围、胎心音、胎位<br>
+                2.胎心监测
+            </div>
+        </div>
+
+
+    </div>
+
+
+</body>
+</html>

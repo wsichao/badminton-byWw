@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>代金券</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimal-ui">
+    <meta name="apple-mobile-web-app-status-bar-style" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link href="advCss.css" rel="stylesheet" type="text/css">
+    <link href="../general_file/general_css.css" type="text/css">
+    <script src="https://cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script>
+
+</head>
+<div class="coupon">
+<ul class="select-coupon-list">
+   <!-- <li>
+        <label for="coupon1">
+        <div class="money">
+            <p>¥<span>0.05</span></p>
+        </div>
+        <div class="info">
+
+            <div class="border">&nbsp;</div>
+            <p>全城购代金券</p>
+            <em>说明</em>
+            <i>有效期至：2017-09-05</i>
+
+        </div>
+        </label>
+        <div class="radio-wrap">
+            <input type="radio" id="coupon1" name="coupons"><span></span>
+        </div>
+    </li>-->
+</ul>
+<div style="position: fixed;left: 0;bottom: 0;background: #EEEEEE;width: 100%">
+    <button class="long-full-btn" id="comfirm" style="position: static">确定</button>
+</div>
+</div>
+<div class="default-page">
+<span id="noHistory"  class="default position-center">
+    <img src="../dynamic/images/recent_non.png">
+    <p>暂无代金券</p>
+</span>
+</div>
+<script src="../general_file/general_js.js"></script>
+<script src="lib/connectWebViewJavascriptBridge.js"></script>
+<script>
+    var webBridge = webViewBridge();
+
+    webBridge.bridgeInit(function (bridge) {
+        bridge.registerHandler('backButton', function(data,responseCallback){
+            var result = {
+                isClose : false
+            }
+            responseCallback(JSON.stringify(result));
+            window.location = "Payment.html"
+        })
+    });
+
+    $(function(){
+
+        //处理单选框可以取消选择
+        var checkedNum;
+        var couponId;
+        var couponMoney;
+        var couponList;
+        var couponTitle;
+        var couponType;
+        var couponDiscount;
+        var changeRadio=function($item,checkStatus,checkValue,inputStatus,id){
+
+            $item.attr("checked",checkStatus);
+           // $price.val(getMoney(checkValue));
+            //$price.attr("disabled",inputStatus);
+            checkedNum=id;
+            if(checkStatus==true){
+                var j=id.toString().split("coupon")[1];
+                couponMoney=couponList[j].rmb;
+                couponId=couponList[j]._id;
+                couponTitle=couponList[j].title;
+                couponType = couponList[j].type;
+                couponDiscount = couponList[j].discount;
+            }else{
+                couponMoney=undefined;
+                couponId=undefined;
+                couponTitle=undefined;
+                couponType = undefined;
+                couponDiscount = undefined;
+            }
+
+        }
+        $('.select-coupon-list').on("click",function(e){
+
+            if(e.target.nodeName=='INPUT'){
+                var ischeck=$(e.target).attr('checked');
+                if(!checkedNum){
+
+                    changeRadio($(e.target),true,$(e.target).val(),"disabled",e.target.id);
+                }else{
+                    if(e.target.id==checkedNum && ischeck){
+
+                        changeRadio($(e.target),false,'',false,e.target.id);
+                    }else{
+
+                        changeRadio($(e.target),true,$(e.target).val(),"disabled",e.target.id);
+                    }
+                }
+            }
+        })
+
+
+        var userId = sessionStorage.getItem("userId");
+        var token = sessionStorage.getItem("token");
+
+
+        //显示优惠券信息
+        var showCoupon=function(couponData){
+            var couponString='';
+            for(var i=0; i<couponData.length;i++){
+                couponString=couponString+ '<li>'+
+                        '<label for="coupon'+i+'">'+
+                        ' <div class="money">'+
+                        '<p>¥<span>'+couponData[i].rmb+'</span></p>'+
+                        '</div>'+
+                        '<div class="info">'+
+
+                        '<div class="border">&nbsp;</div>'+
+                        '<p>'+couponData[i].title+'</p>'+
+                        '<em>'+couponData[i].description+'&nbsp;</em>'+
+                        '<i>有效期至：'+getTime(couponData[i].expiredAt).split(' ')[0]+'</i>'+
+
+                        '</div>'+
+                        '</label>'+
+                        '<div class="radio-wrap">'+
+                        '<input type="radio" id="coupon'+i+'" name="coupons" couponId="' + couponData[i]._id + '" /><span></span>'+
+                        '</div>'+
+                        '</li>';
+            }
+            return couponString;
+        }
+
+        //获取优惠券信息
+        $.ajax({
+            type:"GET",
+            url:"/1/customer/validTransferCouponsById",
+            headers:{
+                "x-docchat-user-id":userId,
+                "x-docchat-session-token":token
+            },
+            success:function(rs){
+                console.log(rs);
+                if(rs.length==0){
+                    $(".default-page").show();
+                    $(".coupon").hide();
+                    return;
+                }
+                else{
+                    $(".default-page").hide();
+                    $(".coupon").show();
+                }
+                couponList=rs;
+                var couponString=showCoupon(rs);
+                if(couponString){
+                    $(".select-coupon-list").append(couponString);
+                }else{
+                    $(".select-coupon-list").text("您还没有可以使用的代金券")
+                }
+                couponId = sessionStorage.getItem("couponId");
+                $(":radio[couponId = " + couponId + "]").attr("checked",true);
+            }
+        });
+
+        $("#comfirm").click(function(){
+            sessionStorage.setItem("couponId",couponId);
+            sessionStorage.setItem("couponMoney",couponMoney);
+            sessionStorage.setItem("couponTitle",couponTitle);
+            sessionStorage.setItem("couponType",couponType);
+            if(couponType == 7){
+                sessionStorage.setItem("couponDiscount",couponDiscount);
+            }
+            window.location.href="Payment.html";
+        });
+    });
+</script>
+</body>
+</html>

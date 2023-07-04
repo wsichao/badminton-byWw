@@ -1,0 +1,224 @@
+/** {*/
+    /*font-family: PingFangSC-Semibold;*/
+/*}*/
+#wrapper {
+    position: absolute;
+    z-index: 1;
+    top: 0px;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+}
+.clearfix:after {
+    content: '';
+    height: 0;
+    line-height: 0;
+    visibility: hidden;
+    display: block;
+    clear: both;
+}
+
+.clearfix {
+    zoom: 1;
+}
+
+.fl {
+    float: left;
+}
+
+.fr {
+    float: right;
+}
+.doctor {
+    margin-top: 25px;
+    padding-left: 64px;
+    position: relative;
+    min-height: 70px;
+}
+.doctor .doctor_icon {
+    width: 64px;
+    height: 64px;
+    position: absolute;
+    left: 17px;
+    border-radius: 50%;
+}
+.doctor .doctor_icon img{
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.doctor .doctor_intro {
+    padding-top: 5px;
+    margin: 5px 15px 0 25px;
+}
+.doctor .doctor_name strong {
+    font-size: 17px;
+}
+.doctor .doctor_name span {
+    font-size: 12px;
+    display: inline-block;
+    border: 1px solid #AEAEAE;
+    border-radius: 10px;
+    padding: 1px 7px;
+    margin-left: 8px;
+}
+.doctor .doctor_intro .desk {
+    font-size: 15px;
+    margin-top: 10px;
+    line-height: 20px;
+}
+.price {
+    font-size: 17px;
+    color: #12B6BB;
+    margin: 10px 0 0 12px;
+    border-top: 1px solid #E0E0E0;
+    height: 44px;
+    line-height: 44px;
+}
+/*出诊时间*/
+.strong-line {
+    height: 10px;
+    width: 100%;
+    background-color: #F4F4F4;
+}
+
+.title {
+    color: #666666;
+    font-size: 15px;
+    height: 40px;
+    line-height: 40px;
+    margin-left: 12px;
+    border-bottom: 1px solid #E0E0E0;
+}
+.time-detail {
+    font-size: 15px;
+    line-height: 24px;
+    padding: 12px 15px;
+    color: #000000;
+}
+.server-detail ul {
+    font-size: 15px;
+    line-height: 24px;
+    padding-left: 12px;
+    color: #000000;
+}
+.server-detail ul li {
+    border-top: 1px solid #E0E0E0;
+    padding-right: 12px;
+}
+.server-detail ul li .package {
+    height: 54px;
+    line-height: 54px;
+    font-size: 17px;
+}
+.package span {
+    font-size: 17px;
+    color: #12B6BB;
+    display: inline-block;
+    float: right;
+}
+.package-exp {
+    padding-bottom: 15px;
+}
+
+/*用户评价*/
+.evaluate {
+    padding-bottom: 50px;
+}
+.evaluate .review{
+    padding-left: 46px;
+    margin: 15px 0 30px 0;
+    position: relative;
+    font-size: 15px;
+}
+.evaluate .review .user-icon {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    left: 12px;
+    border-radius: 50%;
+}
+.evaluate .review .user-icon img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+.review .review-con {
+    padding-left: 10px;
+    padding-right: 12px;
+}
+.review .review-con .user-name {
+    font-size: 13px;
+    line-height: 18px;
+    padding-bottom: 5px;
+}
+.review .zan {
+    float: right;
+    color: #999999;
+}
+.review .zan i {
+    content: "";
+    display: inline-block;
+    position: relative;
+    left: -3px;
+    bottom: -2px;
+    width: 15px;
+    height: 15px;
+    background: url("/doctor/images/wellcopy2@2x.png") no-repeat;
+    -webkit-background-size:100%;
+    background-size: 100%;
+}
+.review .zan img {
+    width: 15px;
+    height: 15px;
+}
+.review .review-con .content {
+    line-height: 24px;
+}
+.review .reply-time {
+    color: #000000;
+    font-size: 13px;
+}
+.review .reply {
+    color: #000000;
+    background-color: #F4F4F4;
+    font-size: 13px;
+    height: 20px;
+    line-height: 20px;
+    padding: 0 10px;
+    margin-top: 7px;
+    border-radius: 10px;
+    display: inline-block;
+    /*margin-left: 5px;*/
+}
+.refer {
+    display: block;
+    background-color: #12B6BB;
+    color: #ffffff;
+    font-size: 17px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    width: 100%;
+    letter-spacing: 2px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
+.refer i {
+    content: "";
+    display: inline-block;
+    width: 17px;
+    height: 17px;
+    background: url("images/tel@2x.png") no-repeat;
+    -webkit-background-size:100%;
+    background-size: 100%;
+    position: relative;
+    bottom: -3px;
+}
+
+.refer:hover {
+    background-color: #14A5A9;
+}

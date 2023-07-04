@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- http://t.co/dKP3o1e -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta name="format-detection" content="telephone=no" />
+    <title>全城购会员卡</title>
+    <link href="../general_file/general_css.css" rel="stylesheet" type="text/css" />
+    <link href="member_recharge.css" rel="stylesheet" type="text/css" />
+
+
+    <!-- Vue -->
+  <!--  <script src="lib/vue.min.js"></script>
+    <script src="lib/vue-resource.min.js"></script>-->
+</head>
+<body style="background-color: #eee">
+
+<div class="content">
+
+
+    <div class="content-all" v-show="contentDisplay" style="display: none">
+        <div class="top">
+            <div class="middleContent fixTop">
+                <div class="surePass" >
+                    <canvas class="circleRun" data-run="0" id="canvasThree" amout="1000" nowData="1000"></canvas>
+                </div>
+                <div class="mask">
+                    <span>可用额度</span>
+                    <p v-text="balance"></p>
+                    <button v-on:click="getDeg">额度详情</button>
+                </div>
+            </div>
+            <!--<div class="new_circle">
+                <div class="circle">
+                    <div class="pie_left">
+                        <div class="left" v-bind:style="{transform:'rotate('+leftRotateNum+'deg)'}"></div>
+                    </div>
+                    <div class="pie_right">
+                        <div class="right" v-bind:style="{transform:'rotate('+rightRotateNum+'deg)'}"></div>
+                    </div>
+
+                </div>
+            </div>-->
+
+
+            <p>会员额度用于抵扣代金券及返现金额</p>
+        </div>
+        <div class="product">
+            <h4>额度充值</h4>
+            <div class="product-list"  >
+                <div class="list-left chose-in" v-for="item in membershipVals" v-on:click="chosePrice(item.cost)">
+                    <p><span v-text="item.benefitVal"></span>元</p>
+                    <p class="selling-price">售价<span v-text="item.cost"></span>元</p>
+                </div>
+                <!--<div class="list-right"  >
+                        <p v-text="item.describe"></p>
+                        <div class="intro">
+                            <em>有效期30天</em>
+                            <i>购买</i>
+                        </div>
+                    </div>-->
+            </div>
+
+            <div id="btn-buy" class="buy-member" v-on:click="buy(cost)">购买</div>
+        </div>
+
+        <p class="apple-pay" v-on:click="otherBuy(membershipVals[0].cost)" v-if="otherBuyDisplay && isVersionPass">苹果支付遇到问题</p>
+    </div>
+
+    <div v-show="isPaymentSucc" style="display: none">
+        <div class="success">
+            <img src="images/success@2x.png" height="75" width="75"/>
+            <p id="succFlag" style="width:100%">支付成功</p>
+        </div>
+
+        <p v-on:click="complete()"  type="button"  class="ad_button wd"  style="margin:0 auto;
+        text-align: center; line-height:44px;font-size: 17px;color: #FFFFFF">完成</p>
+    </div>
+
+    <div v-if="isLoading">
+        <div class="gen-gray-back"></div>
+        <div class="alert" style="padding:15px; width:170px; background-color:rgba(255,255,255,0.0);" id="suc_alert">
+
+            <div class="cushion">
+                <img src="../apply_doctor/images/Loading@3x@3x.png" id="change">
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!--<p class="deadline">购买之日起30天内有效</p>-->
+</div>
+
+
+
+
+</body>
+<script src="https://cdn.bootcss.com/vue/2.3.4/vue.min.js"></script>
+<script src="https://cdn.bootcss.com/vue-resource/1.3.4/vue-resource.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script src="../apply_doctor/lib/connectWebViewJavascriptBridge.js"></script>
+<script>
+    $(function(){
+        var findCanvas=$("#canvasThree");
+        var percents=findCanvas.attr('nowData')/findCanvas.attr('amout');
+        //percents=0.5;
+        //percents 为百分比的值  范围 0- 1
+        runCircle(
+            {
+                obj:'canvasThree',
+                percent:(data.balance/data.totalVal),
+                circleBottomColor:"#e6eaed",//圆环底色
+                innerColorStart:'#ff8d30',  //内部圆环 渐变色
+                innerColorEnd:'#ffb81e',
+            }
+        );
+
+        var count=0;
+        console.log(data.cost);
+        console.log(data.totalVal);
+    })
+
+    function runCircle(settings){
+        var defaultSetting={
+            //url:'images/enter_right_roa@2x.png',   //飞机小图地址
+            obj:'',                  //场景添加的canvas id 名
+            percent:1,               //圆环转动的百分比  0-1
+            circleBottomColor:"red",//圆环底色
+            innerColorStart:'#ffdd00',  //内部圆环 渐变色
+            innerColorEnd:'#fc7d37'
+        };
+        var option=$.extend({},defaultSetting,settings);
+
+        var imageUrl=option.url;
+        var obj=option.obj;
+        var percent=option.percent;
+        var innerColorStart=option.innerColorStart;
+        var innerColorEnd=option.innerColorEnd;
+        var circleBottomColor=option.circleBottomColor;
+
+        var preA=Math.PI/180;  //Math.PI 是圆周率
+
+        var canvasC=document.getElementById(obj);
+        /*控制运动*/
+        var context=canvasC.getContext('2d');
+        var windowW=500; //parseInt($(canvasC).parent().width())
+        var lineW1=20;//控制环的宽度
+        var lineW0=16;
+        var R0,R1;
+        var canvasW=300; //windowW*0.76   控制canvas的宽高
+        R1=120; //	 环的大小，半径  parseInt(canvasW/2-lineW1-lineW0-10)
+        var ra=parseInt(canvasW/2-lineW0/2-5); //	100
+        var canvasH=canvasW;
+        var rotateAngle=percent*360;
+        var anotherA=0;
+        /*if(percent>0.5){
+         anotherA=(percent-0.5)*360*preA;
+         }*/
+        var rotataRadians=preA*rotateAngle;
+        canvasC.width = canvasW;
+        canvasC.height = canvasH;
+
+        var x=canvasC.width/2;
+        var y=canvasC.height/2;
+        var startAa=-Math.PI/2;
+        var startA=0;
+        var Timer;
+        var preSceond=100/(Math.PI*2)
+//        var imageAir=new Image();
+//        imageAir.onload=CanvasApp;
+//        imageAir.src=imageUrl;
+        window.onload = CanvasApp
+        //-imageAir.width/4-2,-imageAir.height/4,imageAir.width/2,imageAir.height/2  ||imageAir.width  ||imageAir.height
+        function CanvasApp(){
+            var loading=0;
+            canvasC.setAttribute("data-run","1")
+            var imgWidth=option.imgWidth/2;
+            var imgHeight=option.imgHeight/2;
+            var imgX=-imgWidth/2-2;
+            var imgY=-imgHeight/2;
+            function drawScreen(){
+                if(startA<rotataRadians){
+                    startA-=0.1;
+                }
+                context.fillStyle="#ffffff";
+                context.fillRect(0,0,canvasC.width,canvasC.height);//绘制已经填色的图形
+                //
+                context.save();
+                context.setTransform(1,0,0,1,0,0); //水平面绘图
+                context.fillStyle="#ffffff";//整个canvas的背景色
+                context.fillRect(0,0,canvasC.width,canvasC.height);//绘制已经填色的图形 坐标0，0 宽高获取canvasC
+                context.translate(x,y);//translate() 方法为画布的变换矩阵添加水平的和垂直的偏移。参数添加给后续定义路径中的所有点。
+                context.rotate(Math.PI*1.5);//控制环的旋转
+
+                //中环
+                context.beginPath();
+
+                context.strokeStyle=circleBottomColor; //笔触的颜色
+                context.lineWidth=lineW1;  //线的宽度
+                context.arc(0,0,R1,0,Math.PI*2,false); //圆心坐标x y 半径 起始角 结束角 顺时针False/逆时针true
+                context.stroke();
+                context.closePath();
+                context.beginPath();
+                // Linear gradients
+                var gradient2 = context.createLinearGradient(R1, 0,-R1,0);
+                gradient2.addColorStop(0, innerColorStart);
+                gradient2.addColorStop(1, innerColorEnd);
+                context.lineCap="round";
+                context.strokeStyle=gradient2;
+                context.lineWidth=lineW1;
+                context.arc(0,0,R1,0,startA,true);  //圆心坐标x y 半径 起始角 结束角 顺时针False/逆时针true
+                context.stroke();
+                context.closePath();
+                //画图
+                if(startAa<rotataRadians-Math.PI/2){
+                    startAa+=0.1;
+                    canvasC.setAttribute("data-run","1")
+                }else{
+                    clearInterval(Timer);
+                    canvasC.setAttribute("data-run","0")
+                }
+                context.save();
+                context.setTransform(1,0,0,1,0,0);
+                var ax=ra*Math.cos(startAa) ;
+                var ay=ra*Math.sin(startAa) ;
+                context.translate(x+ax,y+ay);
+                context.rotate(startAa);
+                //context.drawImage(imageAir,imgX,imgY,30,30) // 图 坐标x y 宽度w h
+                context.restore();
+            }
+            drawScreen();
+            Timer=setInterval(drawScreen,20);
+        }
+    }
+</script>
+
+<script>
+  var data = '<%-data%>';
+  data = data.replace(new RegExp("\r\n", "gm"), "\\r\\n");
+  data = data.replace(new RegExp("\n\r", "gm"), "\\n\\r");
+  data = data.replace(new RegExp("\n", "gm"), "\\n");
+  data = data.replace(new RegExp("\'", "gm"), " ");
+  data = JSON.parse(data);
+  console.log(data);
+  var webBridge = webViewBridge();
+  window.alert = function(name){
+      var iframe = document.createElement("IFRAME");
+      iframe.style.display="none";
+      iframe.setAttribute("src", 'data:text/plain,');
+      document.documentElement.appendChild(iframe);
+      window.frames[0].window.alert(name);
+      iframe.parentNode.removeChild(iframe);
+  }
+  webBridge.bridgeInit(function (bridge) {
+    bridge.registerHandler('checkPaymentStatus', function(data,responseCallback){
+        vm.isLoading=true;
+      var info = data;
+      info = JSON.parse(info);
+      if(info.payType != "iap"){
+        setTimeout(function(){$.ajax({
+          type: "GET",
+          url: "/1/order/prepareOrderStatus?prepareId="+info.prepayId+"&type=membership",
+          headers: {
+            "x-docchat-user-id":info.userId,
+            "x-docchat-session-token":info.token
+          },
+          success: function(rs){
+              vm.isLoading=false;
+            if(rs.payStatus == "paid"){
+              vm.isPaymentSucc = true;
+              vm.contentDisplay = false;
+              vm.totalVal = Number(vm.totalVal) + 300;
+              vm.balance = Number(vm.balance) + 300;
+              sessionStorage.setItem("balance",vm.balance);
+              sessionStorage.setItem("totalVal",vm.totalVal);
+              var nativeData = {
+                hideRight : true
+              }
+              webBridge.upload("hideRightBtn",nativeData);
+
+            }else{
+              alert("支付失败")
+            }
+          },
+          error: function(err){
+              vm.isLoading=false;
+            alert("支付失败");
+          }
+        });},1500);
+      }else{
+          vm.isLoading=false;
+        vm.isPaymentSucc = true;
+        vm.contentDisplay = false;
+        vm.totalVal = Number(vm.totalVal) + 300;
+        vm.balance = Number(vm.balance) + 300;
+        sessionStorage.setItem("balance",vm.balance);
+        sessionStorage.setItem("totalVal",vm.totalVal);
+        var nativeData = {
+          hideRight : true
+        }
+        webBridge.upload("hideRightBtn",nativeData);
+      }
+
+
+    });
+    bridge.registerHandler('goBack', function (data,responseCallback) {
+      if(!vm.contentDisplay && vm.isPaymentSucc){
+        vm.contentDisplay=true;
+        vm.isPaymentSucc = false;
+        var nativeData = {
+          hideRight : false
+        }
+        webBridge.upload("hideRightBtn",nativeData);
+      }else{
+        var result = {};
+        result.isClose = true;
+        responseCallback(JSON.stringify(result));
+      }
+
+    });
+  });
+  function getTitle(title){
+      // hack在微信等webview中无法修改document.title的情况
+      var $body = $('body');
+      document.title =title;
+      // hack在微信等webview中无法修改document.title的情况
+      var $iframe = $('<iframe src="/" style="display:none"></iframe>');
+      $iframe.on('load',function() {
+          setTimeout(function() {
+              $iframe.off('load').remove();
+          }, 0);
+      }).appendTo($body);
+  };
+  var vm=new Vue({
+    el:".content",
+    data:{
+      totalVal:data.totalVal < sessionStorage.getItem("totalVal") ? sessionStorage.getItem("totalVal") : data.totalVal,
+      client: data.client,
+      isVersionPass : data.isVersionPass,
+      userId : data.userId,
+      token : data.token,
+      balance : data.balance < sessionStorage.getItem("balance") ? sessionStorage.getItem("balance") : data.balance,
+      membershipVals : data.membershipVals,
+      isPaymentSucc : false,
+      isActivity:false,
+      contentDisplay : true,
+      otherBuyDisplay : false,
+      isLoading:true,
+      detailCount:0,
+      leftRotateNum:0,
+      rightRotateNum:0,
+      cost:data.membershipVals[0].cost
+    },
+    mounted:function(){
+      this.isLoading = false;
+      this.membershipVals = JSON.parse(JSON.stringify(this.membershipVals));
+      this.membershipVals.forEach(function(item){
+        item.describe = item.cost+'元购买'+data.membershipVals[0].benefitVal+'元会员额度'
+      });
+      sessionStorage.setItem("userId", this.userId);
+      sessionStorage.setItem("token", this.token);
+      if(this.client == "ios"){
+        this.otherBuyDisplay = true
+      }
+      Vue.nextTick(function () {
+        var circleInitValue=(data.cost/vm.totalVal)*100;
+        if(circleInitValue<=2 && circleInitValue>0){
+          circleInitValue=2;
+        }
+        if(vm.totalVal==0){
+          circleInitValue=100;
+        }
+        var num = circleInitValue * 3.6;
+        if (num <= 180) {
+          vm.leftRotateNum=0;
+          vm.rightRotateNum=num;
+        } else {
+          vm.leftRotateNum=num - 180;
+          vm.rightRotateNum=180;
+        }
+
+      })
+      var isD=!(sessionStorage.getItem('isDetail') == 'true');
+      console.log(isD);
+      if(data.from == "banner" && isD){
+        this.isActivity=true;
+        this.contentDisplay=false;
+        getTitle("会员计划");
+        var nativeData = {
+          hideRight : true
+        }
+        webBridge.upload("hideRightBtn",nativeData);
+      }else{
+        var nativeData = {
+          hideRight : false
+        }
+        webBridge.upload("hideRightBtn",nativeData);
+      }
+
+
+
+    },
+    methods: {
+      getDeg: function(){
+        var nativeData = {
+          hideRight : true
+        }
+        webBridge.upload("hideRightBtn",nativeData);
+        sessionStorage.setItem('isDetail',true);
+        window.location="memberRechargeDetail.html";
+      },
+      applyBuy : function(price){
+        //$alert.show();
+        //$gray.show();
+        var data={};
+        data.type = "membership";
+        data.price = price;
+        data.payType = "iap";
+        this.$http({
+          method: 'POST',
+          url: "/1/order/service",
+          headers : {
+            "x-docchat-user-id":this.userId,
+            "x-docchat-session-token":this.token
+          },
+          body:data
+        }).then(function (rs) {
+          this.isLoading=false;
+          rs = rs.body;
+          if(!rs.prepayId){
+            alert("生成支付订单失败，请重试");
+          }else{
+            var appleData = {
+              productId : "0002",
+              prepayId : rs.prepayId
+            }
+            console.log(appleData);
+            webBridge.upload("applePayment",JSON.stringify(appleData))
+          }
+        },function(err){
+          this.isLoading=false;
+          if(JSON.parse(err.responseText).code == 1604){
+            alert("已领取过");
+          }else if(JSON.parse(err.responseText).code == 1208){
+            alert("邀请码不存在");
+          }else{
+            alert("页面异常");
+          }
+        });
+      },
+      normalBay : function(price){
+        var data={};
+        data.type = "membership";
+        data.price = price;
+        data.serviceValue = 300;
+        data.tradeName = "会员额度充值";
+        data.tradeDetail = "会员额度充值";
+        this.$http({
+          method: 'GET',
+          url: "/1/customer/wallet?userId=" + this.userId,
+          headers : {
+            "x-docchat-user-id":this.userId,
+            "x-docchat-session-token":this.token
+          }}).then(function (rs) {
+          this.isLoading=false;
+          rs = rs.body;
+          data.balance = rs.amount;
+          console.log(data);
+          webBridge.upload("selectPayment",JSON.stringify(data))
+        },function(err){
+          this.isLoading=false;
+          alert("获取余额失败");
+        });
+      },
+      otherBuy : function(price){
+        this.normalBay(price);
+      },
+      buy:function(price){
+          console.log(price);
+        this.isLoading=true;
+        if(this.client == "ios"){
+          this.applyBuy(price);
+        }else{
+          this.normalBay(price);
+        }
+      },
+      complete:function(){
+        //webBridge.upload("backCheck");
+        vm.isPaymentSucc=false;
+        vm.contentDisplay=true;
+        var nativeData = {
+          hideRight : false
+        }
+        webBridge.upload("hideRightBtn",nativeData);
+      },
+      getProduct: function(){
+        vm.isActivity=false;
+        vm.contentDisplay=true;
+        getTitle("我的会员卡");
+
+        var nativeData = {
+          hideRight : false
+        }
+        webBridge.upload("hideRightBtn",nativeData);
+
+      },
+      chosePrice:function(cost){
+          vm.cost=cost
+      }
+    }
+  });
+
+  vm.$watch('totalVal', function (newVal, oldVal) {
+      // 这个回调将在 `vm.totalVal`  改变后调用
+      debugger;
+      console.log(data.cost,newVal);
+      var circleInitValue=(data.cost/vm.totalVal)*100;
+      if(circleInitValue<=2 && circleInitValue>0){
+          circleInitValue=2;
+      }
+      if(newVal==0){
+          circleInitValue=100;
+      }
+      console.log(circleInitValue);
+      var num = circleInitValue * 3.6;
+      if (num <= 180) {
+          vm.leftRotateNum=0;
+          vm.rightRotateNum=num;
+      } else {
+          vm.leftRotateNum=num - 180;
+          vm.rightRotateNum=180;
+      }
+  })
+  $(function () {
+      function changeColor(id,class1,class2) {
+          $("#btn-buy").on("touchstart",function () {
+              $(this).attr("class",class1);
+              console.log(1);
+          });
+          $("#btn-buy").on("touchend",function () {
+              $(this).attr("class",class2);
+              console.log(2);
+          })
+      }
+      changeColor("btn-buy","buy-membertouch","buy-member");
+  });
+</script>
+
+<script>
+  $(function(){
+    var findCanvas=$("#canvasThree");
+    var percents=findCanvas.attr('nowData')/findCanvas.attr('amout');
+    //percents=0.5;
+    //percents 为百分比的值  范围 0- 1
+    runCircle(
+      {
+        obj:'canvasThree',
+        percent:(data.balance/data.totalVal),
+        circleBottomColor:"#e6eaed",//圆环底色
+        innerColorStart:'#ff8d30',  //内部圆环 渐变色
+        innerColorEnd:'#ffb81e',
+      }
+    );
+
+    var count=0;
+    console.log(data.cost);
+    console.log(data.totalVal);
+  })
+
+  function runCircle(settings){
+    var defaultSetting={
+      //url:'images/enter_right_roa@2x.png',   //飞机小图地址
+      obj:'',                  //场景添加的canvas id 名
+      percent:1,               //圆环转动的百分比  0-1
+      circleBottomColor:"red",//圆环底色
+      innerColorStart:'#ffdd00',  //内部圆环 渐变色
+      innerColorEnd:'#fc7d37'
+    };
+    var option=$.extend({},defaultSetting,settings);
+    var imageUrl=option.url;
+    var obj=option.obj;
+    var percent=option.percent;
+    var innerColorStart=option.innerColorStart;
+    var innerColorEnd=option.innerColorEnd;
+    var circleBottomColor=option.circleBottomColor;
+
+    var preA=Math.PI/180;  //Math.PI 是圆周率
+
+    var canvasC=document.getElementById(obj);
+      /*控制运动*/
+    var context=canvasC.getContext('2d');
+    var windowW=500; //parseInt($(canvasC).parent().width())
+    var lineW1=20;//控制环的宽度
+    var lineW0=16;
+    var R0,R1;
+    var canvasW=300; //windowW*0.76   控制canvas的宽高
+    R1=120; //	 环的大小，半径  parseInt(canvasW/2-lineW1-lineW0-10)
+    var ra=parseInt(canvasW/2-lineW0/2-5); //	100
+    var canvasH=canvasW;
+    var rotateAngle=percent*360;
+    var anotherA=0;
+      /*if(percent>0.5){
+       anotherA=(percent-0.5)*360*preA;
+       }*/
+    var rotataRadians=preA*rotateAngle;
+    canvasC.width = canvasW;
+    canvasC.height = canvasH;
+
+    var x=canvasC.width/2;
+    var y=canvasC.height/2;
+    var startAa=-Math.PI/2;
+    var startA=0;
+    var Timer;
+    var preSceond=100/(Math.PI*2)
+    var imageAir=new Image();
+
+    CanvasApp();
+
+    //-imageAir.width/4-2,-imageAir.height/4,imageAir.width/2,imageAir.height/2  ||imageAir.width  ||imageAir.height
+    function CanvasApp(){
+      var loading=0;
+      canvasC.setAttribute("data-run","1")
+
+      function drawScreen(){
+        if(startA<rotataRadians){
+          startA-=0.1;
+        }
+        context.fillStyle="#ffffff";
+        context.fillRect(0,0,canvasC.width,canvasC.height);//绘制已经填色的图形
+        //
+        context.save();
+        context.setTransform(1,0,0,1,0,0); //水平面绘图
+        context.fillStyle="#ffffff";//整个canvas的背景色
+        context.fillRect(0,0,canvasC.width,canvasC.height);//绘制已经填色的图形 坐标0，0 宽高获取canvasC
+        context.translate(x,y);//translate() 方法为画布的变换矩阵添加水平的和垂直的偏移。参数添加给后续定义路径中的所有点。
+        context.rotate(Math.PI*1.5);//控制环的旋转
+
+        //中环
+        context.beginPath();
+
+        context.strokeStyle=circleBottomColor; //笔触的颜色
+        context.lineWidth=lineW1;  //线的宽度
+        context.arc(0,0,R1,0,Math.PI*2,false); //圆心坐标x y 半径 起始角 结束角 顺时针False/逆时针true
+        context.stroke();
+        context.closePath();
+        context.beginPath();
+        // Linear gradients
+        var gradient2 = context.createLinearGradient(R1, 0,-R1,0);
+        gradient2.addColorStop(0, innerColorStart);
+        gradient2.addColorStop(1, innerColorEnd);
+        context.lineCap="round";
+        context.strokeStyle=gradient2;
+        context.lineWidth=lineW1;
+        context.arc(0,0,R1,0,startA,true);  //圆心坐标x y 半径 起始角 结束角 顺时针False/逆时针true
+        context.stroke();
+        context.closePath();
+        //画图
+        if(startAa<rotataRadians-Math.PI/2){
+          startAa+=0.1;
+          canvasC.setAttribute("data-run","1")
+        }else{
+          clearInterval(Timer);
+          canvasC.setAttribute("data-run","0")
+        }
+        context.save();
+        context.setTransform(1,0,0,1,0,0);
+        var ax=ra*Math.cos(startAa) ;
+        var ay=ra*Math.sin(startAa) ;
+        context.translate(x+ax,y+ay);
+        context.rotate(startAa);
+        context.restore();
+      }
+      drawScreen();
+      Timer=setInterval(drawScreen,20);
+    }
+  }
+</script>
+
+</html>

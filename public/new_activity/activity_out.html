@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+
+    <link rel="stylesheet" href="../../new_activity/css/share.css"/>
+
+    <script src="https://cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script>
+    <title>好友分享</title>
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?7367a4d011615763d379d07f27135ac4";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+
+</head>
+<body>
+<div class="wrapper" id="wrapper">
+    <div class="scroll share_friends">
+        <div class="share_box">
+
+            <div class="share_text">
+                <p class="new_ticket"><span>现金红包</span> <font>3</font>元</p>
+                <p class="inviter">·邀请新人各得3元，满10元可提现</p>
+            </div>
+
+            <!--立即领取-->
+            <div class="receive_box">
+                <div class="receive_cont">
+                    <p><input type="text" placeholder="输入手机号" id="phoneNum"></p>
+                    <button class="receive_btn" >立即领取</button>
+                </div>
+            </div>
+
+            <div class="active_rule">
+                <span class="tit_show">活 动·规 则</span>
+                <ul class="rule_list_show">
+                    <li><span>1</span><p>本活动红包限第一次注册新用户领取，每个用户邀请新人上限为10个，邀请10个以后不再奖励。</p></li>
+                    <li><span>2</span><p>邀请成功后，邀请双方均可获得3元现金红包，满10元可提现。</p></li>
+                    <li><span>3</span><p>同一手机号、手机设备、支付账号均视为同一用户。</p></li>
+                    <li><span>4</span><p>任何恶意作弊行为一律冻结账户，活动解释权归朱李叶健康app所有。</p></li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="shadowLogin"></div>
+    <div class="now_download">
+        <span class="tip"></span>
+        <p class="p1">恭喜您！<br>您已领取到3元新人现金红包</p>
+        <p class="p2">快下载朱李叶健康领取您的专享红包吧</p>
+        <button>立即下载</button>
+    </div>
+
+</div>
+<script>
+    var data = <%-data%>;
+    window.alert = function (name) {
+        var iframe = document.createElement("IFRAME");
+        iframe.style.display = "none";
+        iframe.setAttribute("src", 'data:text/plain,');
+        document.documentElement.appendChild(iframe);
+        window.frames[0].window.alert(name);
+        iframe.parentNode.removeChild(iframe);
+    }
+    $(function(){
+        $(".receive_btn").click(function () {
+            $(".receive_btn").attr("disabled","disabled");
+            var phoneNum = $("#phoneNum").val();
+            var userId = data.userId;
+
+            console.log(userId);
+            var reg = /^(13|15|18|17)[0-9]{9}$/;
+            if(phoneNum=="" || !reg.test(phoneNum)){
+                alert('请输入正确的手机号');
+                $(".receive_btn").attr("disabled",false);
+                return;
+            }else{
+                $.ajax({
+                    url: '/1/red_paper/invite?phone_num=' + phoneNum +'&invite_id='+userId,
+                    type: 'GET',
+                    success: function (result) {
+                        alert('领取成功');
+                        $(".receive_btn").attr("disabled",false);
+                        window.location = 'https://a.app.qq.com/o/simple.jsp?pkgname=com.zlycare.docchat.c '
+                    },
+                    error:function (err) {
+                        alert(JSON.parse(err.responseText).msg);
+                        console.log(err);
+                        $(".receive_btn").attr("disabled",false);
+                        window.location = 'https://a.app.qq.com/o/simple.jsp?pkgname=com.zlycare.docchat.c '
+                    }
+                });
+                console.log(phoneNum);
+            }
+
+        })
+    });
+
+
+</script>
+</body>
+</html>

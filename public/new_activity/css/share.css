@@ -1,0 +1,379 @@
+@charset "utf-8";
+*{
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -moz-tap-highlight-color: rgba(0, 0, 0, 0);
+    -ms-tap-highlight-color: rgba(0, 0, 0, 0);
+    -o-tap-highlight-color: rgba(0, 0, 0, 0);
+    tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+ul,li{
+    list-style: none;
+}
+body{
+    font-size: 1.4rem;
+    font-family: PingFangSC-Regular,'microsoft yahei',Verdana,Arial,Helvetica,sans-serif;
+    background: #ffffff;
+    -webkit-background-size: 100%;
+    background-size: 100%;
+    -webkit-touch-callout: none; -webkit-text-size-adjust: none;/*是防止用户复制和保存图片,只支持iphone、ipad、android*/
+}
+
+
+#wrapper {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    bottom:  0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    overflow: scroll;
+    background: #ffffff;
+}
+
+
+/*分享给朋友*/
+.share_friends{
+     background: url("../images/share/share_havegift.png") no-repeat;
+     background-size: 100%;
+ }
+.share_buy{
+    background: url("../images/share/newper_10.png") no-repeat;
+    background-size: 100%;
+}
+
+.share_box{
+    padding-top:16.5rem;
+}
+.share_text{
+    font-family: PingFangSC-Regular;
+    margin:0 .75rem;
+    background: url("../images/share/yhq_img.png") no-repeat;
+    padding: 1rem 1.8rem 1.3rem 1.7rem;
+    height:10rem;
+    background-size: cover;
+}
+.share_text p.new_ticket{
+    font-size: .8rem;
+    color: #FB497D;s;
+}
+
+.share_text p.new_ticket font{
+    font-family: PingFangSC-Semibold;
+    color: #FB497D;
+    font-size: 2.7rem;
+    color: #FB497D;;
+}
+
+
+.share_text p.new_ticket span{
+    font-size: 1rem;
+    color: #5C5C5C;
+    float: right;
+    margin-top:.5rem;
+}
+.share_text p.inviter{
+    font-family: PingFangSC-Regular;
+    border-top:1px solid #d8d8d8;
+    margin-top:1rem;
+    padding-top:1rem;
+    font-size: .75rem;
+    color: #A0A0A0;
+}
+.share_text p.inviter a{
+    font-family: PingFangSC-Regular;
+    float: right;
+    font-size: .7rem;
+    color: #FB497D;;
+}
+
+.invite_friends{
+    width: 90%;
+    text-align: center;
+    letter-spacing: 2px;
+    height: 2.5rem;
+    line-height: 2.5rem;
+    color: #fff;
+    font-size: .85rem;
+    outline: none;
+    background: #FB497D;
+    border: 0;
+    margin: 0 auto;
+    margin-top: 2rem;
+}
+
+/*立即领取*/
+
+.receive_box{
+    width: 100%;
+    height:auto;
+    overflow: hidden;
+    margin-top:2rem;
+}
+
+.receive_cont{
+    margin:0 .75rem;
+}
+.receive_box input{
+    float: left;
+    width: 60%;
+    height:2.5rem;
+    border:1px solid #FB497D;
+    outline: none;
+    text-align: center;
+    font-size: .85rem;
+
+}
+.receive_box input::-webkit-input-placeholder{
+    color: #FB497D;
+}
+.receive_box button{
+    float: right;
+    width: 35%;
+    height: 2.5rem;
+    color: #fff;
+    font-size: .85rem;
+    outline: none;
+    background: #FB497D;
+    border:0;
+}
+/*分享至*/
+
+.share_way{
+    margin: 1.5rem 1.5rem 0;
+    text-align: center;
+}
+
+/*公用标题*/
+.tit_show{
+    display: block;
+    text-align: center;
+    height:2.2rem;
+    background: url("../images/share/Group 7@2x.png") no-repeat center center;
+    background-size: cover;
+    font-family: PingFangSC-Semibold;
+    font-size: 1rem;
+    color: #4A4A4A;
+    line-height: 2.2rem;
+    font-weight: 500;
+}
+
+.share_way ul{
+    display: table;
+    width: 100%;
+    height: 3.5rem;
+    overflow: hidden;
+    margin-bottom: 1.6rem;
+    margin-top: 1.3rem;
+}
+.share_way ul li{
+    display: table-cell;
+    text-align: center;
+}
+.share_way ul li img{
+    width: 2.75rem;
+    height: 2.75rem;
+}
+.share_way ul li span{
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-family: PingFangSC-Regular;
+    margin-top:.5rem;
+    font-size: .75rem;
+    color: #4A4A4A;
+}
+
+/*邀 请·记 录*/
+.record_list{
+    margin: 2rem 1.5rem 0;
+}
+.record_list p {
+    width: 23%;
+    text-align: center;
+    float: left;
+    height: 40px;
+    font-size: .6rem;
+    color: #4A4A4A;
+    line-height: 40px;
+    margin-left: 6%;
+}
+ul.record_list_show li{
+    width:90%;
+    margin:0 aut0;
+    height: 40px;
+    font-family: PingFangSC-Regular;
+    font-size: .7rem;
+    color: #4A4A4A;
+}
+ul.record_list_show li.no_record{
+    width:90%;
+    margin: 0 auto;
+    height:40px;
+    line-height: 40px;
+    font-family: PingFangSC-Regular;
+    font-size: 1rem;
+    color: #4A4A4A;
+    text-align: center;
+    letter-spacing: 2px;
+}
+ul.record_list_show li span{
+    width: 14%;
+    float: left;
+    line-height: 40px;
+    height: 40px;
+    font-family: PingFangSC-Regular;
+    font-size: .7rem;
+    color: #4A4A4A;
+    margin-left: 5%;
+    text-align: center;
+}
+ul.record_list_show li span:nth-child(3){
+    margin-left: 14%;
+}
+
+
+ul.record_list_show li img{
+    float: left;
+    margin-top:5px;
+    width: 28px;
+    height: 28px;
+    margin-left: 5%;
+    -webkit-border-radius:50%;
+    -moz-border-radius:50%;
+    border-radius:50%;
+}
+
+/*立即购买按钮*/
+.buy_btn{
+    margin:1.5rem .75rem 0;
+    height:2.5rem;
+    background: #FB497D;
+    box-shadow: 0 2px 4px 0 rgba(192,40,29,0.34);
+    border-radius: 4px;
+    font-family: PingFangSC-Semibold;
+    font-size: .85rem;
+    color: #FFFFFF;
+    line-height: 2.5rem;
+    text-align: center;
+}
+/*活 动·规 则   ／    其他会员权益*/
+.active_rule{
+    margin: 2rem 1.5rem 0;
+    padding-bottom: 2rem;
+}
+ul.rule_list_show li{
+    width: 100%;
+    margin-top:.8rem;
+    float: left;
+}
+ul.rule_list_show li:nth-child(4){
+    margin-bottom:60px;
+}
+ul.rule_list_show span{
+    display: inline-block;
+    width: .75rem;
+    height:.75rem;
+    line-height: .75rem;
+    border-radius: 50%;
+    float: left;
+    text-align: center;
+    margin-right:.4rem;
+    margin-top:.25rem;
+    font-size: .65rem;
+    color: #676767;
+    background: #e5e5e5;
+}
+
+ul.rule_list_show li p{
+    display: inline-block;
+    width: 93%;
+    font-size: .75rem;
+    float: left;
+    color: #4A4A4A;
+    line-height: 1.3rem;
+}
+
+/*遮罩层*/
+.shadowLogin{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: rgba(62,63,77,0.45);
+    z-index: 2;
+    display: none;
+}
+
+/*提示内容*/
+
+.now_download{
+    width: 72%;
+    position: absolute;
+    top:50%;
+    left:50%;
+    z-index: 3;
+    margin:0 auto;
+    margin-top:-6.25rem;
+    margin-left:-36%;
+    height:12.5rem;
+    background: #fff;
+    padding:1.2rem;
+    text-align: center;
+    display: none;
+
+}
+.now_download .tip{
+   display: block;
+    width:3.3rem;
+    height:3.3rem;
+    margin: auto;
+    background: url("../images/share/yhq_bg.png") no-repeat;
+    background-size: 100%;
+}
+
+.now_download .p1{
+    font-size: .8rem;
+    color: #4A4A4A;
+    line-height: 1.4rem;
+}
+.now_download .p2{
+    font-size: .7rem;
+    color: #A0A0A0;
+    line-height: 1.1rem;
+}
+.now_download  button{
+    margin-top:.7rem;
+    width: 5.5rem;
+    height:2.5rem;
+    background: #FB497D;
+    box-shadow: 0 2px 4px 0 rgba(192,40,29,0.34);
+    border-radius: 4px;
+    color: #fff;
+    font-size: .8rem;
+    border:0;
+    outline: none;
+}
+
+button.menmber_btn{
+    width: 100%;
+}
+
+
+
+
+
+
+
+
+
+
+
+

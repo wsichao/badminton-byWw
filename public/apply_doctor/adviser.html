@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    	<meta charset="utf-8">
+
+    	<!-- http://t.co/dKP3o1e -->
+	    <meta name="HandheldFriendly" content="True">
+	    <meta name="MobileOptimized" content="320">
+	    <meta name="viewport" content="width=device-width, initial-scale=1">
+    	<title></title>
+		<!-- JQuery -->
+		<script src="https://cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script>
+		<script src="../../assets/libs/bootstrap.min.js"></script>
+		<!-- Private -->
+		<link rel="stylesheet" href="../../assets/styles/bootstrap.min.css">
+		<link href="../../assets/styles/style.css" rel="stylesheet">
+		<link rel="stylesheet" href="../../marketing/comm/signUp.css">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title></title>
+		<style type="text/css">
+			.title{
+				margin: 15px 0;
+				color:#33a5ee;
+				font-weight:bold;
+				font-size:16px;
+			}
+			fieldset{
+				border:1px solid #bfbfbf;
+				border-radius: 4px;
+				line-height:24px;
+				margin:15px 10% ;
+				padding:15px 5px;
+			}
+			.submitThis{
+				margin:0;
+				margin-bottom: 15px;
+			}
+			legend{
+				padding:0 5px;
+				margin:0;
+			}
+		</style>
+	</head>
+	<body>
+		<h2 class="title">顾问账号申请</h2>
+		<form>
+			<select id="province" class="insert">
+				<option disabled selected value="">选择所在省</option>
+
+			</select>
+			<select id="city" class="insert" disabled="disabled">
+				<option disabled selected value="">选择所在市</option>
+
+			</select>
+			<input id="hospital" class="insert" type="text" placeholder="单位"/>
+      <input id="department" class="insert" type="text" placeholder="部门/科室"/>
+			<input id="position" class="insert" type="text" placeholder="职称"/>
+			<input id="realName" class="insert" type="text" placeholder="真实姓名(提现时使用)"/>
+			<select id="sex" class="insert">
+				<option disabled selected value="">性别</option>
+				<option value="男">男</option>
+				<option value="女">女</option>
+			</select>
+			<input id="phoneNum" class="insert" type="number" placeholder="手机"/>
+
+
+
+			<!-- <fieldset>
+				<legend> 顾问收入 </legend>
+				<div class="input-group insert_no_padding">
+			       <span class="input-group-addon">
+			         <input type="radio" name="chargeLevel" value="零">
+			       </span>
+			       <input type="text" class="form-control" disabled="disabled" value="零级：免费">
+			  </div>
+				<div class="input-group insert_no_padding">
+			       <span class="input-group-addon">
+			         <input type="radio" name="chargeLevel" value="一">
+			       </span>
+			       <input type="text" class="form-control" disabled="disabled" value="一级：5分钟内收费8元，之后2元/每分钟">
+			  </div>
+				<div class="input-group insert_no_padding">
+						 <span class="input-group-addon">
+							 <input type="radio" name="chargeLevel" value="二">
+						 </span>
+						 <input type="text" class="form-control" disabled="disabled" value="二级：5分钟内收费16元，之后4元/每分钟">
+				</div>
+				<div class="input-group insert_no_padding">
+						 <span class="input-group-addon">
+							 <input type="radio" name="chargeLevel" value="三">
+						 </span>
+						 <input type="text" class="form-control" disabled="disabled" value="三级：5分钟内收费40元，之后10元/每分钟">
+				</div>
+				<div class="input-group insert_no_padding">
+						 <span class="input-group-addon">
+							 <input type="radio" name="chargeLevel" value="四">
+						 </span>
+						 <input type="text" class="form-control" disabled="disabled" value="四级：5分钟内收费80元，之后18元/每分钟">
+				</div>
+		</fieldset> -->
+      <select id="chargeLevel" class="insert" style="margin-bottom: 0">
+        <option disabled selected value="">顾问收入</option>
+				<option value="零">零级</option>
+				<option value="一">一级</option>
+				<option value="二">二级</option>
+        <option value="三">三级</option>
+        <option value="四">四级</option>
+      </select>
+			<fieldset>
+				<legend> 顾问收入说明 </legend>
+				零级：免费<br/>
+				一级：5分钟内收费8元，之后2元/每分钟;<br/>
+				二级：5分钟内收费16元，之后4元/每分钟;<br/>
+				三级：5分钟内收费40元，之后10元/每分钟;<br/>
+				四级：5分钟内收费80元，之后18元/每分钟;
+			</fieldset>
+      <input id="managerName" class="insert" type="text" placeholder="介绍人姓名"/>
+      <input id="signUp" class="submitThis btn-submit" type="button" value="提交"/>
+      <p style="font-size: 12px;color: rgb(101, 106, 110);margin-bottom: 15px">注：您的基本信息提交后，我们会在24小时内与您联系并核实您的身份，我们将会对您的联系方式严格保密。成为顾问后，将会短信通知您。</p>
+		</form>
+	</body>
+	<script>
+
+		$(function(){
+			$.ajax({
+				type: "get",
+				url: "/api/getProvince",
+				success: function(rs){
+					var area = rs;
+					for(var i=0;i<area.length;i++){
+						$("#province").append("<option index='" + i + "' value='" + area[i].name + "'>" + area[i].name + "</option>")
+					}
+					$("#province").change(function () {
+						$("#city").removeAttr("disabled");
+						var index = $('#province').find('option:selected').attr('index');
+						$("#city").empty();
+						for(var j=0;j<area[index].subArea.length;j++){
+							$("#city").append("<option  value='" + area[index].subArea[j].name + "'>" + area[index].subArea[j].name + "</option>")
+						}
+					})
+				},
+				error: function(rs){
+					alert("获取省份失败");
+				}
+			});
+			$("#signUp").click(function(){
+				var data= {};
+        // required: ['phoneNum', 'realName', 'sex', 'hospital', 'department', 'chargeLevel'],
+        // optional: ['position', 'managerName']
+				data.province = $('#province').val();
+				data.city = $('#city').val();
+				data.realName = $('#realName').val();
+				data.phoneNum = $('#phoneNum').val();
+        		data.sex = $('#sex').val();
+        		data.hospital = $('#hospital').val();
+        		data.department = $('#department').val();
+				data.chargeLevel = $('#chargeLevel').val();
+				data.position = $("#position").val();
+        		data.managerName = $("#managerName").val();
+				//获取url中的参数
+				function getUrlParam(name) {
+					var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+					var r = window.location.search.substr(1).match(reg); //匹配目标参数
+					if (r != null) return unescape(r[2]); return null; //返回参数值
+				}
+				data.from = getUrlParam("from");
+				console.log(data);
+				var reg = /^(13|15|18|17)[0-9]{9}$/;
+				if(data.province==null){
+					alert("请选择省份");
+					return;
+				}
+				if(data.city==null){
+					alert("请选择所在城市");
+					return;
+				}
+        if(data.hospital==""){
+					alert("请输入单位名称");
+					return;
+				}
+				if(data.realName==""){
+					alert("请输入姓名");
+					return;
+				}
+				if(data.phoneNum=="" || !reg.test(data.phoneNum)){
+					alert('请输入正确的手机号');
+					return;
+				}
+				if(data.chargeLevel=="" || data.chargeLevel==null){
+					alert('请选择收费标准');
+					return;
+				}
+        if(data.department==""){
+					alert('请选择科室');
+					return;
+				}
+        if(data.sex=="" || data.sex==null){
+          alert('请选择性别');
+          return;
+        }
+				$.ajax({
+					type: "POST",
+					url: "/api/adviserReg",
+					data: data,
+					data: JSON.stringify(data),
+					dataType:'json',
+					headers : {
+						"Content-Type": 'application/json'
+					},
+					success: function(rs){
+						if(rs.msg="suc"){
+							alert("申请提交成功\n您的申请已成功提交，我们会在一个工作日之内完成审核，请耐心等待。");
+							JSCaller.finishActivity();
+						}
+					},
+          error: function(rs){
+            var message = "";
+            if (rs && rs.responseText && rs.status){
+              if (rs.status >= 500) message = "服务器异常!";
+              else if (rs.responseText.indexOf("1202")) message = "手机号码已存在!";
+            }
+            alert("报名失败!" + message);
+          }
+				});
+
+			})
+		})
+	</script>
+</html>

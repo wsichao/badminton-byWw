@@ -1,0 +1,45 @@
+<title>医聊</title>
+
+<style>
+    .header {
+        text-align: center;
+    }
+
+    .header h1 {
+        font-size: 200%;
+        color: #333;
+        margin-top: 30px;
+    }
+
+    .header p {
+        font-size: 14px;
+    }
+</style>
+
+<div class="header">
+    <div class="am-g">
+        <h1>医聊</h1>
+    </div>
+    <hr/>
+</div>
+<div class="am-g">
+    <div class="am-u-lg-6 am-u-md-8 am-u-sm-centered">
+        <br>
+        <br>
+
+        <form method="post" class="am-form">
+            <label for="username">用户名:</label>
+            <input type="text" id="username" value="" ng-model="username">
+            <br>
+            <label for="pw">密 码:</label>
+            <input type="password" id="pw" value="" ng-model="pw">
+            <br>
+            <br/>
+
+            <div class="am-cf ">
+                <input type="button" ng-click="login()" value="登 录" class="btn btn-success">
+            </div>
+        </form>
+
+    </div>
+</div>

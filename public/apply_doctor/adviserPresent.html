@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>职业信息</title>
+
+    <!-- http://t.co/dKP3o1e -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    <!-- JQuery -->
+    <script src="https://cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script>
+    <script src="../assets/libs/bootstrap.min.js"></script>
+    <!-- Private -->
+    <link rel="stylesheet" href="../assets/styles/bootstrap.min.css">
+    <link rel="stylesheet" href="apply_doctor/comm/signUp.css">
+    <style>
+        b{
+            font-weight:normal;
+        }
+    </style>
+</head>
+<body style="background: gainsboro;">
+    <div class="profile-wrap">
+        <ul>
+            <li>所在省<span id="province"></span></li>
+            <li>所在市<span id="city"></span></li>
+            <li><b id="hostpitalName">单位</b><span id="hospital"></span></li>
+            <li><b id="deptName">部门</b><span id="department"></span></li>
+            <li id="positonWrap">职称<span id="position"></span></li>
+        </ul>
+    </div>
+</body>
+</html>
+<script src="apply_doctor/lib/connectWebViewJavascriptBridge.js"></script>
+<script>
+    var data = '<%-data%>';
+    data = data.replace(new RegExp("\r\n", "gm"), "\\r\\n");
+    data = data.replace(new RegExp("\n\r", "gm"), "\\n\\r");
+    data = data.replace(new RegExp("\n", "gm"), "\\n");
+    data = data.replace(new RegExp("\'", "gm"), " ");
+    data = JSON.parse(data);
+
+    console.log(data);
+
+    var urlString='userId='+data._id+"&token="+data.token;
+    var initPage = function(){
+        var hospital , department , position;
+        $("#province").text(data.province);
+        urlString=urlString+"&province="+(data.province || '');
+        $("#city").text(data.city);
+        urlString=urlString+"&city="+(data.city || '');
+        if(data.department){
+          department = data.department.length <= 10 ? data.department : data.department.substr(0,9);
+        }
+        $("#department").text(department);
+        urlString=urlString+"&companyDept="+(data.department || '');
+        if(data.position){
+          position =  data.position.length <= 10 ? data.position : data.position.substr(0,9);
+        }
+        $("#position").text(position);
+        urlString=urlString+"&companyTitle="+(data.position || '');
+        if(data.hospital){
+          hospital =  data.hospital.length <= 10 ? data.hospital : data.hospital.substr(0,9);
+        }
+        $("#hospital").text(hospital);
+        urlString=urlString+"&companyName="+(data.hospital || '');
+    }
+    initPage();
+    console.log(urlString);
+    var webBridge = webViewBridge();
+    webBridge.bridgeInit(function (bridge) {
+        bridge.registerHandler('editProfileInfo', function (data,responseCallback) {
+            window.location.href="apply_doctor/adviserModify.html?"+urlString;
+        });
+        bridge.registerHandler('goBack', function (data,responseCallback) {
+            var result = {};
+                result.isClose = true;
+                responseCallback(JSON.stringify(result));
+        });
+    });
+
+</script>

@@ -1,0 +1,125 @@
+
+/*领取成功*/
+.infomation{
+    text-align: center;
+}
+.infomation h3{
+    width:100%;
+    font-size: 15px;
+    /*color: #535353;*/
+    letter-spacing: -0.37px;
+    padding:0 12px 0 12px;
+    box-sizing: border-box;
+
+}
+.infomation span{
+    font-size: 13px;
+    color: #B3B3B3;
+    letter-spacing: -0.32px;
+    margin-top: 6px;
+    display: inline-block;
+}
+.money{
+    margin-top: 24px;
+    text-align: center;
+}
+.money span{
+    display: inline-block;
+    width: 100%;
+    color: #000;
+    font-size: 17px;
+
+
+}
+.money .pity{
+    font-size:19px;
+}
+.money span em{
+    font-size: 60px;
+    color: #000;
+    letter-spacing: -1.02px;
+    line-height: 42px;
+    /*font-weight: bold;*/
+}
+.money i{
+    margin-top:6px;
+    font-size: 15px;
+    color: #ff9000;
+    letter-spacing: -0.37px;
+    display:block;
+}
+
+p{
+    margin: 36px 12px 0 12px;
+    font-size: 15px;
+    /*color: #535353;*/
+    letter-spacing: -0.37px;
+}
+
+
+/*====================================================*/
+.red_list_give{
+    width:100%;
+    background: #fff;
+    margin-top:12px;
+    font-size: 17px;
+   /* color: #535353;*/
+    letter-spacing: -0.41px;
+
+}
+.red_list_give li{
+   /* border-bottom: 0.5px solid #bfbfbf;*/
+    height: 69px;
+    padding:0 12px 0 12px;
+
+}
+
+.red_list_give span{
+    padding-top:12px;
+    display: block;
+    overflow: hidden;
+}
+.red_list_give li em{
+    float: right;
+    color:#000;
+}
+.red_list_give li u{
+    font-size: 13px;
+    color: #B3B3B3;
+    letter-spacing: -0.32px;
+    text-decoration: none;
+    margin-top: 5px;
+    display: block;
+    line-height: 24px;
+    float:left;
+}
+.red_list_give li span i{
+    width: 200px;
+    float: left;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+/*====================================================*/
+
+
+
+
+.wrap{
+    margin:0px 12px 0 12px;
+    font-size: 15px;
+   /* color: #535353;*/
+    line-height: 20px;
+    margin-top:12px;
+    border:1px solid #ddd;
+    padding:12px;
+    border-radius: 4px;
+    background: #fff;
+}
+.dynamic span{
+    color:#f00;
+}
+.mgt15{
+    margin-top:15px;
+}

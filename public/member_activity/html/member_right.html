@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <link href="/member_activity/css/member_right.css" rel="stylesheet">
+    <title>会员权益</title>
+    <script src="https://cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script>
+</head>
+<body>
+<div class="all">
+    <div class="top">
+        <img class="card" src="https://cdn.juliye.net/app_bg_vipcard@3x.png"/>
+        <div class="rightSp">
+            <div class="rightSpTop">
+                <div class="rightOne">
+                    <div class="oneBg">
+                        <img class="icon" src="https://cdn.juliye.net/app_vipdiscount@3x.png"/>
+                    </div>
+                    <p>专属会员价</p>
+                </div>
+                <div class="rightOne">
+                    <div class="oneBg">
+                        <img class="icon" src="https://cdn.juliye.net/app_vipnew@3x.png"/>
+                    </div>
+                    <p> 专享尝鲜权</p>
+                </div>
+                <div class="rightOne">
+                    <div class="oneBg">
+                        <img class="icon" src="https://cdn.juliye.net/app_vipticket@3x.png"/>
+                    </div>
+                    <p> 专享优惠券</p>
+                </div>
+            </div>
+            <div class="rightSpTop">
+                <div class="rightOne" style="padding-top: 13px;">
+                    <div class="oneBg">
+                        <img class="icon" src="https://cdn.juliye.net/app_vipclass@3x.png"/>
+                    </div>
+                    <p>免费名医课程</p>
+                </div>
+                <div class="rightOne" style="padding-top: 13px;">
+                    <div class="oneBg">
+                        <img class="icon" src="https://cdn.juliye.net/app_vipassistant@3x.png"/>
+                    </div>
+                    <p>专属助理1对1</p>
+                </div>
+                <div class="rightOne"></div>
+            </div>
+
+
+        </div>
+    </div>
+        <div class="introSp">
+            <p>权益说明：</p>
+            <p>1.会员专享价权益有效期与99VIP有效期一致，会员专享价权益是基于用户99VIP身份方可享受的权益。</p>
+            <p>2.会员续办，会员有效期累加。</p>
+            <p>3.在有效期内，优先享有新服务优先体验权。</p>
+            <p>4.自成为会员之日起，将会享有名医孕期指导课程全年免费的权利，并有机会与三甲医院主任面诊。</p>
+            <p>5.会员期内，平台每月不定期发放优惠券，可与会员折扣同时使用。</p>
+
+        </div>
+        <div class="choseSp">
+            <div class="clickCg"></div>
+            <div class="choseIn"></div>
+            <p>我已阅读并同意</p>
+            <a class="go_agreement">《相关协议》</a>
+            <a class="go_rules">《权益规则》</a>
+        </div>
+
+</div>
+<script src="../../../advertising/lib/connectWebViewJavascriptBridge.js"></script>
+<script>
+  var chageIcon = true;
+  var webBridge = webViewBridge();
+  webBridge.bridgeInit(function (bridge) {
+    bridge.registerHandler('isAgree', function (data, responseCallback) {
+      var result = {};
+      result.isAgree = chageIcon;
+      responseCallback(JSON.stringify(result));
+    });
+  });
+  $(".go_agreement").click(function () {
+    webBridge.upload("agreementAndRule", JSON.stringify({
+      title: '相关协议',
+      url: '/1/tp_memberships/page/member_right_agreement'
+    }));
+  });
+  $(".go_rules").click(function () {
+    webBridge.upload("agreementAndRule", JSON.stringify({
+      title: '权益规则',
+      url: '/1/tp_memberships/page/right_rules'
+    }));
+  });
+
+  $(".choseIn").click(function () {
+    if (chageIcon == true) {
+      $(".choseIn").hide();
+      $(".clickCg").show();
+      chageIcon = false;
+    }
+  });
+
+  $(".clickCg").click(function () {
+    if (chageIcon == false) {
+      $(".clickCg").hide();
+      $(".choseIn").show();
+      chageIcon = true;
+    }
+  });
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+html,body{
+    width: 100%;
+    padding: 0px 12px;
+    box-sizing: border-box;
+}
+.all{
+    width: 100%;
+}
+.imgSp{
+    width: 100%;
+}
+.words{
+    font-size: 18px;
+    color: #222222;
+    letter-spacing: 0.74px;
+    text-align: justify;
+    line-height: 26px;
+}
+.jump{
+    width: 100%;
+    text-align: center;
+}
+.jump a{
+    font-size: 16px;
+    color: #EC4A4D;
+    letter-spacing: 0.66px;
+}
+.jump .here{
+    width: 13px;
+    height: 16px;
+}
+.jump .here img{
+    width: 13px;
+    height: 16px;
+    margin-left: 3px;
+}

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>连心专家</title>
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    <!-- JQuery -->
+    <script src="https://cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script>
+    <script src="../../assets/libs/bootstrap.min.js"></script>
+    <!-- Private -->
+    <link rel="stylesheet" href="../../assets/styles/bootstrap.min.css">
+    <link href="dot_adviser.css" rel="stylesheet" type="text/css">
+    <!-- <link href="adviser/adviser_main.css" rel="stylesheet" type="text/css">-->
+    <style>
+        body{
+            height: 100%;
+            background: url("http://7j1ztl.com1.z0.glb.clouddn.com/webcall_download.png") no-repeat;
+            /* -moz-background-size:100%;
+             background-size:100%;*/
+            filter:"progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";
+            -moz-background-size:100vw 100vh;
+            background-size:100vw 100vh;
+        }
+        button{
+            background:#64d0ff;
+            border-radius: 4px;
+            width:90vw;
+            border:none;
+            color:#fff;
+            font-size: 17px;
+            font-weight: bold;
+            height: 6vh;
+            position: fixed;
+            bottom:5vh;
+            margin-left:5vw;
+            font-family: "黑体";
+        }
+
+        @media (device-height:568px) and (-webkit-min-device-pixel-ratio:2){
+            button{
+                font-size:15px;
+            }
+
+        }
+        @media (min-device-width : 414px) and (max-device-width : 736px) and (-webkit-min-device-pixel-ratio : 3){
+
+            button{
+                font-size:19px;
+            }
+        }
+    </style>
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?6bfdaad88f72215f7d84ab875eb58f0d";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+</head>
+<body>
+    <button id="download">点击下载联系专家</button>
+
+<script>
+
+    $("#download").click(function(){
+        window.location.href="http://a.app.qq.com/o/simple.jsp?pkgname=com.zlycare.docchat.c"
+    });
+
+</script>
+
+</body>
+</html>

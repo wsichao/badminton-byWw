@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- http://t.co/dKP3o1e -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+
+    <title>提升会员额度</title>
+    <link href="../general_file/general_css.css" rel="stylesheet" type="text/css" />
+    <link href="member_recharge.css" rel="stylesheet" type="text/css" />
+    <!-- JQuery -->
+    <script src="https://cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script>
+    <style>
+        .success{
+            margin:5.5% auto 0 auto;
+            width:75px;
+        }
+        .success p{
+            margin:15px auto ;
+            text-align: center;
+            font-size: 19px;
+            color: #33A5EE;
+            letter-spacing: -0.46px;
+        }
+        .wd{
+            width:93.6%;
+            margin:5.5% auto;
+            display:block;
+        }
+    </style>
+</head>
+<body>
+
+<div id="recharge">
+    <div class="coupon-list">
+        <ul>
+            <li id="membershipCase">
+                <div class="radio-wrap">
+                    <input type="radio" id="coupon1" name="coupons" checked="checked"><span></span>
+                </div>
+                <label for="coupon1">
+
+                    <div class="coupon-left">
+                        <p><i id="serviceValue">300</i>元</p>
+                    </div>
+                    <div class="right-border">
+                        &nbsp;
+                    </div>
+                    <div class="coupon-right">
+                        <div class="coupon-infomation">
+                            <div class="info-list">
+                                <p>奖励金</p>
+                                <i id="price">售价：¥25</i>
+                            </div>
+                        </div>
+                    </div>
+                </label>
+            </li>
+            <li class="coupon">
+                <div>
+
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div style="margin: 0 12px 12px;text-align: center">
+        <button class="gen-long-full-btn" id="appleBuy" style="width:100%;margin: 0;margin-bottom:12px;display: none">购买</button>
+        <button class="gen-long-full-btn" id="buy" style="width:100%;margin: 0;">购买</button>
+        <a id="otherBuy" style="margin-top: 12px;display: none;font-size: 15px;color: #1BADF8;text-decoration: underline">苹果支付有问题？</a>
+    </div>
+    <div class="gen-gray-back filter"  style="background-color: #fff;display: none" id="gray"></div>
+    <div class="alert" style="padding:15px; width:170px; background-color:rgba(255,255,255,0.0); display: none" id="suc_alert">
+        <div class="cushion">
+            <img src="../apply_doctor/images/Loading@3x@3x.png" id="change">
+        </div>
+    </div>
+</div>
+
+
+<div id="succ" style="display: none">
+    <div class="success">
+        <img src="../advertising/images/success@2x.png" height="75" width="75"/>
+        <p id="succFlag">领取成功</p>
+    </div>
+
+    <p id="goCheck" type="button"  class="ad_button wd"  style="margin:0 auto; text-align: center; line-height:44px">完成</p>
+</div>
+
+</body>
+</html>
+<script src="../general_file/general_js.js"></script>
+<script src="../advertising/lib/connectWebViewJavascriptBridge.js"></script>
+<script>
+    window.alert = function(name){
+        var iframe = document.createElement("IFRAME");
+        iframe.style.display="none";
+        iframe.setAttribute("src", 'data:text/plain,');
+        document.documentElement.appendChild(iframe);
+        window.frames[0].window.alert(name);
+        iframe.parentNode.removeChild(iframe);
+    }
+    var urlObj =getUrlQueryObject();
+    var userId = urlObj.userId;
+    var token = urlObj.token;
+    var version = urlObj.version;
+    var client = urlObj.client;
+    var isVersionPass =  urlObj.isVersionPass == 'true' ? true : false;
+    //var isFreeBalanceToken = urlObj.isFreeBalanceToken == 'true' ? true : false;
+    var webBridge = webViewBridge();
+    var $alert=$(".alert");
+    var $gray=$(".gen-gray-back");
+    webBridge.bridgeInit(function (bridge) {
+        bridge.registerHandler('checkPaymentStatus', function(data,responseCallback){
+            var info = data;
+            info = JSON.parse(info);
+            if(info.payType != "iap"){
+                setTimeout(function(){$.ajax({
+                    type: "GET",
+                    url: "/1/order/prepareOrderStatus?prepareId="+info.prepayId+"&type=membership",
+                    headers: {
+                        "x-docchat-user-id":info.userId,
+                        "x-docchat-session-token":info.token
+                    },
+                    success: function(rs){
+                        if(rs.payStatus == "paid"){
+                            //window.location = "succPayment.html?type=pay";
+                            $("#succ").show();
+                            $("#recharge").hide();
+                            $("#succFlag").text("支付成功")
+
+                        }else{
+                            alert("支付失败")
+                        }
+                    },
+                    error: function(err){
+                        alert("支付失败");
+                    }
+                });},1500);
+            }else{
+                //window.location = "succPayment.html?type=pay";
+                $("#succ").show();
+                $("#recharge").hide();
+                $("#succFlag").text("支付成功")
+            }
+
+
+        });
+        bridge.registerHandler('goBack', function(data,responseCallback){
+            var backInfo ={};
+            backInfo.isClose = false;
+            responseCallback(JSON.stringify(backInfo));
+            window.history.back(-1);
+        })
+    });
+    var pageInit = function(){
+        if(client && client == "ios"){
+            console.log(client);
+                $("#buy").hide();
+                $("#appleBuy").show();
+                if(isVersionPass){
+                    $("#otherBuy").show();
+                }
+
+        }else{
+                $("#buy").show();
+                $("#appleBuy").hide();
+                $("#otherBuy").hide();
+
+
+        }
+    };
+    pageInit();
+
+    var normalBuy = function(){
+        var checkStatus = $("#coupon1").attr("checked");
+        if(!checkStatus){
+            alert("请选择购买额度");
+            return
+        }
+        var data={};
+            $alert.show();
+            $gray.show();
+            data.type = "membership";
+            data.price = 25;
+            data.serviceValue = 300;
+            data.tradeName = "会员额度充值";
+            data.tradeDetail = "会员额度充值";
+            data.memberInviteCode='';
+            $.ajax({
+                type: "GET",
+                url: "/1/customer/wallet?userId=" + userId,
+                headers: {
+                    "x-docchat-user-id": userId,
+                    "x-docchat-session-token": token
+                },
+                success: function(rs){
+                    $alert.hide();
+                    $gray.hide();
+                    data.balance = rs.amount;
+                    console.log(data);
+                    webBridge.upload("selectPayment",JSON.stringify(data))
+                },
+                error: function(err){
+                    $alert.hide();
+                    $gray.hide();
+                    alert("获取余额失败");
+                }
+            });
+
+    }
+
+    $("#buy").click(function(){
+        normalBuy()
+    });
+    $("#otherBuy").click(function(){
+        normalBuy()
+    });
+
+    $("#membershipCase").click(function(){
+        $("#coupon1").attr("checked",true);
+    })
+
+
+
+    $("#appleBuy").click(function(){
+        $("#appleBuy").attr("disabled","disabled");
+        var checkStatus = $("#coupon1").attr("checked");
+        if(!checkStatus){
+            alert("请选择购买额度");
+            return
+        }
+        $alert.show();
+        $gray.show();
+        var data={};
+        data.type = "membership";
+        data.price = 25; //
+        data.serviceValue = 300;
+        data.payType = "iap";
+        $.ajax({
+            type: "POST",
+            url: "/1/order/service",
+            headers: {
+                "x-docchat-user-id": userId,
+                "x-docchat-session-token": token
+            },
+            data: data,
+            dataType:'json',
+            success: function(rs){
+                $alert.hide();
+                $gray.hide();
+                $("#appleBuy").removeAttr('disabled');
+                // 判断rs返回prepayId是否正确
+                if(!rs.prepayId){
+                  alert("生成支付订单失败，请重试");
+                }else{
+                  var appleData = {
+                    productId : "0001",
+                    prepayId : rs.prepayId
+                  }
+                  console.log(appleData);
+                  webBridge.upload("applePayment",JSON.stringify(appleData))
+                }
+            },
+            error: function(err){
+                $alert.hide();
+                $gray.hide();
+                $("#appleBuy").removeAttr('disabled');
+                if(JSON.parse(err.responseText).code == 1604){
+                    alert("已领取过");
+                }else if(JSON.parse(err.responseText).code == 1208){
+                    alert("邀请码不存在");
+                }else{
+                    alert("页面异常");
+                }
+            }
+        });
+
+    });
+    $("#goCheck").click(function(){
+        webBridge.upload("backCheck");
+    })
+</script>

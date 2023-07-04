@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>历史动态</title>
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no,maximum-scale=1">
+
+    <!-- JQuery -->
+    <script src="https://cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script>
+    <!-- Private -->
+    <link href="dynamic/dynamic.css" rel="stylesheet" type="text/css">
+    <style>
+        body{
+            background-color: #eee;
+        }
+    </style>
+</head>
+<body>
+<div class="content">
+<div id="renovation"  class="renovation position-center">
+    <img src="dynamic/images/Rectangle@2x.png" >
+    <p>点击屏幕，重新加载</p>
+</div>
+</div>
+<script>
+    var data = '<%-data%>';
+     console.log("data: " + data)
+    data = data.replace(new RegExp("\n", "gm"), "\\n");
+    data = data.replace(new RegExp("\r", "gm"), "\\r");
+    data = JSON.parse(data);
+    $(".content").click(function(){
+        window.location.replace("http://localhost:9020/momentsHistory?userId="+data);
+    });
+</script>
+</body>
+</html>

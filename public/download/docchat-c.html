@@ -1,0 +1,699 @@
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>朱李叶健康</title>
+    <!--<base href="/download/" />-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimal-ui">
+    <meta name="apple-mobile-web-app-status-bar-style" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="description" content="医聊">
+    <link rel="icon" type="image/x-icon" href="images/logo_c.png">
+    <link rel="stylesheet" type="text/css" href="styles/docchat-c.css">
+    <!-- JQuery -->
+    <script src="https://cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script>
+    <!-- 新 Bootstrap 核心 CSS 文件
+    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+     -->
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件
+    <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+     -->
+    <!-- 微信JSSDK -->
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+
+</head>
+<style>
+    * {
+        margin: 0px;
+        padding: 0px;
+        font-style:normal;
+    }
+    ::-webkit-input-placeholder { /* WebKit browsers */
+        　　color:#535353;
+    }
+    a{
+        text-decoration: none;
+    }
+    body{
+        width:100%;
+        height:100%;
+        position: relative;
+        background:url('images/Rectangle@3x.png');
+        background-size: 100% 100%;
+
+    }
+
+    .triangle{
+        width: 0;
+        height: 0;
+       /* border-bottom: 10px solid #f6f6f6;*/
+        border-bottom: 10px solid #f6f6f6;
+        border-left: 7px solid transparent;
+        border-right:7px solid transparent;
+        margin:0 auto;
+    }
+
+</style>
+
+<body>
+<div id="contant" style=" width: 100%;">
+
+    <div class="info" style="">
+        <div style="float:left;">
+            <img id="docAvatar" class="img-rounded" src="images/doctor_avatar_woman.png" style=" width:54px;height: 54px;border-radius: 27px">
+        </div>
+        <div style="float:left;margin-left: 12px;padding-top:2px;">
+            <div>
+                <span class="name" id="docName">
+                    热线团队
+                </span>
+                <span class="phone" id="docChatNum" >
+                    00120
+                </span>
+            </div>
+
+
+            <div class="info-list">
+                <ul>
+                    <li style="list-style-type:none;margin-top: 8px;">
+                        <span id="department" class="docInfo"></span>
+                        <span id="divider">|</span>
+                        <span id="position" class="docInfo" ></span>
+                    </li>
+                    <li style="list-style-type:none;margin-top:8px"><span id="hospital" class="companyInfo">朱李叶集团</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="first_line"></div>
+    <!--<div id="triangle"></div>-->
+    <div id="intruduction" class="introduce">
+        您好，我是热线团队。如果您有问题需要咨询，请点击下方按钮➝ 下载朱李叶健康APP➝ 安装后在拨号盘中拨打<span id="phoneNumIntroduce" class="phone" style="font-size:15px":>00120</span>与我联系。
+
+    </div>
+    <!--
+    <div style="margin: 40px auto 0px auto;text-align:center; width: 300px;">
+        <div id="getCoupon" style="text-align:center;">
+            <span class="couponTips">输入手机号码，立获30元代金券</span>
+
+            <div style="margin: 5px auto 5px auto; display: inline;">
+                <input style="font-family: '宋体';font-size: 16px; padding-left:5px;font-weight:normal;width: 230px;height: 35px;border-radius: 5px;border:none"
+                       id="phoneNum"
+                       type="text" placeholder="请输入您的手机号码"
+                        />
+                <button style="margin: 0px 0px;width: 60px;height: 35px;background: #227cc7;border:none;border-radius: 5px;color: #fff"
+                        onclick="getCoupon()">确定
+                </button>
+            </div>
+            <br/>
+            <span id="errorTips" class="error"></span>
+        </div>
+        <div id="getCouponSuccess" style="text-align:center; display: none" class="couponTips">
+            您已成功领取30元代金券<br/>快去app中查看吧
+        </div>
+    </div>
+-->
+    <!--<div style="margin: 50px auto 0px auto;text-align:center; width: 300px;height: 110px">-->
+        <!--<img src="images/logo_c.png" style="float:left; margin:18px auto 0px auto;width: 66px;height: 66px;">-->
+
+        <!--<div style="float: right">-->
+            <!--<div style=" margin:10px auto; text-align:center">-->
+                <!--<img src="images/download_ios.png" style="width:230px" height="38px" alt="" onclick="downloadIos()">-->
+            <!--</div>-->
+            <!--<div style="margin:0px auto; text-align:center;">-->
+                <!--<img src="images/download_and.png" style="width:230px" height="38px" alt=""-->
+                     <!--onclick="downloadAndroid()">-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div style="margin: 0px auto;text-align:center;width: 330px" class="introduce">-->
+        <!--如遇下载安装问题，请联系客服<br/><a href="tel:010-57733871">010-57733871</a>-->
+    <!--</div>-->
+    <!--<div style="margin:12px 12px;">-->
+        <!--<input class="inputphone" type="text" placeholder="请输入姓名" id="customerName">-->
+    <!--</div>-->
+    <!--<div style="margin:12px 12px;">-->
+        <!--<input class="inputphone" type="number" placeholder="请输入手机号" id="customerPhone">-->
+    <!--</div>-->
+    <!--<div style="margin:12px 12px;">-->
+        <!--<input class="inputphone" type="number" placeholder="请输入邀请码（选填）" id="channelCode">-->
+    <!--</div>-->
+
+    <div class="download-btn">
+        <p id="veryPhone" style="text-align: center;font-size: 15px;padding-bottom: 5px;display: none">朱李叶健康已升级为专属热线，敬请下载！</p>
+        <img id="concernBtn" src="images/Group%203@3x.png"/>
+
+    </div>
+
+
+    <!--<div class="triangle"></div>-->
+    <!--<div class="dynamics" id="dynamics">
+        <p>
+            <em style="font-weight:bold; color:#000; font-size:13px; ">我的动态：</em><span id="dynamicsInput"></span>
+        </p>
+        <p style="text-align: center; margin-top:10px; color:#33a5ee;" id="connect">点击下载与我联系></p>
+    </div>-->
+
+    <fieldset class="dynamics">
+        <legend>&nbsp;我的动态 &nbsp;</legend>
+
+            <pre id="dynamicsInput" class="dynamicsInput"></pre>
+
+
+    </fieldset>
+    <!--<p style="text-align: center;color: #535353;font-size: 14px;">-->
+        <!--(关注后，我的最新动态将以短信形式通知您)-->
+    <!--</p>-->
+    <!--<div class="footer">-->
+    <!--</div>-->
+    <!--<img class="logo" src="images/logo_c.png" />-->
+    <!--<span class="zly">朱李叶健康</span>-->
+    <!--<a class="down-load" href="http://a.app.qq.com/o/simple.jsp?pkgname=com.zlycare.docchat.c">-->
+        <!--立即下载-->
+    <!--</a>-->
+
+    <!--<div style="position: absolute;left: 0;bottom: 0;width: 100%;text-align: center">
+        <div>
+            <img style="display: inline-block;width:48px" src="images/logo_c.png">
+        </div>
+        <p style="font-size: 15px;color: #535353;margin:5px auto 24px;">朱李叶健康</p>
+    </div>-->
+    <div class="downloadImg">
+            <p style="text-align: center">
+            <span class="line"></span>
+            <img src="images/logo_c.png">
+            <span class="line"></span>
+            </p>
+
+
+        <!--<p style="font-size: 15px;color: #535353;margin:5px auto 24px; text-align: center">朱李叶健康</p>-->
+    </div>
+</div>
+<div class="gray" style="display: none">
+</div>
+
+<div class="alert" id="concernSuccessAlert" style="display: none">
+    <div class="msg">
+        <h4>领取成功!</h4>
+        <p>代金券已放入你的钱包，可以直接下载朱李叶健康给他打电话啦！</p>
+    </div>
+    <div class="alertBtn">
+        <button class="cancel">取消</button>
+        <a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.zlycare.docchat.c" class="download-App">下载App</a>
+    </div>
+
+</div>
+    <div class="alert" id="phoneMsgCode" style="padding-bottom: 20px;height: auto;display: none" >
+        <button id="closeAlert">
+            <img src="images/btn_close@2x.png">
+        </button>
+        <!--
+        <h4 style="text-align: center;font-size: 18px;margin-top: 20px;font-weight: 100">&nbsp; 验证码</h4>
+        -->
+        <div style="padding: 0 30px;margin-top:18px;">
+            <input type="text" id="msgCodeInput" placeholder="请输入短信验证码">
+            <button id="confirmMsgCode">确认</button>
+        </div>
+        <p class="errorMsg" id="error" style="display: none">验证码错误，请重新输入</p>
+    </div>
+
+
+<div id="tishi" class="tishi">
+    <img src="images/02.png"/>
+</div>
+<!--<script src="../general_file/general_js.js"></script>-->
+<script>
+    /*$(function(){
+        var dynamics=$("#dynamicsInput");
+        dynamics.text("123123");
+        if(dynamics.html().length==0){
+            $("#dynamics").hide();
+        }
+
+    });*/
+    //热线号加上“-”
+    function getDocChatNum(number){
+        var docchatnumber=number.split("");
+        var arrayLength=docchatnumber.length;
+        //  console.log(arrayLength);
+        if(arrayLength>7){
+            var totalNumber=arrayLength/3;
+            var finalNumber='';
+            var totalLength=0;
+            for(var i=0;i<totalNumber;i++){
+                var j=0;
+                var subNumber='';
+                for(var n=0;n<3;n++){
+                    if(totalLength<arrayLength){
+                        subNumber=subNumber+docchatnumber[0];
+                        docchatnumber.shift();
+                        totalLength++;
+                    }else{
+                        break;
+                    }
+                    //console.log(subNumber);
+                }
+                if(totalLength<arrayLength){
+                    finalNumber=finalNumber+subNumber+'-';
+                }else{
+                    finalNumber=finalNumber+subNumber;
+                }
+
+
+            }
+            //console.log(finalNumber);
+            return finalNumber;
+        }else{
+            return number;
+        }
+    }
+
+    $(function () {
+        document.getElementById("contant").style.height = window.innerHeight;
+       // console.log(window.innerWidth);
+        //$("#phoneMsgCode").css(width,window.innerWidth)
+    });
+    var HOST = 'https://pro.mtxhcare.com';
+    var REG = /test/;
+    //if(window.location.hostname!="dc-c.zlycare.com"){
+    if (REG.test(window.location.hostname)){
+        HOST = 'https://dev.mtxhcare.com';
+    }
+    //更新医师信息
+    $(function () {
+        var params = location.search; //获取url中"?"符后的字串
+//        if (params) {
+            docChatNum = params.split('=')[1];
+            var apiUrl = HOST + '/1/doctor/infoByDocChatNum?docChatNum=' + docChatNum ;
+            console.log("this id url:"+apiUrl)
+            if (docChatNum) {
+                console.log("docChatNum:" + docChatNum);
+                $.ajax({
+                    url:apiUrl ,
+                    //url: '/1/doctor/infoByDocChatNum?docChatNum=' + docChatNum,
+                    type: 'GET',
+                    success: function (result) {
+                        Doctor = result;
+                        console.log(Doctor);
+                        updateDoctorInfo(Doctor);
+                    },
+                    error:function(){
+                        window.location.href="http://a.app.qq.com/o/simple.jsp?pkgname=com.zlycare.docchat.c";
+                    }
+                });
+            }else{
+                window.location.href="http://a.app.qq.com/o/simple.jsp?pkgname=com.zlycare.docchat.c";
+            }
+//        }
+    });
+
+    //纪录医师被扫码
+//    $(function () {
+//        var params = location.search; //获取url中"?"符后的字串
+//        if (params) {
+//            docChatNum = params.split('=')[1];
+//            if (docChatNum) {
+////                console.log("docChatNum:" + docChatNum);
+//                $.ajax({
+//                    url:  '/1/doctor/scanQRCode?docChatNum=' + docChatNum,
+//                    type: 'GET',
+//                    success: function (result) {
+////                        console.log("success:" + result);
+//                    }
+//                });
+//            }
+//        }
+//    });
+    //点击关注顾问按钮
+    $(function(){
+        $("#connect").click(function(){
+//            var reg = /^(13|15|18|17)[0-9]{9}$/;
+//            var phoneNum = $("#customerPhone").val();
+//            var name = $("#customerName").val();
+//            console.log(phoneNum)
+//            if(phoneNum=="" || !reg.test(phoneNum)){
+//                alert('请输入正确的手机号');
+//                return;
+//            }
+//            if(name==""){
+//                alert('请输入姓名');
+//                return;
+//            }
+//
+//            $.ajax({
+//                url: HOST + '/1/common/authCode?phoneNum=' + phoneNum,
+//                type: 'GET',
+//                success: function (result) {
+//                    console.log("获取验证码成功");
+//                    $(".gray").show();
+//                    $("#phoneMsgCode").show();
+//                    $("#confirmMsgCode").focus();
+//                }
+//            });
+            window.location = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zlycare.docchat.c"
+
+
+
+        })
+        $("#concernBtn").click(function(){
+//            var reg = /^(13|15|18|17)[0-9]{9}$/;
+//            var phoneNum = $("#customerPhone").val();
+//            var name = $("#customerName").val();
+//            console.log(phoneNum)
+//            if(phoneNum=="" || !reg.test(phoneNum)){
+//                alert('请输入正确的手机号');
+//                return;
+//            }
+//            if(name==""){
+//                alert('请输入姓名');
+//                return;
+//            }
+//
+//            $.ajax({
+//                url: HOST + '/1/common/authCode?phoneNum=' + phoneNum,
+//                type: 'GET',
+//                success: function (result) {
+//                    console.log("获取验证码成功");
+//                    $(".gray").show();
+//                    $("#phoneMsgCode").show();
+//                    $("#confirmMsgCode").focus();
+//                }
+//            });
+            if(Doctor && Doctor.toVeryPhone ){
+                window.location = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zlycare.docchat.zs"
+            }else{
+                window.location = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zlycare.docchat.c"
+            }
+
+
+
+
+        })
+
+    })
+    //点击×
+    $(function(){
+        $("#closeAlert").click(function(){
+            $(".gray").hide();
+            $("#phoneMsgCode").hide();
+            $("#error").hide();
+            $("#msgCodeInput").val("");
+        })
+    })
+    //点击关注成功的取消
+    $(function(){
+        $(".cancel").click(function(){
+            $("#concernSuccessAlert").hide();
+            $(".gray").hide();
+            $("#msgCodeInput").val("");
+        })
+    })
+    //确认短信验证码按钮状态
+    $(function () {
+        if($("#msgCodeInput").val()==""){
+            $("#confirmMsgCode").attr("disabled","disabled");
+        }
+        $("#msgCodeInput").keypress(function(){
+            $("#confirmMsgCode").removeAttr("disabled");
+        })
+    })
+    //点击确认短信验证码
+    $(function(){
+        $("#confirmMsgCode").click(function(){
+            var data ={};
+            data.authCode = $("#msgCodeInput").val();
+            data.phoneNum = $("#customerPhone").val();
+            data.name = $("#customerName").val();
+            data.channelCode = $("#channelCode").val();
+            var params = location.search; //获取url中"?"符后的字串
+            if (params) {
+                data.docChatNum = params.split('=')[1];
+            }
+            console.log(JSON.stringify(data));
+            $.ajax({
+                url: '/1/customer/getCouponByPhone',
+                type: 'POST',
+                data: JSON.stringify(data),
+                dataType:'json',
+                headers : {
+                    "Content-Type": 'application/json'
+                },
+                success: function (result) {
+                    console.log("关注成功");
+                    $("#phoneMsgCode").hide();
+                    $("#concernSuccessAlert").show();
+                    $("#error").hide();
+                },
+                error: function (err) {
+                    console.log(err);
+                    if( JSON.parse(err.responseText).code == 1502){
+                        $("#error").text("验证码错误请重新输入")
+                    }else if(JSON.parse(err.responseText).code == 1601){
+                        $("#error").text("你已领取过代金券")
+                    }else{
+                        $("#error").text("请求失败")
+                    }
+                    $("#error").show();
+                }
+            });
+        })
+    })
+    var isWX = function () {
+        var ua = navigator.userAgent.toLowerCase();
+        if (ua.match(/MicroMessenger/i) == "micromessenger") {
+            return true;
+        } else {
+            return false;
+        }
+
+//        return false;
+    };
+
+    var downloadAndroid = function () {
+//        if (isWX()) {
+//            document.getElementById("tishi").style.display = "block";
+//        } else {
+//            window.location.href = "http://7j1ztl.com1.z0.glb.clouddn.com/docchat-c-21.apk";
+//
+//            downloadTrace();
+//        }
+
+        window.location.href = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zlycare.docchat.c";
+        //downloadTrace();
+    };
+
+    var downloadIos = function () {
+//        if (isWX()) {
+//            document.getElementById("tishi").style.display = "block";
+//        } else {
+//            window.location.href = "itms-services://?action=download-manifest&url=https://dn-juliye.qbox.me/DocChat-C-iphone-internal-18.plist";
+
+        window.location.href = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zlycare.docchat.c";
+//        downloadTrace();
+//        }
+    };
+
+    var downloadTrace = function () {
+//        var params = location.search; //获取url中"?"符后的字串
+//        if (params) {
+//            docChatNum = params.split('=')[1];
+//            if (docChatNum) {
+//                console.log("downloadTrace docChatNum:" + docChatNum);
+//                $.ajax({
+//                    url: HOST + '/1/doctor/downloadTrace?docChatNum=' + docChatNum,
+//                    type: 'GET',
+//                    success: function (result) {
+////                        console.log("success:" + result);
+//                    }
+//                });
+//            }
+//        }
+    };
+
+    var Doctor;
+    $('#docAvatar').error(function () {
+        if (Doctor) {
+            if (Doctor.sex == '男')
+                $(this).attr('src', "images/img_headportrait_man@3x.png");
+            else
+                $(this).attr('src', "images/img_headportrait_lady@3x.png");
+
+            return;
+        }
+
+        $(this).attr('src', "images/doctor_avatar_woman.png");
+    });
+
+    var updateDoctorInfo = function (doctor) {
+
+        // hack在微信等webview中无法修改document.title的情况
+        var $body = $('body');
+        document.title = doctor.mainPageTitle;;
+        // hack在微信等webview中无法修改document.title的情况
+        var $iframe = $('<iframe src="/"></iframe>');
+        $iframe.on('load',function() {
+            setTimeout(function() {
+                $iframe.off('load').remove();
+            }, 0);
+        }).appendTo($body);
+
+        //console.log(doctor);
+//        console.log("success:" + JSON.stringify(doctor));
+        if(doctor.avatar){
+            document.getElementById("docAvatar").src = "https://cdn.juliye.net/" + doctor.avatar + "?imageView2/2/w/80/h/80";
+        }
+       // doctor.realName="拉伸看得见法拉克拉伸看得见法拉克拉伸看得见法拉克";
+        //doctor.docChatNum=123456789123;
+        var screenWidth=document.body.clientWidth;
+        screenWidth=screenWidth-102;
+        var numberCount=doctor.docChatNum+"";
+        numberCount=numberCount.length;
+        screenWidth=screenWidth-(numberCount*9);
+        var wordCount=screenWidth/16;
+       // console.log(wordCount);
+        if(doctor.realName.length>=wordCount){
+            var docName=doctor.realName.slice(0,wordCount-2)+'...';
+        }else{
+            docName=doctor.realName;
+        }
+
+        document.getElementById("docName").innerHTML = docName;
+        var docChatNum=getDocChatNum( doctor.docChatNum);
+        document.getElementById("docChatNum").innerHTML = docChatNum;
+        if(doctor.department =="" && doctor.position ==""){
+            $("#department").hide();
+            $("#divider").hide();
+            $("#position").hide();
+        }else{
+            if(doctor.department ==""){
+                $("#department").hide();
+                $("#divider").hide();
+            }else{
+                document.getElementById("department").innerHTML = doctor.department;
+            }
+            if(doctor.position ==""){
+                $("#position").hide();
+                $("#divider").hide();
+            }else{
+                document.getElementById("position").innerHTML = doctor.position;
+            }
+        }
+        if(doctor.hospital==""){
+            $("#hospital").hide()
+        }else{
+            document.getElementById("hospital").innerHTML = doctor.hospital;
+        }
+
+
+        //varyPhone
+        if(doctor.toVeryPhone ){
+            $("#veryPhone").show();
+            $("#concernBtn").attr("src","images/veryPhone.png")
+        }
+
+
+        //显示动态的处理
+        //获取高度
+        var bodyHeight=document.body.clientHeight;
+        var introHeight=$("#intruduction").height();
+        var btnHeight=$("#concernBtn").height();
+        introHeight=parseInt(introHeight)+369+parseInt(btnHeight);
+
+        var dynamicHeight=bodyHeight-introHeight;
+        /*console.log(bodyHeight);
+        console.log(introHeight);
+        console.log(dynamicHeight);*/
+        $(".dynamicsInput").css('max-height',dynamicHeight+'px');
+
+        var rowCount=parseInt(dynamicHeight/20);
+        //$(".dynamicsInput").attr('style','-webkit-line-clamp:'+rowCount);
+
+        var dynamics=$("#dynamicsInput");
+        //doctor.message2Customer="埃里克森解放啦是看得见法拉克三等奖我埃里克森解放啦是看得见法拉克三等奖我IE入侵oil考完IE若i埃里克森解放啦是看得见法拉克三等奖我IE入侵oil考完IE若i";
+       // doctor.message2Customer=doctor.message2Customer+doctor.message2Customer+doctor.message2Customer;
+       //doctor.message2Customer="金克拉立刻就会户籍科啦啦啦家家户户就看看即可来来来空间啊哈哈哈哈咔咔已经咔咔咔咔咔咔咔咔咔咔艰难啊那么明明看见哈哈哈哈咔咔咔咔就哈哈镜卡卡卡啊看见咔咔咔咔啊咔咔安哈哈汉家咔咔咔咔咔咔哈哈哈哈安急急急啊哈哈咔咔咔咔卡就咔咔咔咔咔咔按哈哈哈哈解决啊哈哈啊看卡卡卡啊JJ Ajax看看那安安咔咔咔咔咔咔哈哈哈就卡啊咔咔咔咔咔卡啊咔咔咔咔卡咔咔咔咔咔咔就哈";
+        dynamics.text(doctor.message2Customer);
+        if(dynamics.text().length==0){
+            $("#dynamics").hide();
+        }
+        document.getElementById("intruduction").innerHTML = "你好，我是" + docName + "。若有问题需要咨询，请点击下方下载按钮➝下载朱李叶健康APP➝安装后在拨号盘中拨打<span  class='phone' style='font-size:15px;  white-space: nowrap;'>" +docChatNum  + "</span>，即可与我联系。";
+       // document.getElementById("alertName").innerHTML = doctor.realName;
+
+
+    };
+
+    var getCoupon = function () {
+        var phone = document.getElementById("phoneNum").value;
+
+        if (phone.length != 11) {
+            document.getElementById("errorTips").innerHTML = '您输入的手机号码有误';
+            return;
+        }
+
+        document.getElementById("errorTips").innerHTML = '  ';
+        $.ajax({
+            url: '/1/operation/getCoupon?phoneNum=' + phone + (Doctor ? ('&docChatNum=' + Doctor.docChatNum) : ''),
+            type: 'GET',
+            success: function (result) {
+                document.getElementById("getCoupon").style.display = 'none';
+                document.getElementById("getCouponSuccess").style.display = 'inline';
+            },
+            error: function (err) {
+                document.getElementById("errorTips").innerHTML = '您已领取了代金券';
+            }
+        });
+    };
+
+    //配置微信jssdk
+//    $(function () {
+//        var url = encodeURIComponent(window.location.href);
+//        $.ajax({
+//            url: '/1/wxConfig?url=' + url,
+//            type: 'GET',
+//            success: function (result) {
+//                wx.config(result);
+//            }
+//        });
+//    });
+    wx.ready(function (data) {
+        wx.onMenuShareAppMessage({
+            title: Doctor ? Doctor.realName : '小助理',
+            desc: Doctor ? (Doctor.hospital + '\n' + Doctor.department + '-' + Doctor.position) : '',
+            link: window.location.href, // 分享链接
+            imgUrl: Doctor ? ('http://7j1ztl.com1.z0.glb.clouddn.com/' + Doctor.avatar + '?imageView2/2/w/80/h/80') : '',
+            type: 'link',// 分享类型,music、video或link，不填默认为link
+            dataUrl: '' // 如果type是music或video，则要提供数据链接，默认为空
+//                success: function () {
+//                    // 用户确认分享后执行的回调函数
+////                    alert("onMenuShareAppMessage success");
+//
+//                },
+//                cancel: function () {
+//                    // 用户取消分享后执行的回调函数
+//
+//                },
+//                trigger: function () {
+//                }
+        });
+
+        wx.onMenuShareTimeline({
+            title: Doctor ? Doctor.realName : '小助理', // 分享标题
+            link: window.location.href, // 分享链接
+            imgUrl: Doctor ? ('http://7j1ztl.com1.z0.glb.clouddn.com/' + Doctor.avatar + '?imageView2/2/w/80/h/80') : ''
+//            success: function () {
+//                // 用户确认分享后执行的回调函数
+//            },
+//            cancel: function () {
+//                // 用户取消分享后执行的回调函数
+//            }
+        });
+
+    });
+
+</script>
+</body>
+</html>

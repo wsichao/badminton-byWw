@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>提交出价</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimal-ui">
+    <meta name="apple-mobile-web-app-status-bar-style" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link href="advCss.css" rel="stylesheet" type="text/css">
+    <script src="https://cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script>
+    <style>
+        p{
+            font-size: 15px;
+            color: #B3B3B3;
+            letter-spacing: 0;
+            width:62.4%;
+            margin:12px auto;
+            text-align: center;
+        }
+        input{
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="bid_list">
+        <ul>
+            <li id="firstbid">
+                <span id="bid1">出价金额：</span>
+                <span style="display:none" id="bid2">已出金额：</span>
+                <i style="font-family:'微软雅黑'">&yen;</i>
+                <input id="originPrice" type="text" placeholder="1元起">
+            </li>
+            <li id="addbid">
+                <span id="bid4">追加金额：</span>
+                <span id="bid3" style="display:none">出价金额：</span>
+                <i style="font-family:'微软雅黑'">&yen;</i>
+                <input id="price" type="number" placeholder="1元起">
+            </li>
+            <li>
+                <div id="pay" class="ad_button" style="text-align: center;line-height:44px " >付款</div>
+            </li>
+        </ul>
+    </div>
+    <p>注：出价金额影响到你的排名先后,金额越高越靠前</p>
+</body>
+</html>
+<script src="lib/connectWebViewJavascriptBridge.js"></script>
+<script>
+    window.alert = function(name){
+        var iframe = document.createElement("IFRAME");
+        iframe.style.display="none";
+        iframe.setAttribute("src", 'data:text/plain,');
+        document.documentElement.appendChild(iframe);
+        window.frames[0].window.alert(name);
+        iframe.parentNode.removeChild(iframe);
+    }
+    var webBridge = webViewBridge();
+    webBridge.bridgeInit(function (bridge) {
+            bridge.registerHandler('checkPaymentStatus', function(data,responseCallback){
+                var info = data;
+                info = JSON.parse(info);
+                setTimeout(function(){$.ajax({
+                    type: "GET",
+                    url: "/1/order/prepareOrderStatus?prepareId="+info.prepayId+"&type=ad",
+                    headers: {
+                        "x-docchat-user-id":info.userId,
+                        "x-docchat-session-token":info.token
+                    },
+                    success: function(rs){
+                        if(rs.payStatus == "paid"){
+                            window.location = "succPayment.html";
+                        }else{
+                            alert("支付失败")
+                        }
+                    },
+                    error: function(err){
+                        alert("支付失败");
+                    }
+                });},2000);
+
+            });
+        bridge.registerHandler('goBack', function(data,responseCallback){
+            var backInfo ={};
+            backInfo.isPaySuc = false;
+            responseCallback(JSON.stringify(backInfo));
+        })
+    });
+
+    var gettitle;
+
+    function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg); //匹配目标参数
+        if (r != null) return unescape(r[2]); return null; //返回参数值
+    }
+    function getUrlQueryObject(){
+        var query = decodeURIComponent(window.location.search.substring(1));
+        var urlArray = query.split('&'),queryObj = {};
+        urlArray.forEach(function(item){
+            var itemArray =  item.split('=');
+            queryObj[itemArray[0]] = itemArray[1];
+        })
+        return queryObj;
+    }
+    //获取title
+    $(function(){
+        gettitle=getUrlParam("pay");
+        if(gettitle=="init"){
+            document.title="提交出价";
+            $("#addbid").hide();
+            /*$("#bid4").hide();*/
+        }else if(gettitle=="more"){
+            document.title="追加出价";
+            $("#bid1").hide();
+            $("#bid2").show();
+            $("#bid3").hide();
+            $("#firstbid").attr("style","background-color:#eee");
+            $("#firstbid input").attr("style","background-color:#eee");
+            $("#firstbid input").attr("disabled","true");
+            var paidPrice =  parseFloat(getUrlParam("paid") || 0).toFixed(2)
+            $("#originPrice").val(paidPrice);
+        }
+    });
+    $("#pay").click(function(){
+        gettitle=getUrlParam("pay");
+        var userId=getUrlQueryObject().userId;
+        var token=getUrlQueryObject().token;
+        console.log(userId+","+token);
+        if(gettitle=="init" && $("#originPrice").val() == "")
+        {
+            alert("请先输入金额")
+            return;
+        }
+        if(gettitle=="more" &&$("#price").val() == ""){
+            alert("请先输入金额")
+            return;
+        }
+        var data ={};
+
+        if(gettitle=="init"){
+            data.price = $("#originPrice").val();
+        }else{
+            data.price = $("#price").val();
+        }
+        data.tradeName = "广告竞价";
+        data.tradeDetail = "广告竞价";
+        $.ajax({
+            type: "GET",
+            url: "/1/customer/wallet?userId=" + userId,
+            headers: {
+                "x-docchat-user-id": userId,
+                "x-docchat-session-token": token
+            },
+            success: function(rs){
+                data.balance = rs.amount;
+                webBridge.upload("selectPayment",JSON.stringify(data))
+            },
+            error: function(err){
+                alert("获取余额失败");
+            }
+        });
+    })
+</script>

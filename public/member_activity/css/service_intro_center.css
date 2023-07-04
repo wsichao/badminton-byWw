@@ -1,0 +1,38 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+html,body{
+    width: 100%;
+    height: 100%;
+}
+.all{
+    width: 100%;
+    height: 100%;
+    padding:0px 12px;
+    box-sizing: border-box;
+}
+.imgSp{
+    display: block;
+    width: 100%;
+}
+.introOne{
+    width: 100%;
+    padding-bottom: 78px;
+}
+.introOne p {
+    font-size: 15px;
+    color: #965500;
+    text-align: justify;
+    line-height: 30px;
+}
+.cg_color{
+    color: #965500;
+}
+.introOne .partTop{
+    font-size: 20px;
+    text-align: center;
+}
+.introOne .tg_c{
+    text-align: center;
+}

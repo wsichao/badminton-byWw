@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>朱李叶健康</title>
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    <!-- js -->
+    <script src="https://cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script>
+    <script src="../invite_prize/jquery.qrcode.js"></script>
+    <!-- css -->
+    <link href="../invite_prize/css/success.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div class="all">
+    <div class="top"></div>
+    <div class="bottom">
+        <div class="btn">
+            <img src="https://oij06m690.qnssl.com/app_button_download@3x.png" />
+        </div>
+        <div class="coupon_list">
+            <% data.items.forEach(function(item){
+            %>
+            <div class="item">
+                <div class="left_part">
+                    <div class="money">
+                        <span><%=item.limit/100%></span>
+                    </div>
+                    <p class="rule">满<%=item.working_condition/100%>减<%=item.limit/100%></p>
+                </div>
+                <div class="right_part">
+                    <img class="lace" src="https://oij06m690.qnssl.com/app_ticket_lace@3x.png">
+                    <p class="name"><%=item.name%></p>
+                    <p class="status">未使用</p>
+                    <p class="time">有效期：<%=item.start_time%> - <%=item.end_time%></p>
+                </div>
+            </div>
+            <%
+            })%>
+
+
+
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    $(".btn").click(function () {
+      var ua = navigator.userAgent.toLowerCase();
+      if (/android/.test(ua)) {
+        window.location.href = "http://app.mi.com/details?id=com.zlycare.zlycare&ref=search";
+      } else {
+        window.location.href = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zlycare.zlycare";
+      }
+    })
+</script>

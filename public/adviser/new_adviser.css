@@ -1,0 +1,281 @@
+/*第一页*/
+.content1{
+    width:100vw;
+    height: 100vh;
+    background-size: 100% 100%;
+    color:#f0ad4e;
+    /*display: none;*/
+}
+.content1 button{
+    width:24vw;
+    height:24vw;
+    border-radius: 15vw;
+    border:none;
+    position: fixed;
+    left:40vw;
+    bottom:12vh;
+    background: chocolate;
+    background: url("images/call_btn.png");
+    background-size: 100% 100%;
+
+}
+
+/*第二页*/
+.content2{
+    width:100vw;
+    height: 100vh;
+    background:#C0E8FF;
+    display: none;
+
+}
+.content2 ul{
+    width: 90vw;
+    margin:0 auto;
+    padding-top:24px;
+}
+.content2 ul li{
+    width:100%;
+
+    height:12vw;
+    box-sizing:content-box;
+}
+.mg{
+    margin-top:12px;
+}
+.wd100{
+    width:100%;
+    height:100%;
+}
+.bdr{
+    border-radius: 4px;
+}
+.content2 ul li p{
+    color:#fff;
+    font-size:15px;
+    margin-top:5px;
+}
+.content2 ul li input{
+    border:1px solid #fff;
+    padding-left:8px;
+    font-size: 20px;
+    color:#A9A9A9;
+}
+.content2 ul li button{
+    background: #5EE3FF;
+    border:none;
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/*第三页*/
+.content3{
+    width:100vw;
+    height: 100vh;
+    background:#C0E8FF;
+    display: none;
+}
+.content3 ul{
+    width: 90vw;
+    margin:0 auto;
+    padding-top:24px;
+    /*overflow: hidden;*/
+}
+.content3 ul li{
+
+    height:12vw;
+
+
+}
+.content3 ul .veri{
+    background-color: #fff;
+}
+/*.content3 ul .veri button{
+    width:100px;
+    height: 100%;
+    border: none;
+    font-size: 15px;
+    padding: 0px;
+}*/
+.content3 ul .veri input{
+    width:100%;
+    border: none;
+    padding-left:10px;
+    font-size: 20px;
+    color:#A9A9A9;
+
+}
+.content3 ul li p{
+    color:#fff;
+    font-size: 14px;
+    margin-top: 5px;
+}
+.content3 ul li span{
+    color:#5EE3FF;
+}
+.content3 ul li button{
+    background: #5EE3FF;
+    border:none;
+    font-size: 19px;
+    color:#fff;
+    font-weight:bold;
+}
+
+#change{
+    -webkit-animation:run 3s linear 0s infinite;
+}
+
+@-webkit-keyframes run{
+    from{
+        -webkit-transform:rotate(0deg);
+    }
+    to{
+        -webkit-transform:rotate(360deg);
+    }
+
+}
+.alert{
+    background: #FFF;
+    width:calc(100% - 74px);
+    border-radius: 4px;
+    left: 50%;
+    top:50%;
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    z-index: 11;
+    display:none;
+    position:fixed;
+    padding:18px;
+    margin:0;
+    background: url("images/alert_bg.png");
+    background-size:100% 100%;
+}
+.closeAlert{
+    width:22px;
+    height:22px;
+    border:0;
+    float:right;
+    margin:-10px ;
+    background: #FFFFFF;
+    padding:0
+}
+.closeAlert img{
+    width:100%;
+    height:100%;
+}
+.cushion{
+    width:100%;
+    margin-top:18px;
+}
+.cushion img{
+    height:67px;
+    width:120px;
+    margin:0 auto;
+    display:block;
+
+}
+.alert_inf{
+    margin:24px auto 0 auto;
+}
+.alert_inf p{
+    text-align: center;
+    font-size: 17px;
+    color: #33A5EE;
+    letter-spacing: 0;
+    margin-bottom:8px;
+}
+.alert i{
+    font-style: normal;
+    font-size: 15px;
+    color: #535353;
+    letter-spacing: 0;
+    text-align: center;
+    display: block;
+    margin-bottom:22px;
+}
+.alert em{
+    font-style: normal;
+    font-size: 15px;
+    color: #000;
+    letter-spacing: 0;
+    text-align: center;
+    display: block;
+}
+.gray{
+    width:100%;
+    height:100%;
+    z-index: 10;
+    left: 0;
+    top:0;
+    background: #000;
+    filter:alpha(opacity=70);
+    -moz-opacity:0.7;
+    opacity:0.7;
+    display:none;
+    position:fixed;
+}
+
+.spinner {
+    margin: 10px auto;
+    width: 50px;
+    height: 60px;
+    text-align: center;
+    font-size: 10px;
+}
+
+.spinner>div {
+    background-color: #990305;
+    height: 100%;
+    width: 6px;
+    display: inline-block;
+    -webkit-animation: stretchdelay 1.2s infinite ease-in-out;
+    animation: stretchdelay 1.2s infinite ease-in-out;
+}
+
+.spinner .rect2 {
+    -webkit-animation-delay: -1.1s;
+    animation-delay: -1.1s;
+    background-color: #FF9312;
+}
+
+.spinner .rect3 {
+    -webkit-animation-delay: -1.0s;
+    animation-delay: -1.0s;
+    background-color: #FEE800;
+}
+
+.spinner .rect4 {
+    -webkit-animation-delay: -0.9s;
+    animation-delay: -0.9s;
+    background-color: #1BC4FF;
+}
+
+.spinner .rect5 {
+    -webkit-animation-delay: -0.8s;
+    animation-delay: -0.8s;
+    background-color: #9F02C0;
+}
+
+@-webkit-keyframes stretchdelay {
+    0%,
+    40%,
+    100% {
+        -webkit-transform: scaleY(0.4)
+    }
+    20% {
+        -webkit-transform: scaleY(1.0)
+    }
+}
+
+@keyframes stretchdelay {
+    0%,
+    40%,
+    100% {
+        transform: scaleY(0.4);
+        -webkit-transform: scaleY(0.4);
+    }
+    20% {
+        transform: scaleY(1.0);
+        -webkit-transform: scaleY(1.0);
+    }
+}

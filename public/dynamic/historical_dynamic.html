@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>历史动态</title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no,maximum-scale=1">
+
+    <!-- JQuery -->
+    <script src="https://cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script>
+    <script src="../../assets/libs/bootstrap.min.js"></script>
+    <!-- Private -->
+    <link href="dynamic/dynamic.css" rel="stylesheet" type="text/css">
+    <!-- <link href="adviser/adviser_main.css" rel="stylesheet" type="text/css">-->
+    <style>
+        body{
+            background: #eee;
+        }
+
+        .list{
+            background: #fff;
+            border-top:0.5px solid #bfbfbf;
+            margin-top:12px;
+            border-bottom:0.7px solid #bfbfbf;
+        }
+        .count_list{
+            position: relative;
+            margin-top:12px;
+        }
+        i{
+            margin-left:12px;
+        }
+
+
+    </style>
+</head>
+<body>
+<ul class="dynamic_list" id="dynamic_list">
+    <!--<li class="list">-->
+        <!--<div class="dynamic">-->
+            <!--<p>-->
+                <!--一家公司诞生之初，一款产品开发之前就已经根深蒂固地存在了。-->
+                <!--公司的创始人是否拥有完美主义型人格，是否对所处的市场和消费者有足够深刻的理解和洞察，-->
+                <!--是否对所处的市场和消费者有足够深刻的理解和洞察，-->
+                <!--是否对产是否对所处的市场和消费者有足够深刻的理解和洞察，-->
+                <!--是否对产。否对产是否对所处的市场和消费者有足够深刻的理。-->
+            <!--</p>-->
+            <!--<ul class="dynamic_pic_list">-->
+                <!--<li>-->
+                    <!--<img src="dynamic/images/QR@3x.png">-->
+                <!--</li>-->
+                <!--<li>-->
+                    <!--<img src="dynamic/images/read@3x.png">-->
+                <!--</li>-->
+                <!--<li>-->
+                    <!--<img src="dynamic/images/send@3x.png">-->
+                <!--</li>-->
+
+            <!--</ul>-->
+            <!--<i id="time">2017-1-2 10:08</i>-->
+        <!--</div>-->
+
+        <!--<div class="count">-->
+            <!--<ul class="count_list">-->
+                <!--<li><span id="read">1000</span></li>-->
+                <!--<li><span id="like">100</span></li>-->
+                <!--<li><span id="send">1</span></li>-->
+            <!--</ul>-->
+        <!--</div>-->
+    <!--</li>-->
+</ul>
+<div class="line"></div>
+<button id="getMore" class="pageButton">点击加载更多...</button>
+<div class="line"></div>
+<span id="noHistory"  class="default position-center">
+    <img src="dynamic/images/recent_non.png">
+    <p>暂无动态</p>
+</span>
+
+<script src="apply_doctor/lib/connectWebViewJavascriptBridge.js"></script>
+<script src="dynamic/dynamic.js"></script>
+<script src="../general_file/jquery.lazyload.js"></script>
+<script>
+    var data = '<%-data%>';
+   // console.log("data: " + data)
+    data = data.replace(new RegExp("\n", "gm"), "\\n");
+    data = data.replace(new RegExp("\r", "gm"), "\\r");
+    data = JSON.parse(data);
+//    try{
+//        data = JSON.parse(data);
+//    }catch(e1){
+//        console.log("err1 ： " + e1);
+//        data = data.replace(new RegExp("\r\n", "gm"), "\\r\\n");
+//        try{
+//            data = JSON.parse(data);
+//        }catch(e2){
+//          console.log("err2 ： " + e2);
+//          data = data.replace(new RegExp("\n\r", "gm"), "\\n\\r");
+//          try{
+//            data = JSON.parse(data);
+//          }catch(e3){
+//            console.log("err3 ： " + e3);
+//            data = data.replace(new RegExp("\n", "gm"), "\\n");
+//            try{
+//              data = JSON.parse(data);
+//            }catch(e4){
+//              console.log("err4 ： " + e4);
+//            }
+//          }
+//        }
+//    }
+    //data = data.replace(new RegExp("\n", "gm"), "\\n");
+    //data = data.replace(new RegExp("\'", "gm"), " ");
+    //data = JSON.parse(data);
+   // console.log(data);
+
+
+    console.log(data);
+    if(!data){
+        $("#renovation").show();
+    }else{
+
+    }
+
+    var userId=data.userId;
+    if(data.data.length== 0){
+        $("#noHistory").show();
+        $("#getMore").hide();
+        $(".line").hide();
+    }else{
+        $("#noHistory").hide();
+        $("#getMore").show();
+        $(".line").show();
+    }
+    var webBridge = webViewBridge();
+    webBridge.bridgeInit(function (bridge) {
+    });
+
+    $(function(){
+        function addDynamic(content,pic,time,read,like,send,j,isOrigin,originalName,isHongbao,honbaoTotalCount){
+
+            var addString='';
+            //加入动态文字
+            if(isOrigin==true){
+                addString=addString+'<li class="list"> <div class="dynamic"><p class="mg12">';
+
+            }else{
+                //处理首发名字
+                // var sreenWidth1=screen.width;
+
+                var sreenWidth1=screen.width;
+                sreenWidth1=sreenWidth1-72;
+                var nameCount=sreenWidth1/15;
+                var originUser="";
+                if(originalName.length>nameCount){
+                    originUser=originalName.slice(0,nameCount-2)+"...";
+                }else{
+                    originUser=originalName;
+                }
+
+                addString=addString+'<li class="list"> <div class="dynamic">'+'<i>首发于<span>@'+originUser+'</span></i>'+'<p><span></span>';
+            }
+            if(isHongbao===1){
+                //addString=addString+'<span class="red">'+'#前'+honbaoTotalCount+'名转发领红包#'+'</span><pre>'+content+'</pre></p>';
+                addString=addString+'<pre><span class="red"></span>'+content+'</pre></p>';
+            }else{
+                addString=addString+'<pre>'+content+'</pre></p>';
+            }
+
+            //加入动态图片
+            if(pic.length!=0){
+            var addPic='<ul class="dynamic_pic_list" id="'+j+'">';
+                for(var pici=0; pici<pic.length;pici++){
+                    //addPic=addPic+'<li><div class=".lazy" style=background-image:url("https://cdn.juliye.net/'+pic[pici]+'")></li>';
+                   addPic=addPic+'<li><div class="lazy" data-original="https://cdn.juliye.net/'+pic[pici]+'"></div></li>';
+
+                }
+            addPic=addPic+'</ul>';
+            addString=addString+addPic;
+            }
+            //加入动态时间
+            var addTime='<i>'+getTime(time)+'</i>';
+            addString=addString+addTime;
+
+            //加入动态统计栏
+            var addCount='<div class="count">'+' <ul class="count_list">';
+            addCount=addCount+'<li><span>'+read+'</span></li>';
+            addCount=addCount+'<li><span>'+like+'</span></li>';
+            addCount=addCount+'<li><span>'+send+'</span></li>';
+            addCount=addCount+'</ul></div></li>';
+
+            addString=addString+addCount;
+
+            return addString;
+
+        }
+
+        var appendString='';
+        function appendDynamic(data){
+            for(var i=0; i<data.length; i++) {
+                if(data[i].hongbaoTotalCount>0)
+                {
+                    appendString = appendString + addDynamic(
+                                    data[i].displayContent || data[i].originalContent,
+                                    data[i].pics,
+                                    data[i].createdAt,
+                                    data[i].viewedCount,
+                                    data[i].zanCount,
+                                    data[i].sharedCount,
+                                    i,data[i].isOriginal,
+                                    data[i].originalUser? data[i].originalUser.userName:"",
+                                    1,
+                                    data[i].hongbaoTotalCount);
+                }else{
+
+                    appendString = appendString + addDynamic(
+                                    data[i].displayContent || data[i].originalContent,
+                                    data[i].pics,
+                                    data[i].createdAt,
+                                    data[i].viewedCount,
+                                    data[i].zanCount,
+                                    data[i].sharedCount,
+                                    i,
+                                    data[i].isOriginal,
+                                    data[i].originalUser? data[i].originalUser.userName:"",
+                                    0);
+                }
+
+            }
+
+
+        }
+        appendDynamic(data.data);
+        $("#dynamic_list").append(appendString);
+
+
+        //获取系统
+        function getSystem(){
+            var ua = navigator.userAgent.toLowerCase();
+            if (/android/.test(ua)) {
+                // alert("android");
+                $(".count_list").css("border-top","1px solid #bfbfbf");
+                $(".count_list li").css("border-right","1px solid #bfbfbf");
+                $(".list").css("border-top","1px solid #bfbfbf");
+                $(".list").css("border-bottom","1px solid #bfbfbf");
+            }
+        }
+        getSystem();
+
+        $(".dynamic_pic_list li").click(function(){
+            var picData={};
+            picData.number=$(this).index();
+            var parentIndex=$(this).parents(".list").index();
+            picData.pics=data.data[parentIndex].pics;
+            webBridge.upload("picClick",JSON.stringify(picData));
+        })
+
+
+        $(".lazy").lazyload({effect: "fadeIn"});
+
+        var pageNum=0;
+        var $getMore=$("#getMore");
+        $getMore.click(function(){
+            pageNum++;
+            $.ajax({
+                url: ' momentsHistory?userId='+userId+'&type=notPage&pageNum='+pageNum,
+                type: 'GET',
+                success: function (result) {
+                    console.log(result.data);
+                   // alert("成功");
+                    if(result.length!=0){
+                        appendString='';
+                        appendDynamic(result.data);
+                        $("#dynamic_list").append(appendString);
+                        $(".lazy").lazyload({effect: "fadeIn"});
+                        getSystem();
+                        $(".dynamic_pic_list li").click(function(){
+                            var picData={};
+                            picData.number=$(this).index();
+
+                            var parentIndex=$(this).parents(".list").index();
+                            parentIndex=parentIndex-(pageNum*20);
+                            picData.pics=result.data[parentIndex].pics;
+                            console.log(picData.pics);
+                            webBridge.upload("picClick",JSON.stringify(picData));
+                        });
+                        if(result.data.length<20){
+                            /*$getMore.attr("disabled","disabled");
+                            $getMore.text("加载完成");
+                            $getMore.css("color","#b3b3b3")*/
+                            $getMore.hide();
+                            $(".line").hide();
+                        }
+                    }
+
+                },
+                error: function(){
+
+                }
+            });
+
+
+
+        });
+
+
+
+    })
+
+
+
+
+</script>

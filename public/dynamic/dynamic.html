@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    <!-- JQuery -->
+    <script src="https://cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script>
+    <script src="../../assets/libs/bootstrap.min.js"></script>
+    <!-- Private -->
+    <link href="dynamic.css" rel="stylesheet" type="text/css">
+
+    <style>
+
+
+
+        #redCount{
+            color:#f00;
+        }
+        .container{
+            margin-top:20px;
+        }
+        pre{
+            line-height:20px;
+        }
+    </style>
+</head>
+<body>
+<div class="content" style="display: none">
+    <div class="red_paper">
+        <span>打开朱李叶健康，转发动态领红包!</span>
+        <button class="go_download">打开</button>
+
+    </div>
+    <div class="infomation">
+        <img src="" id="doc_pic">
+        <div class="info">
+            <h1><span id="name">张仲景</span></h1>
+
+            <i id="time">2017-1-2 10:08</i>
+            <ul class="show_count">
+                <li>评论<span id="comment"></span></li>
+                <li>点赞<span id="like"></span></li>
+            </ul>
+        </div>
+    </div>
+    <div class="dynamic">
+        <!--<h3>扫下方二维码，转发动态领红包！</h3>-->
+        <i id="original">首发于<span id="originName">@哦哦哦</span></i>
+        <p >
+            <!--<span id="redCount">#前33名转发领红包#</span>-->
+            <span><pre id="content">一家公司诞生之初，一款产品开发之前就已经根深蒂固地存在了。公司的创始人是否拥有完美主义型人格，是否对所处的市场和消费者有足够深刻的理解和洞察，
+是否对所处的市场和消费者有足够深刻的理解和洞察，
+是否对产是否对所处的市场和消费者有足够深刻的理解和洞察，
+是否对产。否对产是否对所处的市场和消费者有足够深刻的理。</pre></span>
+        </p>
+        <ul class="pic_list">
+           <!-- <li>
+                <img src="images/QR@3x.png">
+            </li>-->
+
+            <li class="hotline">
+
+            </li>
+        </ul>
+        <!--<div class="red_info">-->
+            <!--<p>扫码下载朱李叶健康 → 拨号盘中输入<em class="number">123456789</em> → 点击进入<span class="name">张仲景</span>主页 → 转发动态即可领取红包！</p>-->
+        <!--</div>-->
+
+    </div>
+
+    <!--<div class="count">
+        <ul class="count_list">
+            <li><span id="read">1000</span></li>
+            <li><span id="like">100</span></li>
+            <li><span id="send">1</span></li>
+        </ul>
+
+    </div>-->
+    <div class="open_download">
+        <div class="open-logo"><img src="images/icon.png"></div>
+        <div class="open_content">
+            <span>朱李叶健康</span>
+            <i>让更多家庭拥有健康</i>
+
+        </div>
+        <button class="jump_download">立即下载</button>
+    </div>
+
+</div>
+
+<script src="dynamic.js"></script>
+<script src="jquery.qrcode.js"></script>
+<script src="../general_file/jquery.lazyload.js"></script>
+<script src="../general_file/general_js.js"></script>
+<script>
+
+
+    $(function(){
+
+        var windowWidth=screen.width;
+
+        windowWidth=windowWidth*0.4;
+
+        var ua = navigator.userAgent.toLowerCase();
+        if (/android/.test(ua)) {
+            // alert("android");
+            $(".infomation").css("border-bottom","1px solid #bfbfbf");
+        }
+        function getUrlQueryObject(){
+            var query = decodeURIComponent(window.location.search.substring(1));
+            var urlArray = query.split('&'),queryObj = {};
+            urlArray.forEach(function(item){
+                var itemArray =  item.split('=');
+                queryObj[itemArray[0]] = itemArray[1];
+            })
+            return queryObj;
+        }
+        var urlData=getUrlQueryObject();
+        var momentId=urlData.momentId;
+        /*function getQR(docChatNum){
+            var options = {
+                render: "canvas",
+                ecLevel: 'H',//识别度
+                fill: '#000',//二维码颜色
+                background: '#ffffff',//背景颜色
+                quiet: 2,//边距
+                width: windowWidth,//宽度
+                height: windowWidth,
+                text: "http://web.dc.zlycare.com/download/docchat-c.html?docChatNum="+docChatNum,//二维码内容
+                //中间logo start
+                mode: 4,
+                mSize: 11 * 0.01,
+                mPosX: 50 * 0.01,
+                mPosY: 50 * 0.01,
+                src: 'http://7j1ztl.com1.z0.glb.clouddn.com/WechatIMG1.png'
+                //image:$('#logo'),//logo图片
+                //中间logo end
+            };
+
+
+            /!*$(".hotline img").css("width",minwindowWidth);
+            $(".hotline img").css("height",minwindowWidth);*!/
+            $('#container').empty().qrcode(options);
+            var canvas1=$("#container canvas")[0];
+
+
+
+            var image=$("#QRImg");
+            image.src = canvas1.toDataURL("image/png");
+            $("#QRImg").attr("src",image.src);
+
+
+        }*/
+      
+        var sex;
+         function getAvatar(){
+            if(sex=="男"){
+                $("#doc_pic").attr('src',"images/male@3x.png");
+            }else if(sex=="女"){
+                $("#doc_pic").attr('src',"images/famale@3x.png");
+            }else{
+                $("#doc_pic").attr('src',"images/mid@2x.png");
+            }
+        }
+        $("#doc_pic").error(function(){
+            getAvatar();
+        });
+        function addPic(picSrc){
+            return '<li><img class="lazy" data-original="'+picSrc+'"></li>';
+        }
+
+        $.ajax({
+            url: ' /1/customer/getMoment?momentId='+momentId,
+            type: 'GET',
+            success: function (result) {
+                /*console.log(result);*/
+                $(".content").show();
+                var oContent = result.originalContent;  
+                var reg = /(http:\/\/|https:\/\/)((\w|=|\?|\.|\/|&|-)+)/g;
+                 var urlArr = oContent.match(reg); 
+                Array.prototype.unique3 = function(){ 
+                  var res = []; 
+                  var json = {}; 
+                  for(var i = 0; i < this.length; i++){ 
+                    if(!json[this[i]]){ 
+                      res.push(this[i]); 
+                      json[this[i]] = 1; 
+                    } 
+                  } 
+                  return res; 
+                }
+                if(urlArr && urlArr.length){
+                  urlArr = urlArr.unique3();
+                  for(var i = 0 ; i<urlArr.length ; i++){
+                    var regSub = new RegExp(urlArr[i],"g");
+                    oContent = oContent.replace(regSub,'<a href="' + urlArr[i] + '">' + urlArr[i] + '</a>')
+                  }
+                }
+                $("#content").html(oContent);
+    		//处理头像
+                sex=result.sex;
+               // console.log(sex);
+
+                //当result.avatar的头像为""时，不会出错，不会触发img的error事件
+                if(result.avatar==""){
+                    getAvatar();
+                }else{
+                    $("#doc_pic").attr('src',"https://cdn.juliye.net/" + result.avatar);
+                }
+
+                $(".name").text(result.userName);
+                var docChatNum=getDocChatNum(result.docChatNum);
+                /*$(".number").text(docChatNum);*/
+                //处理名字
+
+                var screenWidth=document.body.clientWidth;
+                screenWidth=screenWidth-102;
+                var numberCount=result.docChatNum+"";
+                numberCount=numberCount.length;
+                screenWidth=screenWidth-(numberCount*9);
+                var wordCount=screenWidth/16;
+               // console.log(wordCount);
+                if(result.userName.length>=wordCount){
+                    var addname=result.userName.slice(0,wordCount-2)+'...';
+                }else{
+                    addname=result.shopName ||  result.userName;
+                }
+
+                var titleName=addname;
+                if(result.userName.length>=5){
+                    titleName=result.userName.slice(0,5)+'...';
+                }
+                document.title=titleName+"的动态";
+
+
+                // hack在微信等webview中无法修改document.title的情况
+                var $body = $('body');
+                document.title = titleName+"的动态";
+
+                // hack在微信等webview中无法修改document.title的情况
+                /*var $iframe = $('<iframe src="/"></iframe>');
+                $iframe.on('load',function() {
+                    setTimeout(function() {
+                        $iframe.off('load').remove();
+                    }, 0);
+                }).appendTo($body);*/
+
+
+                //是否有红包
+
+               // result.hongbao=true;
+                if(result.hongbao && result.hongbao!=null){
+                    /*$(".dynamic h3").show();*/
+                    $(".red_paper").show();
+                    $(".infomation").css("margin-top","32px");
+                    //$("#redCount").show();
+                   // $("#redCount").text("#前"+result.hongbaoTotalCount+"名转发领红包#");
+//                    $(".red_info").show();
+                }else{
+                    /*$(".dynamic h3").hide();*/
+                    $(".red_paper").hide();
+                    $(".infomation").css("margin-top","0px");
+                   // $("#redCount").hide();
+//                    $(".red_info").hide();
+                }
+
+                $("#name").text(addname);
+                //处理热线号
+
+
+                $("#number").text(docChatNum);
+                $("#time").text(getTime(result.createdAt));
+                if(result.isOriginal==false){
+                    $("#original").show();
+                    //处理首发名字
+                   // var sreenWidth1=screen.width;
+
+                    var sreenWidth1=screen.width;
+                    sreenWidth1=sreenWidth1-72;
+                    var nameCount=sreenWidth1/15;
+                    var originUser="";
+                    if(result.originalUser.userName.length>nameCount){
+                        originUser=result.originalUser.userName.slice(0,nameCount-2)+"...";
+                    }else{
+                        originUser=result.originalUser.userName;
+                    }
+
+
+                    $("#originName").text("@"+originUser);
+                }else{
+                    $("#original").hide();
+                    $("#content").css("margin","12px 12px 0 12px");
+                }
+
+                $("#read").text(result.viewedCount);
+                $("#like").text(result.zanCount);
+                $("#comment").text(result.commentCount);
+                $("#send").text(result.sharedCount);
+                var append='';
+                for(var i=0;i< result.pics.length;i++){
+                   append=append+addPic("https://cdn.juliye.net/"+ result.pics[i]);
+                }
+                $(".hotline").before(append);
+                /*getQR(result.docChatNum);*/
+                console.log(result.docChatNum);
+                $(".lazy").lazyload({effect: "fadeIn"});
+            },
+            error: function(){
+                $(".content").hide();
+                var ajaxerror='网络异常...';
+                $('body').append(ajaxerror);
+            }
+        });
+
+
+
+    })
+</script>
+</body>
+</html>

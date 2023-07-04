@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>朱李叶健康</title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    <!-- jquery -->
+    <script src="https://cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script>
+    <!-- css -->
+    <link href="../invite_prize/css/sign.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div class="bgAll" id="signSp">
+    <div class="top">
+        <img src="https://oij06m690.qnssl.com/app_bg_sign@3x.png">
+    </div>
+    <div class="inputSp">
+        <input id="phoneIn" class="phoneIn" type="text" maxlength="11" placeholder="输入你的手机号" />
+        <div class="upload" onclick="upload()">提交并下载APP</div>
+        <p>填写手机号，立即赢现金红包活动</p>
+        <div class="mg-t">
+            <div class="bottom">
+                <div class="logo">
+                    <img src="../invite_prize/img/logolittle.png" />
+                </div>
+                <div class="show">朱李叶健康APP</div>
+                <div class="show">让您享受更多健康实惠</div>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+
+<script>
+  function getUrlQueryObject(){
+    var query = decodeURIComponent(window.location.search.substring(1));
+    var urlArray = query.split('&'),queryObj = {};
+    urlArray.forEach(function(item){
+      var itemArray =  item.split('=');
+      queryObj[itemArray[0]] = itemArray[1];
+    })
+    return queryObj;
+  }
+  var urlObject = getUrlQueryObject();
+    var clock = '';
+    var nums = 60;
+    var btn;
+    function upload(){
+      if(!urlObject.user_id){
+        alert('无效的邀请用户');
+        return;
+      }
+      if(!$('#phoneIn').val()){
+        alert('请输入手机号码');
+        return;
+      }
+      if(!(/^1([358][0-9]|4[579]|66|7[0135678]|9[89])[0-9]{8}$/.test($('#phoneIn').val()))){
+        alert('请输入正确的手机号码');
+        return
+      }
+      $.ajax({
+        url: '/1/drugAllowance/invitedRegister',
+        type: 'POST',
+        data:{
+          phoneNum : $('#phoneIn').val(),
+          fromId : urlObject.user_id,
+          cmsId : urlObject.cms_id
+        },
+        success: function (result) {
+          console.log(result);
+          if(result.code == "1502"){
+            alert(result.msg);
+            return;
+          }
+          if(result.code == "200"){
+            alert("提交成功");
+            window.location.href = "/invite_reward/success?user_id=" + result.data.user_id;
+//            var ua = navigator.userAgent.toLowerCase();
+//            if (/android/.test(ua)) {
+//              window.location.href = "http://app.mi.com/details?id=com.zlycare.zlycare&ref=search";
+//            } else {
+//              window.location.href = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zlycare.zlycare";
+//            }
+          }
+        },error:function(err){
+          console.log(err);
+          alert(JSON.stringify(err))
+        }
+      });
+    }
+
+  window.alert = function (name) {
+    var iframe = document.createElement("IFRAME");
+    iframe.style.display = "none";
+    iframe.setAttribute("src", 'data:text/plain,');
+    document.documentElement.appendChild(iframe);
+    window.frames[0].window.alert(name);
+    iframe.parentNode.removeChild(iframe);
+  }
+</script>
+</body>
+</html>

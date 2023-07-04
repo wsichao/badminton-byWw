@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- http://t.co/dKP3o1e -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    <meta name="format-detection" content="telephone=no"/>
+    <title></title>
+    <!-- Vue -->
+    <script src="https://cdn.bootcss.com/vue/2.3.3/vue.min.js"></script>
+    <style>
+        body {
+            margin: 0px;
+            padding: 0px;
+            padding-bottom: 80px;
+        }
+
+        .detail {
+            margin-left: 12px;
+            margin-top: 15px;
+            margin-right: 12px;
+            margin-bottom: 10px;
+            font-size: 16px;
+            line-height: 21px;
+        }
+
+        .imgs {
+            padding-left: 12px;
+            padding-right: 12px;
+        }
+
+        .imgs img {
+            width: 100%;
+
+        }
+
+        .service-msg {
+
+            position: fixed;
+            bottom: 0px;
+            color: #333333;
+            width: 100%;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            background: #ffffff;
+        }
+        .service-msg > div{
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <div class="detail" v-html="product_detail"></div>
+    <div class="imgs" v-for="product_pic in product_pics">
+        <img v-bind:src="product_pic"/>
+    </div>
+
+    <div class="service-msg">
+        <div>服务须知:</div>
+        <div>1.点击"电话咨询",联系平台服务助理</div>
+        <div>2.服务助理会与您确认具体服务项目及服务流程</div>
+    </div>
+</div>
+
+</body>
+<script src="https://cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script>
+<script src="/apply_doctor/lib/connectWebViewJavascriptBridge.js"></script>
+
+<script>
+
+    var webBridge = webViewBridge();
+    webBridge.bridgeInit(function (bridge) {
+        bridge.registerHandler('seniormember', function (data, responseCallback) {
+            var app = new Vue({
+                el: '#app',
+                data: JSON.parse(data)
+            })
+        });
+    });
+</script>
+</html>

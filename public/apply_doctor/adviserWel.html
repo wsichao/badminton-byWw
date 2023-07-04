@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+
+    <!-- http://t.co/dKP3o1e -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    <title>开通热线</title>
+    <!-- JQuery -->
+    <script src="https://cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script>
+    <script src="../../assets/libs/bootstrap.min.js"></script>
+    <!-- Private -->
+    <link rel="stylesheet" href="../../assets/styles/bootstrap.min.css">
+    <link rel="stylesheet" href="comm/signUp.css">
+    <style type="text/css">
+        body{
+            background: #FFFFFF;
+        }
+        .banner{
+            width:100%;
+        }
+        .h-title{
+            margin: 15px auto 24px;
+            font-size: 24px;
+            color: #33a5ee;
+            text-align: center;
+        }
+        .text-tabs{
+            font-size:15px;
+            marign-bottom:15px;
+            text-align: center;
+            color: #000;
+        }
+        .gray-text{
+            font-size: 15px;
+            color: #b3b3b3;
+            text-align: center;
+        }
+        .foot{
+            position: absolute;
+            bottom:0;
+            left: 0;
+            padding:0 12px;
+        }
+        .foot p{
+            text-align: center;
+            margin:5px auto 12px;
+            color: #b3b3b3;
+            font-size: 13px;
+        }
+        .foot a{
+            text-align: center;
+            margin:5px auto 12px;
+            color: #b3b3b3;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <img class="banner" src="../assets/images/reg/banner.png">
+    <h3 class="h-title">让专业产生价值</h3>
+    <p class="text-tabs">开通热线号</p>
+    <p class="text-tabs">拥有热线号后，可以分享你的名片</p>
+    <p class="text-tabs">接听粉丝电话，即可获得收入</p>
+    <p class="gray-text">（粉丝不会知道你的手机号）</p>
+   <!-- <p class="text-tabs">申请成为顾问</p>
+    <p class="text-tabs">登录“朱李叶健康顾问版”，分享你的名片</p>
+    <p class="text-tabs">接听粉丝电话，即可获得收入</p>
+    <p class="gray-text">（粉丝不会知道你的手机号）</p>-->
+    <div class="foot">
+        <input id="next" class="submitThis btn-submit" type="button" value="立即开通"/>
+        <p>朱李叶健康可以帮您沉淀粉丝群，便捷地建立与粉丝的联系，并让您的专业产生更大的价值。</p>
+    </div>
+</body>
+<script src="lib/connectWebViewJavascriptBridge.js"></script>
+<script src="lib/common.js"></script>
+<script>
+
+$(function(){
+    function getUrlQueryObject(){
+        var query = decodeURIComponent(window.location.search.substring(1));
+        var urlArray = query.split('&'),queryObj = {};
+        urlArray.forEach(function(item){
+            var itemArray =  item.split('=');
+            queryObj[itemArray[0]] = itemArray[1];
+        })
+        return queryObj;
+    }
+
+    function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg); //匹配目标参数
+        if (r != null) return unescape(r[2]); return null; //返回参数值
+    }
+  //  var app = getUrlQueryObject().app;
+  //  var from = getUrlQueryObject().from;
+    var urlItem=getUrlQueryObject();
+   // alert(window.location);
+    localStorage.setItem("name",urlItem.name);
+
+    localStorage.setItem("phoneNum",urlItem.phoneNum);
+    localStorage.setItem("userId",urlItem.userId);
+    localStorage.setItem("token",urlItem.token);
+
+
+
+    common.initData( webViewBridge(),0);
+    $("#next").click(function(){
+        window.location="_newAdviser.html";
+    })
+    common.webBridgeInit(function (bridge) {
+        bridge.registerHandler('backButton', common.backButton);
+    });
+})
+</script>
+</html>

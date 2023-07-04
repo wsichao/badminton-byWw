@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>朱李叶健康</title>
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    <script src="https://cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script>
+    <script src="/health/libs/common.js"></script>
+    <script src="https://cdn.bootcss.com/iScroll/5.1.1/iscroll-infinite.min.js"></script>
+    <link href="/general_file/general_css.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/doctor/reply_detail.css">
+</head>
+<body >
+<div id="wrapper">
+<div>
+<div style="margin: 0 12px">
+    <img id="downloadImg" src="/doctor/images/downloadingapp.png" style="margin-top: 10px;width: 100%;" onclick="download()">
+</div>
+<div class="reply">
+    <div class="title">223条回复</div>
+    <div class="comment">
+        <div class="user-icon">
+            <!--<img src="images/well_pre%20copy%202@3x.png" alt="">-->
+        </div>
+        <div class="review-con">
+            <p class="user-name">
+                <strong style="font-weight: normal"></strong>
+                <span class="zan">
+                    <!--<i></i>赞-->
+                </span>
+            </p>
+            <p class="content">
+                <!--想购买豪华服务包，购买过的亲们回复下怎值不值得买？-->
+            </p>
+        </div>
+    </div>
+    <div class="all-reply">
+        <p class="all-title">全部回复</p>
+        <ul id="comment_list">
+        </ul>
+    </div>
+</div>
+<input type=hidden id="d_bookmark" value="-1"/>
+<input type=hidden id="d_weight" value="-1" />
+<input type=hidden id="d_request" value="0" />
+</div>
+</div>
+</body>
+</html>
+<script>
+    //获取地址栏参数：
+function getQueryString(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null) return unescape(r[2]);
+    return null;
+}
+
+    var end = false;//数据加载完成后的标识
+    function getList(){
+        if($("#d_request").val()=="1"){
+            return;
+        }
+        $("#d_request").val("1");
+
+        var commentId = getQueryString('comment_id');
+        $.ajax({
+            type: "GET",
+            url: "/1/doctor_comment/getCommentReplyList",
+            data:{
+                commentId:commentId,
+                pageSize:20,
+                bookmark:$("#d_bookmark").val(),
+                weight:$("#d_weight").val()
+            },
+            success: function(data){
+                var html="";
+                for(var i=0;i<data.items.length;i++){
+                    html+='<li class="comment"><div class="user-icon">';
+                    if(!data.items[i].user.avatar){
+                        html+='<img src="/doctor/images/moren.png">';
+                    }else {
+                        html+='<img src=https://cdn.juliye.net/' + data.items[i].user.avatar + '>';
+                    }
+                    html+='</div>';
+                    html+='<div class="review-con">';
+                    html+='<p class="user-name">';
+                    html+=data.items[i].user.name;
+                    html+='<span class="zan">';
+                    html+='<i></i>';
+                    if(data.items[i].like_count>0){
+                        html+=data.items[i].like_count;
+                    }else {
+                        html+="赞";
+                    }
+                    html+='</span>';
+                    html+='</p>';
+                    html+='<p class="content">';
+                    html+=data.items[i].content;
+                    html+='</p>';
+                    html+='</div>';
+                    html+='</li>';
+                    $("#d_weight").val(data.items[i].weight);
+                    $("#d_bookmark").val(data.items[i].replyTime);
+                }
+                $("#comment_list").append(html);
+                myScroll.refresh();
+                $("#d_request").val("0");
+            },
+            error:function(err){
+            }
+        });
+    }
+
+    myScroll = new IScroll("#wrapper", {
+        useTransition: true,
+        useTransform: true,
+        mouseWheel: true,
+        scrollbars: "custom",//只有该属性的值为"custom"，才能通过.iScrollVerticalScrollbar和.iScrollIndicator设置凹槽和滚动条的样式
+        interactiveScrollbars: true,
+        resizeScrollbars: false,//当这个属性设置为否时,才可以通过.iScrollIndicator改变滚动条(不是凹槽的的宽和高）
+        probeType: 3,//这个值设置为3而且必须引入iscroll-probe.js才能触发onscroll事件
+        click: true,
+        taps:true
+    });
+
+    var down = document.getElementById("down");
+    var up = document.getElementById("up");
+    var scroller = document.getElementById("scroller");
+    var list = document.getElementById("list");
+    var step = 3;//上拉加载时的动态创建的li的个数
+    var max = 30;//li的最大个数
+    var flag = false;//滚动条滚动到最底部的标识
+
+    myScroll.on("scroll", function () {
+//   console.log(this)
+        if (parseInt(this.y) >= 0 && this.directionY == -1) {//down
+            if (parseInt(this.y) == 0) {
+                this.refresh();
+            }
+        }
+
+//           console.log(this.y);
+//           console.log(this.maxScrollY)
+        if (parseInt(this.y) == this.maxScrollY) {
+            if (end) {
+                return;
+            }
+            end = true;
+            getList();
+
+        }
+        if (flag && this.directionY == 1 && this.y < this.maxScrollY) {
+            if (end) {
+                return;
+            }
+            flag = false;
+            down.style.display = "none";
+            var fragment = document.createDocumentFragment();
+            var len = list.children.length;//每次上拉时动态获取当前li的总个数
+            var num = max - len;//最大个数和总个数的差值
+            step = num <= step && num >= 0 ? num : step;//当两个数的差值大于等于0小于等于step的时候，step等于两者之差，否则step不变
+            for (var i = 0; i < step; i++) {
+                var li = document.createElement("li");
+                li.innerHTML = list.children.length + i + 1;
+                fragment.appendChild(li);
+            }
+            list.appendChild(fragment);
+        }
+    });
+//    load();
+
+
+
+
+
+
+
+
+
+
+
+    $(function (){
+        var data = <%-data%>;
+//        data = JSON.parse(data);
+//        console.log(data);
+        $('.title').html(data.reply_count+'条回复');
+        if(!data.user.avatar){
+            $('.user-icon').html('<img src="/doctor/images/moren.png">')
+        }else {
+            $('.user-icon').html('<img src=https://cdn.juliye.net/' + data.user.avatar + '>')
+        }
+        $('.content').html(data.content);
+        $('.user-name strong').html(data.user.name);
+
+        if(data.like_count>0){
+            $('.zan').html('<i></i>'+data.like_count)
+        }else {
+            $('.zan').html('<i></i>赞')
+        }
+
+        getList();
+    });
+</script>

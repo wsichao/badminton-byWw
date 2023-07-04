@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<script>
+  var _hmt = _hmt || [];
+  (function () {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?a0a3eb32605b0e2ffad5dbef973a57d8";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+<head>
+    <meta charset="UTF-8">
+    <title>健康头条</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="yes">
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimal-ui">
+    <link href="./styles/flowPage.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div style="clear:both;position:absolute;top: 40%;left: 35%;text-align: center;vertical-align: middle;visibility: hidden">
+    <img id='focusImg' style="width: 110px;height: 92px;">
+</div>
+<div style="margin-left:12px;margin-right:12px;">
+
+    <div id="loading" style="position:absolute;top:16px;left:45%;text-align: center;vertical-align: middle;">
+        <img src="images/loading.gif" style="width: 42px;height: 22px;">
+        <div style="text-align: center;font-size: 10px;
+color: #666666;
+letter-spacing: 0;">加载中
+        </div>
+    </div>
+    <header style="margin-top: 13px;">
+        <label id="title"
+               style="color: #000;text-align: center;font-size: 23px;font-weight: 700;line-height: 33px;letter-spacing: 1.1px"></label>
+        <div id="normal" class="titleCss">
+            <label id="source" style="color: #999999;font-size: 13px;line-height: 12px"></label>
+            <!--<label id="createdAt" style="margin-left:5px;color: #999999;font-size: 13px;line-height: 18px"></label>-->
+        </div>
+
+        <div id="special" class="titleCss" style="padding-top: 10px;">
+            <img id="specialImg"
+                 style="width: 38px;height: 38px;    border-radius: 38px;margin-left: 5px;display: inline-block"
+                 class="left">
+
+            <div style="display: inline-block;">
+                <div id="facName" style="display:none;font-size: 15px;line-height:21px;color: #000000;letter-spacing: -0.36px;margin-left: 10px;margin-top: 6px;"></div>
+                <div id="docName" style="font-size: 15px;line-height:21px;color: #000000;letter-spacing: -0.36px;display: block;margin-left: 10px;"></div>
+                <div id="docPosition" style="font-size: 13px;color: #999999;line-height:18px;letter-spacing: -0.36px;display: block;margin-left: 10px;"></div>
+                <!--<label id="specialSource" class="source"></label>-->
+
+                <br>
+                <!--<label id="specialCreatedAt" class="createdAt"></label>-->
+
+            </div>
+
+            <input type="button" id="favorite" class="favoriteBtn">
+        </div>
+    </header>
+    <div style="margin-top: 17px">
+        <div style="font-size: 18px;line-height: 29px;letter-spacing: 0.8px;word-wrap: break-word;color: #222222;text-align: justify"
+             id="mainBody">
+            <!--假蜂蜜危害大！70岁蜂农教你一杯清水，鉴别真假防受骗，假蜂蜜危害大！70岁蜂农教你一杯清水，鉴别真假防受骗。假蜂蜜危害大！70岁蜂农教你一杯清水，鉴别真假防受骗。假蜂蜜危害大！70岁蜂农教你一杯清水，鉴别真假防受骗。-->
+        </div>
+
+    </div>
+
+    <div style="margin-top: 17px;line-height:12px;font-size: 13px">
+        <img src="images/glanceover.png"
+             id="view"
+             style="float: left;width: 18px;height: 12px;margin-left: 3px;margin-top: 15px;display: inline-block;visibility: hidden">
+        <label id="viewNum"
+               style="float: left;color: #B9B9B9 ;font-size: 13px;margin-right: 5px;margin-top: 15px;margin-left: 5px;"></label>
+
+    </div>
+
+    <footer id="approveDiv" style="visibility: hidden;position: relative;
+    top: 30px;">
+        <div style="clear: both;width: 156px;height: 40px;border: 1px solid #E0E0E0;border-radius: 20px;margin-left: 28%;"
+             onclick="approve()">
+            <img id="approveId" src="images/nice.png"
+                 style="float: left;display: inline-block;width: 20px;height: 20px;margin-left: 35%;margin-right: 10px;margin-top: 10px;">
+            <!--<label id="approveNum" style="font-size: 17px;color: #666666;line-height: 24px">3</label>-->
+            <!--<span style="margin-top: 10px;line-height: 24px;float: left;">-->
+            <label id="approveNum"
+                   style="margin-top: 10px;line-height: 24px;float: left;font-size: 17px;color: #666666;"></label>
+            <!--</span>-->
+        </div>
+    </footer>
+</div>
+
+<!--推荐样式-->
+<div id="recPagesDiv" style="margin-top:40px;font-size: 18px;line-height: 28px;letter-spacing: 0.8px;">
+    <table id='recPages'
+           style="border-collapse:collapse;background: #FAFAFA;text-align:left;margin-top: 30px;padding-top: 15px;border-radius:3px;letter-spacing: 0.8px"
+           align=right>
+        <tbody style="padding-left: 15px;line-height: 24px;text-align:left;">
+
+        </tbody>
+    </table>
+</div>
+
+
+<!--评论样式-->
+<div style="clear: both;margin: 30px 12px 100px 12px">
+    <div style="padding-top: 30px">
+        <div id="comment" style="margin-top: 10px;clear:both">
+            <!--<div style="margin-top: 30px">-->
+            <!--<img class="image" src="images/avatar@3x.png"-->
+            <!--style="width: 40px;height: 40px;border-radius: 20px;float: left">-->
+            <!--<div style="margin-left: 50px">-->
+            <!--<label style="font-size: 15px;color: #2766A9 ;">李浩然</label>-->
+            <!--<div style="margin-top:10px;font-size: 17px;line-height: 24px;letter-spacing:0.4px">-->
+            <!--鉴别真假防受骗。假蜂蜜危害大！70岁蜂农教你一杯清水，鉴别真假防受骗。-->
+            <!--</div>-->
+            <!--<div style="margin-top:10px;margin-bottom: 110px;font-size: 13px">-->
+            <!--09-03 13:27-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--</div>-->
+        </div>
+    </div>
+</div>
+
+<!--删除时的弹出层-->
+<!--<div id="deleteDiv"-->
+<!--style="visibility: hidden;background: rgba(0,0,0,0.40);width: 100%;height: 100%;position: fixed;bottom: 0px">-->
+<!--<div id="deleteItem"-->
+<!--style="margin: auto 45px auto 45px;background-color: #F6F6F6;border-radius: 8px;width: 286px;height: 118px;position: relative;top: 40%;">-->
+
+<!--<div style="border: 0 solid #BFBFBF;font-size: 19px;color: #000000;-->
+<!--font-weight: 900;letter-spacing: 0;text-align: center;line-height: 66px">-->
+<!--删除此条评论？-->
+<!--</div>-->
+<!--<div style="text-align: center;line-height: 50px;">-->
+<!--<div style="border:1px solid #BFBFBF;line-height: 50px;font-size: 17px;color: #12B6BB;letter-spacing: 0;-->
+<!--border-bottom-left-radius: 8px;" onclick="handleDeleteDiv(false)">取消-->
+<!--</-->
+<!--&gt;-->
+<!--&lt;!&ndash;<div style="float:right;width:143px;border:1px solid;line-height: 50px;font-size: 17px;color: #12B6BB;letter-spacing: 0;">删除</div>&ndash;&gt;-->
+<!--<div id="deleteButton" style="float:right;width:143px;border-top-width:1px;border-left-width:1px;border-left-style:solid;-->
+<!--border-bottom-right-radius: 8px;line-height: 50px;font-size: 17px;color: #BFBFBF;letter-spacing: 0;"-->
+<!--onclick="deleteComment()">删除-->
+<!--</div>-->
+<!--<label id="deleteId" style="visibility: hidden"></label>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+
+
+</body>
+<script src="libs/jquery.min.js"></script>
+<script src="libs/connectWebViewJavascriptBridge.js"></script>
+<script src="libs/common.js"></script>
+<!--<script src="https://static.mlinks.cc/scripts/dist/mlink.min.js"></script>-->
+
+<script>
+  var userId, pageId, token, deviceId, authorId, authorType, isApproved = false, shareTitle, shareImg, shareDes,
+    approveNum = 0,
+    isFavorited = false,
+    imgUri = 'https://cdn.juliye.net/';
+  var recPages = [], NUM, images = [];
+  var approveIdDom = $('#approveId'), commentDom = $('#comment'), approveNumDom = $('#approveNum'), commentNum = 0;
+
+  var webBridge = webViewBridge();
+  webBridge.bridgeInit(function (bridge) {
+    bridge.registerHandler('goCommentTop', function (data, responseCallback) {
+      goCommentTop();
+      responseCallback();
+    });
+
+    bridge.registerHandler('publishComment', function (data, responseCallback) {
+      data = JSON.parse(data);
+      if (commentDom[0].firstChild) {
+        $(getPageComment(data, 0, 2)).insertBefore(commentDom[0].firstChild);
+      } else {
+        $(getPageComment(data, 0, 2)).insertAfter(commentDom);
+      }
+      goCommentTop();
+      responseCallback();
+    });
+
+
+    //接收前端通知，当前关注状态被改变了
+    bridge.registerHandler('synFavoriteStatusPage', function (data, responseCallback) {
+      if (isFavorited) {
+        isFavorited = false;
+      } else {
+        isFavorited = true;
+      }
+
+      favoriteStyle(isFavorited);
+      responseCallback();
+    });
+
+    //接收前端通知，删除成功
+    bridge.registerHandler('deleteCommentCompleted', function (data, responseCallback) {
+      data = JSON.parse(data);
+      if (data && data.commentId) {
+        $("#" + data.commentId).remove()
+      }
+      responseCallback();
+    });
+
+  });
+  var WIDTH = window.screen.width;
+
+  window.onload = function () {
+    var pageInfo, authorInfo;
+    NUM = parseInt(WIDTH / 28);
+    userId = getUrlQueryObject().userId, pageId = getUrlQueryObject().pageId, token = getUrlQueryObject().token,
+      deviceId = getUrlQueryObject().deviceId;
+    //文章主题
+    $.ajax({
+      type: "GET",
+      url: "/1/zlycare/page/detail?userId=" + userId + "&pageId=" + pageId,
+      headers: {
+        "x-docchat-user-id": userId,
+        "x-docchat-session-token": token,
+        "x-docchat-application-device-mark": deviceId
+      },
+      success: function (ret) {
+        if (ret) {
+          pageInfo = ret;
+          var source = pageInfo.user_name;
+          $('#loading').css('visibility', 'hidden');//:
+          var mainBodyDom = $('#mainBody');
+          if(pageInfo.activity_id && userId){
+            function bonus() {
+              webBridge.upload('activity_bonus', JSON.stringify({activity_id: ret.activity_id,article_id:pageId}));
+            }
+            setTimeout(bonus, 3000 )
+          }
+          if (pageInfo.authorId && (pageInfo.authorType == 'doctor' || pageInfo.authorType == 'factory')) {
+            authorId = pageInfo.authorId;
+            authorType = pageInfo.authorType;
+            //作者信息
+            $.ajax({
+              type: "GET",
+              url: "/1/feedFlow/getAuthorInfo?authorId=" + authorId + "&authorType=" + authorType + '&userId=' + userId,
+              headers: {
+                "x-docchat-user-id": userId,
+                "x-docchat-session-token": token,
+                "x-docchat-application-device-mark": deviceId
+              },
+              success: function (ret) {
+                if (ret) {
+                  authorInfo = ret;
+                  if (authorType == 'doctor') {
+//                                            $('#specialSource').html(authorInfo.name+'|'+authorInfo.title);
+                    //source = authorInfo.name + ' | ' + authorInfo.title;
+                    $('#docName').show();
+                    $('#docName').html(formatSource(authorInfo.name));
+                    $('#docPosition').html(formatSource(authorInfo.title));
+                  } else {
+                    /*source = authorInfo.name;*/
+                    $('#facName').show();
+                    $('#facName').html(formatSource(authorInfo.name));
+                  }
+                  /*$('#specialSource').html(formatSource(source));*/
+
+                  $('#specialImg').attr('src', imgUri + authorInfo.avatar);
+                  $('#special').css('display', 'block');
+                  $('#specialImg').attr('onclick', 'goHomePage()');
+                  $('#specialSource').attr('onclick', 'goHomePage()');
+                  /*$('#specialCreatedAt').attr('onclick', 'goHomePage()');*/
+                  $('#specialCreatedAt').html(formatDate(pageInfo.createdAt));
+                  isFavorited = authorInfo.isFavorited;
+                  favoriteStyle(isFavorited);
+                  pageMainBodyData(pageInfo.title, pageInfo.viewNum, pageInfo.mainBody);
+                } else {
+                  alert('获取作者信息失败');
+                }
+              }
+            });
+          } else {
+//
+            $('#source').html(formatSource(source));
+            /*$('#createdAt').html(formatDate(pageInfo.createdAt));*/
+            $('#normal').css('display', 'block');
+            pageMainBodyData(pageInfo.title, pageInfo.viewNum, pageInfo.mainBody);
+          }
+          shareTitle = pageInfo.title;
+          shareImg = pageInfo.pics[0] || '/health/images/logo150.png';
+          shareDes = pageInfo.desc;
+          sendShareInfo(shareTitle, shareDes, pageInfo.pics);
+          var mainBodyImages = mainBodyDom.find('img');
+          for (var i = 0; i < mainBodyImages.length; i++) {
+            images.push(mainBodyImages[i].src);
+            if (mainBodyImages[i].parentNode.tagName != 'A') {
+              mainBodyImages[i].onclick = enlargeImage;
+            } else {
+              console.log('我是A标签，不添加button');
+            }
+          }
+//                     webBridge.upload("recommendPages", JSON.stringify({userId: userId}), function (data) {
+// //                    var recPages = [{
+// //                        moment_id: '1231',
+// //                        title: 'ferfref',
+// //                        pics: ['https://cdn.juliye.net/00003F61-A241-4B2D-8F3E-5CEE952D3875']
+// //                    }, {//测试推荐
+// //                        moment_id: '1231',
+// //                        title: 'ferfref',
+// //                        pics: ['https://cdn.juliye.net/00003F61-A241-4B2D-8F3E-5CEE952D3875']
+// //                    }, {
+// //                        moment_id: '1231',
+// //                        title: 'ferfref',
+// //                        pics: ['https://cdn.juliye.net/00003F61-A241-4B2D-8F3E-5CEE952D3875']
+// //                    }, {
+// //                        moment_id: '1231',
+// //                        title: 'ferfref',
+// //                        pics: ['https://cdn.juliye.net/00003F61-A241-4B2D-8F3E-5CEE952D3875']
+// //                    }];
+//                         var retHtml = '';
+//                         recPages = JSON.parse(data);
+//                         if (recPages.length > 0) {
+//                             for (var i = 0; i < recPages.length; i++) {
+//                                 if (recPages[i].moment_id) {
+//                                     retHtml += getDataRow(recPages[i], i, recPages.length);
+//                                 }
+//                             }
+//                             var recPagesDom = $('#recPages');
+//                             recPagesDom.html(retHtml);
+//                             recPagesDom.css({'width': '100%'});
+//                         } else {
+//                             $('#recPagesDiv').css({'display': 'none'});
+//                             recPagesDom.css({'display': 'none'});
+//                         }
+//
+//                     })
+        } else {
+          alert('获取头条信息失败');
+        }
+      }
+    });
+
+
+    //推荐文章内容
+
+    $.ajax({
+      url: '/1/feedFlow/cmsRecommend?pageId=' + pageId,
+      type: 'GET',
+      success: function (res) {
+        console.log("获取文章列表");
+        console.log(res);
+        var options = []
+
+
+        var retHtml = '';
+        recPages = res.data;
+        if (recPages.length > 0) {
+          for (var i = 0; i < recPages.length; i++) {
+            if (recPages[i].moment_id) {
+              retHtml += getDataRow(recPages[i], i, recPages.length);
+            }
+          }
+          var recPagesDom = $('#recPages');
+          recPagesDom.html(retHtml);
+          recPagesDom.css({'width': '100%'});
+        } else {
+          $('#recPagesDiv').css({'display': 'none'});
+          recPagesDom.css({'display': 'none'});
+        }
+
+
+        /*for (var i = 0; i < res.data.length; i++) {
+          if (res.data[i].pics.length > 0) {
+            $(".articleList").append("<li class='jumpBrowser' ><a id='" + "gotoApp" + i + "'><p class='part1'>" + res.data[i].title + "</p><img src='" + res.data[i].pics[0] + "'/></a></li>");
+          } else {
+            $(".articleList").append("<li class='jumpBrowser'><a id='" + "gotoApp" + i + "'><p class='part2'>" + res.data[i].title + "</p></a></li>")
+          }*/
+        //   var queryStr = 'a#gotoApp' + i
+        //   var optionItem = {
+        //     mlink: 'https://apbv6m.mlinks.cc/Ab7X?momentId='+ res.data[i].moment_id
+        //     +'&authorId='+ res.data[i].authorId
+        //     +'&authorType=' + res.data[i].authorType
+        //     +'&fromad=true',
+        //     button: document.querySelector(queryStr)
+        //   };
+        //   options.push(optionItem);
+        // }
+        // console.log(options);
+        // new Mlink(options);
+      }
+    });
+
+    //评论内容
+    $.ajax({
+      type: "GET",
+      url: "/1/zlycare/page/comments?pageId=" + pageId,
+//            headers: {
+//                "x-docchat-user-id": userId,
+//                "x-docchat-session-token": token,
+//                "x-docchat-application-device-mark": deviceId
+//            },
+      success: function (ret) {
+        if (ret) {
+          var retPageHtml = '';
+          for (var i = 0; i < ret.length; i++) {
+            retPageHtml += getPageComment(ret[i], i, ret.length)
+          }
+
+          commentDom.html(retPageHtml);
+        } else {
+          alert('获取文章评论失败');
+        }
+      }
+    });
+//
+// 统计数据
+    $.ajax({
+      type: "GET",
+      url: "/1/zlycare/page/statisticals?userId=" + userId + "&pageId=" + pageId,
+//            headers: {
+//                "x-docchat-user-id": userId,
+//                "x-docchat-session-token": token,
+//                "x-docchat-application-device-mark": deviceId
+//            },
+      success: function (ret) {
+        if (ret) {
+          approveNum = ret.approveNum || 0;
+          approveNumDom.html(approveNum);
+          isApproved = ret.isApproved || false;
+          commentNum = ret.commentNum || 0;
+
+          if (isApproved) {
+            approveIdDom.attr('src', 'images/nice_sel.png');
+          } else {
+            approveIdDom.attr('src', 'images/nice.png');
+          }
+          $('#approveDiv').css('visibility', 'visible');
+          webBridge.upload("pageStatisticals", JSON.stringify({
+            commentNum: ret.commentNum,
+            isCollected: ret.isCollected
+          }));
+        }
+      }
+    });
+  };
+
+  function approve() {
+    if (!userId) {
+      //调用前端的方法
+      webBridge.upload("goLogin", JSON.stringify({docChatNum: ''}));
+    } else {
+      if (isApproved == false) {
+
+        isApproved = true;
+        approveIdDom.attr('src', 'images/nice_sel.png');
+        approveNum = Number(approveNum) + 1;
+        approveNumDom.html(approveNum);
+        $.ajax({
+          type: "PUT",
+          url: "/1/zlycare/page/approve",
+          data: {userId: userId, pageId: pageId},
+          headers: {
+            "x-docchat-user-id": userId,
+            "x-docchat-session-token": token
+          },
+          success: function (rs) {
+//                        isApproved = true;
+//                        approveIdDom.attr('src', 'images/nice_sel.png');
+//                        approveNum = Number(approveNum) + 1;
+//                        approveNumDom.html(approveNum);
+
+          },
+          error: function (err) {
+
+          }
+        });
+      } else {
+        isApproved = false;
+        approveIdDom.attr('src', 'images/nice.png');
+        approveNum = Number(approveNum) - 1;
+        approveNumDom.html(approveNum);
+        $.ajax({
+          type: "PUT",
+          url: "/1/zlycare/page/disApprove",
+          data: {userId: userId, pageId: pageId},
+          headers: {
+            "x-docchat-user-id": userId,
+            "x-docchat-session-token": token
+          },
+          success: function (rs) {
+//                        isApproved = false;
+//                        approveIdDom.attr('src', 'images/nice.png');
+//                        approveNum = Number(approveNum) - 1;
+//                        approveNumDom.html(approveNum);
+          },
+          error: function (err) {
+
+          }
+        });
+      }
+    }
+  }
+
+
+  //    function getDataRow(h, index, length) {
+  //        var title = h.title;
+  //        var retItem = '';
+  //        if (h.title.length > 2 * NUM) {
+  //            title = h.title.substr(0, 2 * NUM - 2) + '...';
+  //        }
+  ////        if (index != length - 1) {
+  ////            retItem = '<tr><td><div style="margin: 15px 15px 0px 15px;padding-bottom: 15px;border-bottom:1px solid #EBEBEB " onclick="goToPage(' + h.moment_id + ')">' + title + '</div></td></tr>';
+  ////        } else {
+  ////            retItem = '<tr><td><div style="margin: 15px 15px 0px 15px;padding-bottom: 15px;" onclick="goToPage(' + h.moment_id + ')">' + title + '</div></td></tr>';
+  ////        }
+  //
+  //        if (index != length - 1) {
+  //            if (h.pics.length > 0) {
+  //                retItem = '<div style="width: 100%;" class="touchCss"><div id="'
+  //                    + h.moment_id
+  //                    + '" style="width: 100%;' +
+  //                    'border-bottom: 1px solid #F4F4F4;'
+  //                    +
+  //                    'float: left;padding: 15px 0px 15px ;margin-left: 12px;line-height: 24px;" onclick="goToPage('
+  //                    + h.moment_id + ')"> <label class="lengthCss" style="font-size: 17px;float: left;width: '
+  //                    + (WIDTH - 129)
+  //                    + 'px; ">'
+  //                    + title
+  //                    + '</label><img  class="recImg" src='
+  //                    + h.pics[0]
+  //                    + ' width="79px" height="51px" style="display: inline-block;float: right;margin-left: 20px;padding-right:24px"></div></div>';
+  //            } else {
+  //                retItem = '<div style="width: 100%;" class="touchCss"><div id="'
+  //                    + h.moment_id
+  //                    + '" style="float: left;margin: 0px 0px 15px 12px;padding-bottom: 15px;border-bottom:1px solid #F4F4F4 ;line-height: 24px" onclick="goToPage('
+  //                    + h.moment_id + ')"> <label class="lengthCss" style="font-size: 17px;float: left;width: '
+  //                    + (WIDTH - 47)
+  //                    + 'px;">'
+  //                    + title
+  //                    + '</label></div></div>';
+  //            }
+  ////            retItem = '<tr><td><div style="margin: 15px 15px 0px 15px;padding-bottom: 15px;border-bottom:1px solid #EBEBEB " onclick="goToPage(' + h.moment_id + ')">' + title + '</div></td></tr>';
+  //        } else {
+  ////            retItem = '<tr><td><div style="margin: 15px 15px 0px 15px;padding-bottom: 15px;" onclick="goToPage(' + h.moment_id + ')">' + title + '</div></td></tr>';
+  //            if (h.pics.length > 0) {
+  //                retItem = '<div style="width: 100%;" class="touchCss"><div style="width: 100%;float: left;padding: 15px 0px 15px ;margin-left: 12px;line-height: 24px" onclick="goToPage('
+  //                    + h.moment_id + ')"> <label class="lengthCss" style="font-size: 17px;float: left;width:  ' +
+  //                    +(WIDTH - 129)
+  //                    + 'px;">'
+  //                    + title
+  //                    + '</label><img class="recImg"  src='
+  //                    + h.pics[0]
+  //                    + ' width="79px" height="51px" style="display: inline-block;float: right;margin-left: 20px;padding-right: 24px"></div></div>';
+  //            } else {
+  //                retItem = '<div style="width: 100%;" class="touchCss"><div style="float: left;margin: 0px 0px 15px 12px;line-height: 24px" onclick="goToPage('
+  //                    + h.moment_id + ')">  <label  class="lengthCss" style="font-size: 17px;float: left;width: ' +
+  //                    +(WIDTH - 47)
+  //                    + 'px;">'
+  //                    + title
+  //                    + '</label></div></div> ';
+  //            }
+  //        }
+  //        return retItem;
+  //    }
+
+
+  function getDataRow(h, index, length) {
+    var title = h.title;
+    var retItem = '';
+    if (h.title.length > 2 * NUM) {
+      title = h.title.substr(0, 2 * NUM - 2) + '...';
+    }
+    if (index != length - 1) {
+      if (h.pics.length > 0) {
+        retItem = '<tr id="' + h.moment_id
+          + '" class="touchCss" ><td id="td_' + h.moment_id
+          + '"><div id="div_' + h.moment_id
+          + '" style="border-bottom: 1px solid #EBEBEB;float: left;margin: 0px 0px 0px 12px;line-height: 24px;padding-top: 15px;"> <label style="font-size: 17px;float: left;width: '
+          + (WIDTH - 123)
+          + 'px;">'
+          + title
+          + '</label><img  class="recImg" src='
+          + h.pics[0]
+          + ' width="79px" height="51px" style="display: inline-block;float: right;margin-left: 20px;    margin-bottom: 15px;padding-right:12px"></div></td></tr>';
+      } else {
+        retItem = ' <tr id="' + h.moment_id
+          + '"  class="touchCss"><td id="td_' + h.moment_id
+          + '"><div id="div_' + h.moment_id
+          + '"   style="float: left;padding: 15px 0px 15px 12px;border-bottom:1px solid #EBEBEB ;line-height: 24px" > <label style="font-size: 17px;float: left;width: '
+          + (WIDTH - 24)
+          + 'px;">'
+          + title
+          + '</label></div></td></tr>';
+      }
+    } else {
+      if (h.pics.length > 0) {
+        retItem = '<tr id="' + h.moment_id
+          + '"  class="touchCss"><td id="td_' + h.moment_id
+          + '"><div id="div_' + h.moment_id
+          + '" style="float: left;margin: 0px 0px 0px 12px;line-height: 24px;padding-top: 15px;padding-bottom: 20px;" > <label style="font-size: 17px;float: left;width:  '
+          + (WIDTH - 123)
+          + 'px;">'
+          + title
+          + '</label><img class="recImg"  src='
+          + h.pics[0]
+          + ' width="79px" height="51px" style="display: inline-block;float: right;margin-left: 20px;padding-right: 12px"></div></td></tr>';
+      } else {
+        retItem = ' <tr id="' + h.moment_id
+          + '"  class="touchCss"><td id="td_' + h.moment_id
+          + '"><div id="div_' + h.moment_id
+          + '"  style="float: left;padding: 15px 0px 15px 12px;line-height: 24px" >  <label style="font-size: 17px;float: left;width: '
+          + (WIDTH - 24)
+          + 'px;">'
+          + title
+          + '</label></div></td></tr>';
+      }
+    }
+    return retItem;
+  }
+
+
+  function getPageComment(page, index, length) {
+    var name = page.name;
+    var retItem = '';
+    if (page.name.length > 12) {
+      name = page.name.substr(0, 10) + '...';
+    }
+    var avatar = page.avatar ? imgUri + page.avatar : 'images/avatar@3x.png';
+    var createdAt = formatDate(page.createdAt);
+
+    var display = 'hidden';
+    if (page.userId == userId) {
+      display = 'visible';
+    }
+    retItem = '<div id='
+      + page.commentId
+      + ' style="margin-top: 30px" ><img class="image" src=' + avatar + ' style="width: 40px;height: 40px;border-radius: 20px;float: left"> <div style="margin-left: 50px"> <label style="font-size: 15px;color: #2766A9 ;">'
+      + name
+      + ' </label><div style="margin-top:10px;font-size: 17px;line-height: 24px;letter-spacing:0.4px">'
+      + page.content
+      + ' </div><div style="margin-top:10px;font-size: 13px"><span>'
+      + createdAt
+      + ' </span><span style="padding-bottom:3px;display:inline-block;z-index: 100;visibility:'
+      + display
+      + ';float: right;right: 12px;" onclick=showDeleteComment("' + page.commentId + '")  >删除</span></div></div></div>';
+
+
+    return retItem;
+  }
+
+  function goToPage(moment_id) {
+    for (var key in recPages) {
+      if (recPages[key].moment_id == moment_id) {
+        webBridge.upload("goPage", JSON.stringify(recPages[key]));
+        break;
+      }
+    }
+  }
+
+  //监听touch事件，跳转到推荐文章详情
+  document.getElementById('recPages').addEventListener('touchend', touch, true);
+  //document.getElementById('recPages').addEventListener('touchmove', touch, true);
+  document.getElementById('recPages').addEventListener('touchstart', touch, true);
+  document.getElementById('recPages').addEventListener('click', touch, true);
+  document.getElementById('recPages').addEventListener('touchcancel', touch, true);
+
+  function touch(event) {
+    var event = event || window.event;
+    var targetTagName = event.target.tagName.toLowerCase();
+    var targetTr = event.target.parentNode.parentNode;
+    var id = targetTr.id;
+    if (targetTr.id.indexOf('_') > -1) {
+      id = targetTr.id.substr(targetTr.id.indexOf('_') + 1, targetTr.id.length);
+    }
+    switch (event.type) {
+      case "touchstart":
+        $('#' + id).css('background', '#F0F0F0');
+        break;
+      case "touchend":
+        $('#' + id).css('background', '#FAFAFA');
+        break;
+      case "touchmove":
+        break;
+      case "click":
+        goToPage(id);
+        break;
+      case "touchcancel":
+        $('#' + id).css('background', '#FAFAFA');
+        break;
+    }
+  }
+
+
+  function enlargeImage(src) {
+    var src = this.src;
+    webBridge.upload("enlargeImage", JSON.stringify({images: images, currentImage: src}));
+  }
+
+  //用户客户端分享
+  function sendShareInfo(title, desc, pics) {
+    webBridge.upload("getShareInfo", JSON.stringify({title: title, desc: desc, pics: pics}));
+  }
+
+
+  function addComment() {
+//        _id:用户ID,name:用户姓名,avatar:头像,content:评论内容,createdAt:评论时间
+//        var data={_id:'wefwefewfew',name:'tetettt',content:'feferferferfer',createdAt:Date.now()};
+    if (commentDom[0].firstChild) {
+      $(getPageComment(data, 0, 2)).insertBefore(commentDom[0].firstChild);
+    } else {
+      $(getPageComment(data, 0, 2)).insertAfter(commentDom);
+    }
+  }
+
+  function goCommentTop() {
+    $('html, body').animate({scrollTop: commentDom.offset().top - 30}, 200);
+  }
+
+  //关注和取消关注
+  $('#favorite').click(function () {
+    if (!userId) {
+      //调用前端的方法
+      webBridge.upload("goLogin", JSON.stringify({userId: userId}));
+    } else {
+      if (isFavorited == false) {//未关注
+        $.ajax({
+          type: "POST",
+          url: "/1/feedFlow/favorite",
+          data: {authorId: authorId, authorType: authorType},
+          headers: {
+            "x-docchat-user-id": userId,
+            "x-docchat-session-token": token
+          },
+          success: function (rs) {
+            isFavorited = true;
+            favoriteStyle(isFavorited);
+            favoriteStyleAction();
+            handleFavorite();
+
+          },
+          error: function (err) {
+            alert(err);
+          }
+        });
+      } else {
+        $.ajax({
+          type: "POST",
+          url: "/1/feedFlow/cancelFavorite",
+          data: {authorId: authorId, authorType: authorType},
+          headers: {
+            "x-docchat-user-id": userId,
+            "x-docchat-session-token": token
+          },
+          success: function (rs) {
+            isFavorited = false;
+            favoriteStyle(isFavorited);
+            favoriteStyleAction();
+            handleFavorite();
+          },
+          error: function (err) {
+
+            alert(err);
+          }
+        });
+      }
+    }
+  });
+
+  //通知app跳转到主页
+  function goHomePage() {
+    webBridge.upload("goHomePage", JSON.stringify({}));
+  }
+
+  //操作关注时，通知前端
+  function handleFavorite() {
+    webBridge.upload("handleFavorite", JSON.stringify({}));
+  }
+
+  //删除评论,调用前端
+  function showDeleteComment(commentId) {
+    //将要删除的评论ID给app
+    webBridge.upload("goDeleteComment", JSON.stringify({commentId: commentId}));
+  }
+</script>
+</html>
